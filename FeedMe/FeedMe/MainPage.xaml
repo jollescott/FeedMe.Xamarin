@@ -2,12 +2,33 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:FeedMe"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="FeedMe.MainPage">
 
-    <StackLayout>
-        <ListView x:Name="ListView_selectedEatebles" ItemSelected="ListView_selectedEatebles_ItemSelected" HeightRequest="90" RowHeight="25"/>
-        <SearchBar x:Name="SearchBar_eatebles" TextChanged="SearchBar_TextChanged"/>
-        <ListView x:Name="ListView_eatebles" ItemSelected="ListView_eatebles_ItemSelected"/>
-    </StackLayout>
+
+    <AbsoluteLayout BackgroundColor="Red">
+        <BoxView Color="#8ACC9B"
+                AbsoluteLayout.LayoutBounds="0, 0, 1, 0.1"
+                AbsoluteLayout.LayoutFlags="SizeProportional"/>
+
+        <StackLayout BackgroundColor="White"
+                     AbsoluteLayout.LayoutBounds="0.5, 1, 1, 0.9"
+                     AbsoluteLayout.LayoutFlags="All">
+            <ListView x:Name="ListView_selectedEatebles" ItemSelected="ListView_selectedEatebles_ItemSelected" HeightRequest="90" RowHeight="25"/>
+            <SearchBar x:Name="SearchBar_eatebles" TextChanged="SearchBar_TextChanged"/>
+            <ListView x:Name="ListView_eatebles" ItemSelected="ListView_eatebles_ItemSelected"/>
+        </StackLayout>
+
+        <Button BackgroundColor="#8AFF9B"
+                TextColor="White"
+                CornerRadius="20"
+                AbsoluteLayout.LayoutBounds="0.5, 0.99, 0.8, 0.1"
+                AbsoluteLayout.LayoutFlags="All"
+                Text="FeedMe"
+                Clicked="Button_Clicked"/>
+
+
+
+    </AbsoluteLayout>
 
 </ContentPage>

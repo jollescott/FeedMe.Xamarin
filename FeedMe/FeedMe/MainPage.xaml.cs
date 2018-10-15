@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using System.Net.Http;
 
 namespace FeedMe
 {
@@ -57,12 +58,25 @@ namespace FeedMe
             InitializeComponent();
 
             ListView_selectedEatebles.ItemsSource = selectedEatebles; //update listview for selected items
-
+            DisplayAlert("response", "test", "ok");
             //Add test spagetti to eatebles
             for (int i = 0; i < 1000; i++)
             {
                 eatebles.Add("spagetti" + i);
             }
+        }
+
+
+        // Post
+        async void Post(string str)
+        {
+            var client = new HttpClient();
+            HttpContent content = new StringContent(str);
+            HttpResponseMessage response = await client.PostAsync("http://...", content);
+
+            HttpContent newcontent = response.Content;
+            string json = await newcontent.ReadAsStringAsync();
+            await DisplayAlert("response", json, "ok");
         }
 
 
@@ -170,6 +184,14 @@ namespace FeedMe
 
             //Update the listView
             ListView_selectedEatebles.ItemsSource = ConvertToNonCrashgingMagicalList(selectedEatebles);
+        }
+
+        // Go to the MealsList page
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            string[] str = { "spagetti", "sås"};
+            Meal[] meals = { new Meal("spagett", str, "koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka vvvkoka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka vkoka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka", "Länk") };
+            await Navigation.PushAsync(new MealsListPage(meals) { Title = "Bon Appétit" });
         }
     }
 }

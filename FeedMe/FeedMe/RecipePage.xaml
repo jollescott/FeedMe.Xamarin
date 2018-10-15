@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FeedMe.RecipePage">
+    <ContentPage.Content>
+        <StackLayout>
+            
+            
+            <Frame BackgroundColor="Blue">
+                <Grid BackgroundColor="Yellow">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Top Left" Grid.Row="0" Grid.Column="0" />
+                    <Label Text="Top Right" Grid.Row="0" Grid.Column="1" />
+                    <Button Text="Button" BackgroundColor="Red" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"/>
+                    <Label Text="Bottom Left" Grid.Row="1" Grid.Column="0" />
+                    <Label Text="Bottom Right" Grid.Row="1" Grid.Column="1" />
+                </Grid>
+            </Frame>
+
+
+            <ScrollView>
+                <StackLayout>
+                    <!--Recipe Name-->
+                    <Label x:Name="Label_RecipeName"
+                           LineBreakMode="WordWrap"
+                           HorizontalTextAlignment="Center"/>
+                    
+                    <!--Ingridients-->
+                    <StackLayout x:Name="Stack_Ingridients">
+                        
+                    </StackLayout>
+
+                    <!--Instructions-->
+                </StackLayout>
+            </ScrollView>
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

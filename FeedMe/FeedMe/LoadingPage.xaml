@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FeedMe"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="FeedMe.LoadingPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <ff:CachedImage x:Name="ffimg"/>
+        </StackLayout>
+    </ContentPage.Content>
+
+    <AbsoluteLayout x:Name="AbsLayout">
+        <Image Source="FeedMe_icon.png"
+               AbsoluteLayout.LayoutBounds ="0.5, 0.5, 200, 200"
+               AbsoluteLayout.LayoutFlags="PositionProportional"/>
+        <Image Source="ME_feedme.png"
+               AbsoluteLayout.LayoutBounds ="0, 1, 100, 100"
+               AbsoluteLayout.LayoutFlags="PositionProportional"/>
+    </AbsoluteLayout>
+</ContentPage>
