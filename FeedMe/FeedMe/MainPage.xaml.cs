@@ -72,7 +72,7 @@ namespace FeedMe
         {
             var client = new HttpClient();
             HttpContent content = new StringContent(str);
-            HttpResponseMessage response = await client.PostAsync("http://...", content);
+            HttpResponseMessage response = await client.PostAsync(Constants.server_adress, content);
 
             HttpContent newcontent = response.Content;
             string json = await newcontent.ReadAsStringAsync();

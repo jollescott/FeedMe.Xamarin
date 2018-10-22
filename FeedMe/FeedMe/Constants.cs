@@ -13,11 +13,13 @@ namespace FeedMe
         public static Color textColor1 = Color.FromRgb(20, 20, 20);
 
         public static int padding = 30;
+        public static int textListMargin = 3;
 
-        public static int menuSize1 = 30;
-        public static int menuSize2 = 20;
-        public static int textSize1 = 20;
-        public static int textSize2 = 18;
+        public static int menuSize1 = 25;
+        public static int menuSize2 = 18;
+        public static int textSize1 = 15;
+        public static int textSize2 = 10;
 
+        public static string server_adress = "gusteausharp.azurewebsites.net/";
     }
 }

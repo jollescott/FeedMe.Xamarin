@@ -28,25 +28,15 @@ namespace FeedMe
 
             string dot = "● ";
 
-            /*Label_Ingridients.Margin = Constants.padding;
-            Label_Ingridients.FontSize = Constants.textSize1;
-            Label_Ingridients.Text = meal.ingredients;*/
-
-            Label lbl = new Label();
-
-            lbl.Text = dot + meal.ingredients[0];
-            lbl.FontSize = Constants.textSize1;
-            lbl.Margin = Constants.padding;
-
-            /*Label lbl2 = new Label();
-
-            lbl2.Text = dot + meal.ingredients[1];
-            lbl2.FontSize = Constants.textSize1;
-            lbl2.Margin = Constants.padding;*/
-
-            Stack_Ingridients.Children.Add(lbl);
-            //Stack_Ingridients.Children.Add(lbl2);
-
+            Label[] labels = new Label[meal.ingredients.Length];
+            for (int i = 0; i < labels.Length; i++)
+            {
+                labels[i] = new Label();
+                labels[i].Text = dot + meal.ingredients[i];
+                labels[i].FontSize = Constants.textSize1;
+                labels[i].Margin = Constants.textListMargin;
+                Stack_Ingridients.Children.Add(labels[i]);
+            }
 
         }
     }
