@@ -4,6 +4,39 @@
              x:Class="FeedMe.MealsListPage">
 
     <StackLayout>
+
+        <!--NavigationBar-->
+        <Frame x:Name="Frame_Head" Margin="0">
+            <StackLayout>
+                <AbsoluteLayout Margin="0" x:Name="AbsLayout_Head">
+                    <Label x:Name="Label_HeadTitle" AbsoluteLayout.LayoutBounds="0.5, 0.5" AbsoluteLayout.LayoutFlags="PositionProportional"/>
+                    <Image x:Name="Image_Back"  Source="back.png" AbsoluteLayout.LayoutBounds="0, 0.5" AbsoluteLayout.LayoutFlags="PositionProportional">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                </AbsoluteLayout>
+            </StackLayout>
+        </Frame>
+
         <ListView x:Name="ListVeiw_Meals" ItemSelected="ListVeiw_Meals_ItemSelected"/>
+
+
+        <ScrollView>
+            <ListView x:Name="ListView_Recipes">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ImageCell Text="{Binding Name}" Detail="{Binding inget}" ImageSource="{Binding imgsource}"></ImageCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollView>
+       
+
+        <ScrollView x:Name="ScrollView_Recipes">
+            <StackLayout x:Name="StackLayout_Recipes" Spacing="0">
+
+            </StackLayout>
+        </ScrollView>
     </StackLayout>
 </ContentPage>

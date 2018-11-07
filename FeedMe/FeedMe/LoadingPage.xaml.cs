@@ -31,7 +31,7 @@ namespace FeedMe
             await Task.Delay(5000);
 
             //Application.Current.MainPage = new NavigationPage(new MainPage());
-            Application.Current.MainPage = new NavigationPage(new MainPage() { Title = "FeedMe" }) { BarBackgroundColor = Constants.backgroundColor, BarTextColor = Constants.mainColor1 };
+            Application.Current.MainPage = new NavigationPage(new MainPage() { Title = "" }) {BarBackgroundColor = Constants.navigationBarColor, BarTextColor = Constants.mainColor1 };
         }
     }
 }

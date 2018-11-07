@@ -16,6 +16,13 @@
                      AbsoluteLayout.LayoutFlags="All">
             <ListView x:Name="ListView_selectedEatebles" ItemSelected="ListView_selectedEatebles_ItemSelected" HeightRequest="90" RowHeight="25"/>
             <SearchBar x:Name="SearchBar_eatebles" TextChanged="SearchBar_TextChanged"/>
+            <ListView x:Name="ListView_Ingredients">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             <ListView x:Name="ListView_eatebles" ItemSelected="ListView_eatebles_ItemSelected"/>
         </StackLayout>
 
