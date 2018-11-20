@@ -51,7 +51,7 @@
             <ScrollView>
                 <StackLayout>
                     <!--Image-->
-                    <Image Margin="0" x:Name="Image_Recipe" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
+                    <Image Margin="0" x:Name="Image_Recipe" Aspect="AspectFill"  HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
 
                     <!--Recipe Name-->
                     <Label x:Name="Label_RecipeName"
@@ -67,7 +67,7 @@
                     <!--Instructions-->
                     <StackLayout x:Name="Stack_Instructions">
                         <Label x:Name="Label_InstructionsHead"/>
-                        <Label x:Name="Label_Instructions" />
+
                     </StackLayout>
                     
                 </StackLayout>

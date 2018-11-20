@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Net.Http;
 using Newtonsoft.Json;
+using Ramsey.NET.Dto;
 
 namespace FeedMe
 {
@@ -40,7 +41,7 @@ namespace FeedMe
             "Lidl Kania tomato ketchup",
             "Asda Chosen by You tomato ketchup",
             "French's Tomato Ketchup"};
-        List<string> selectedEatebles = new List<string>();
+        List<IngredientDto> selectedEatebles = new List<IngredientDto>();
 
         //the selectedEatebles List won't work without this. I don't know why
         private List<string> ConvertToNonCrashgingMagicalList(List<string> badList)
@@ -59,15 +60,37 @@ namespace FeedMe
         public MainPage()
         {
             InitializeComponent();
-            NavigationPage.SetHasNavigationBar(this, false);
 
-            ListView_selectedEatebles.ItemsSource = selectedEatebles; //update listview for selected items
+            //ListView_SelectedIngredients.ItemsSource = selectedEatebles; //update listview for selected items
+
+            XamlSetup();
 
             //Add test spagetti to eatebles
             for (int i = 0; i < 1000; i++)
             {
                 eatebles.Add("spagetti" + i);
             }
+
+        }
+
+        void XamlSetup()
+        {
+            BackgroundImage = "background.jpg";
+
+            Stack_Head.BackgroundColor = Constants.backgroundColor;
+
+            ListView_Ingredients.BackgroundColor = Constants.backgroundColor;
+
+            ListView_SeletedIngredients2.BackgroundColor = Constants.backgroundColor;
+
+            Label_myFridge.TextColor = Constants.textColor1;
+            Label_myFridge.FontSize = Constants.fontSize1;
+
+            Button_FeedMe.Margin = Constants.padding1;
+            Button_FeedMe.TextColor = Constants.textColor3;
+            Button_FeedMe.FontSize = Constants.fontSize1;
+            Button_FeedMe.BackgroundColor = Constants.mainColor2;
+            Button_FeedMe.CornerRadius = Constants.buttonCornerRadius;
         }
 
 
@@ -113,16 +136,16 @@ namespace FeedMe
         }
 
 
-        List<Ingredient> filterdEatebles = new List<Ingredient>();
+        List<IngredientDto> filterdEatebles = new List<IngredientDto>();
         //Updates the ListView when user types in "SearchBar_eatebles"
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string searchWord = SearchBar_eatebles.Text.ToLower();
+            string searchWord = SearchBar_Ingredients.Text.ToLower();
 
 
-            if (searchWord != null)
+            if (searchWord != "")
             {
-
+                ListView_Ingredients.IsVisible = true;
                 //Put all eatebles that contains the searchWord in a new List (filterdEatebles)
                 /*for (int i = 0; i < eatebles.Count; i++)
                 {
@@ -137,65 +160,141 @@ namespace FeedMe
                     var response = t.Result;
 
                     var json = await response.Content.ReadAsStringAsync();
-                    filterdEatebles = JsonConvert.DeserializeObject<List<Ingredient>>(json, new JsonSerializerSettings {
+                    filterdEatebles = JsonConvert.DeserializeObject<List<IngredientDto>>(json, new JsonSerializerSettings {
                         NullValueHandling = NullValueHandling.Ignore });
 
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         //Update xaml ListView
-                        ListView_eatebles.ItemsSource = filterdEatebles.Select(x=> x.Name);
-
                         ListView_Ingredients.ItemsSource = filterdEatebles;
                     });
                 });
+
+            } else
+            {
+                ListView_Ingredients.IsVisible = false;
             }
         }
 
-        //Add items to selectedEatebles
-        private void ListView_eatebles_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        //When new ingrident is selected from ingridients listview
+        private void ListView_Ingredients_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            string item = ListView_eatebles.SelectedItem.ToString();
+            IngredientDto selected = e.SelectedItem as IngredientDto;
+            selectedEatebles.Add(selected);
+            //ListView_SelectedIngredients.ItemsSource = selectedEatebles;
 
-            //Check if item allready exist
-            bool copy = false;
-            for (int i = 0; i < selectedEatebles.Count(); i++)
+            var names = selectedEatebles.Select(x => x.Name);
+
+            ListView_SeletedIngredients2.ItemsSource = names;
+        }
+
+        //When new ingridient is selected from selected ingridients2 
+        private void ListView_SelectedIngredients_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            IngredientDto selected = ListView_Ingredients.SelectedItem as IngredientDto;
+            selectedEatebles.Remove(selected);
+            //ListView_SelectedIngredients.ItemsSource = selectedEatebles;
+        }
+
+        //When new ingridient is selected from selected ingridients2
+        private void ListView_SeletedIngredients2_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            string str = ListView_SeletedIngredients2.SelectedItem.ToString();
+            for (int i = 0; i < selectedEatebles.Count; i++)
             {
-                if (selectedEatebles[i] == item)
+                if (str == selectedEatebles[i].Name)
                 {
-                    copy = true;
+                    selectedEatebles.Remove(selectedEatebles[i]);
+                    ListView_SeletedIngredients2.ItemsSource = selectedEatebles.Select(x => x.Name);
+                    break;
                 }
             }
-            if (!copy)
-            {
-                selectedEatebles.Add(item);
+        }
 
-                ListView_selectedEatebles.ItemsSource = ConvertToNonCrashgingMagicalList(selectedEatebles); //Update "ListView_selectedEatebles"
+        // Klicked FeedMe
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            //string[] str = { "spagetti", "sås" };
+            //string[] str1 = { "mjöl", "socker", "mjölk", "ägg", "choklad" };
+            //Meal[] meals = { new Meal("kakor", str1, "gå bara till ica"), new Meal("spagett", str, "koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka vvvkoka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka vkoka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka") };
+            //await Navigation.PushAsync(new MealsListPage(meals) { Title = "Bon Appétit" });
+
+            /*IngredientDto[] ingredientsToPost = new IngredientDto[selectedEatebles.Count];
+            for (int i = 0; i < ingredientsToPost.Length; i++)
+            {
+                ingredientsToPost[i] = filterdEatebles[i];
+            }
+
+            PostIngredients(ingredientsToPost);*/
+
+            PostIngredients(selectedEatebles);
+
+
+            //List<RecipeDto> recipes = new List<RecipeDto>();
+            //RecipeDto m1 = new RecipeDto();
+            //m1.Name = "köttbullarochpotatis";
+            //recipes.Add(m1);
+            //RecipeDto m2 = new RecipeDto();
+            //m2.Name = "tårta";
+            //recipes.Add(m2);
+            //RecipeDto m3 = new RecipeDto();
+            //m3.Name = "fisk och ris";
+            //recipes.Add(m3);
+            //gotoMealsListPage(recipes);
+        }
+
+        async void gotoMealsListPage(List<RecipeDto> recipeDto)
+        {
+            Meal[] meals = new Meal[recipeDto.Count];
+            string[] testStr = { "ingridiens1", "ingridens2", "ingridiens3" };
+            for (int i = 0; i < meals.Length; i++)
+            {
+                meals[i] = new Meal(recipeDto[i].Name, testStr);
+            }
+
+            await Navigation.PushAsync(new MealsListPage(recipeDto) { Title = "Bon Appétit" });
+        }
+
+        async void PostIngredients(List<IngredientDto> ingredientDto)
+        {
+            var json = JsonConvert.SerializeObject(ingredientDto);
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage respone = await httpClient.PostAsync(Constants.server_adress_recipe, content);
+
+            if (respone.IsSuccessStatusCode)
+            {
+                var result = await respone.Content.ReadAsStringAsync();
+                var recipes = JsonConvert.DeserializeObject<List<RecipeDto>>(result);
+                
+                gotoMealsListPage(recipes);
             }
         }
 
-        //Remove from selectedEatebles
-        private void ListView_selectedEatebles_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        bool imgbool = true;
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            //Get selected item name
-            string item = ListView_selectedEatebles.SelectedItem.ToString();
-
-            //Find the index of the item
-            int listindex = FindIn(item, selectedEatebles);
-
-            //Remove the item from the list
-            selectedEatebles.RemoveAt(listindex);
-
-            //Update the listView
-            ListView_selectedEatebles.ItemsSource = ConvertToNonCrashgingMagicalList(selectedEatebles);
-        }
-
-        // Go to the MealsList page
-        private async void Button_Clicked(object sender, EventArgs e)
-        {
-            string[] str = { "spagetti", "sås"};
-            string[] str1 = { "mjöl", "socker", "mjölk", "ägg", "choklad"};
-            Meal[] meals = {new Meal("kakor", str1, "gå bara till ica"), new Meal("spagett", str, "koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka vvvkoka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka vkoka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka koka") };
-            await Navigation.PushAsync(new MealsListPage(meals) { Title = "Bon Appétit"});
+            imgbool = !imgbool;
+            if (imgbool)
+            {
+                Image_Page.Source = "myFood_icon.png";
+                if (SearchBar_Ingredients.Text != "")
+                {
+                    ListView_Ingredients.IsVisible = true;
+                }
+                SearchBar_Ingredients.IsVisible = true;
+                ListView_SeletedIngredients2.IsVisible = false;
+                Label_myFridge.IsVisible = false;
+            }
+            else
+            {
+                Image_Page.Source = "search_icon.png";
+                ListView_SeletedIngredients2.IsVisible = true;
+                Label_myFridge.IsVisible = true;
+                ListView_Ingredients.IsVisible = false;
+                SearchBar_Ingredients.IsVisible = false;
+            }
         }
     }
+
 }

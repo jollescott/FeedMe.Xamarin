@@ -11,11 +11,11 @@
     </ContentPage.Content>
 
     <AbsoluteLayout x:Name="AbsLayout">
-        <Image Source="FeedMe_icon.png"
-               AbsoluteLayout.LayoutBounds ="0.5, 0.5, 200, 200"
-               AbsoluteLayout.LayoutFlags="PositionProportional"/>
-        <Image Source="ME_feedme.png"
-               AbsoluteLayout.LayoutBounds ="0, 1, 100, 100"
-               AbsoluteLayout.LayoutFlags="PositionProportional"/>
+        <Image x:Name="Image_AppLogo"
+               AbsoluteLayout.LayoutBounds ="0.5, 0.5, 0.5, 0.5"
+               AbsoluteLayout.LayoutFlags="All"/>
+        <Image x:Name="Image_CompanyLogo"
+               AbsoluteLayout.LayoutBounds ="0, 1, 0.25, 0.25"
+               AbsoluteLayout.LayoutFlags="All"/>
     </AbsoluteLayout>
 </ContentPage>

@@ -13,7 +13,7 @@ namespace FeedMe
 
             //MainPage = new NavigationPage(new MainPage());
 
-            MainPage = new LoadingPage();
+            MainPage = new FDMasterPage();
         }
 
         protected override void OnStart()

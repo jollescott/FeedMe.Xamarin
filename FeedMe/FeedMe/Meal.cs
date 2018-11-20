@@ -10,7 +10,7 @@ namespace FeedMe
         public readonly string name;
         public readonly string[] ingredients;
         public readonly string recipe;
-        public readonly int rating = 4;
+        public readonly double rating = 1.5;
         public readonly int ratings = 27;
         public readonly int time = 10;
         public readonly int yield= 1; 
@@ -18,7 +18,7 @@ namespace FeedMe
 
         public Meal() { }
 
-        public Meal(string name, string[] ingredients, string recipe, string imageLink = "img_1.png")
+        public Meal(string name, string[] ingredients, string recipe = "inget recept", string imageLink = "food.jpg")
         {
             this.name = name;
             this.ingredients = ingredients;

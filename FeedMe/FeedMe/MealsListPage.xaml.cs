@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Ramsey.NET.Dto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace FeedMe
@@ -12,73 +14,78 @@ namespace FeedMe
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class MealsListPage : ContentPage
 	{
-        Meal[] meals;
-		public MealsListPage (Meal[] meals_)
+        List<RecipeDto> recipes;
+		public MealsListPage (List<RecipeDto> recipes_)
 		{
             InitializeComponent();
-            NavigationPage.SetHasNavigationBar(this, false);
+            //NavigationPage.SetHasNavigationBar(this, false);
 
-            meals = meals_;
+            recipes = recipes_;
 
-            List<string> recipeNames = new List<string>();
-            foreach (var meal in meals)
-            {
-                recipeNames.Add(meal.name);
-            }
-
-            ListVeiw_Meals.ItemsSource = recipeNames;
+            //List<string> recipeNames = new List<string>();
+            //foreach (var recipe in recipes)
+            //{
+            //    recipeNames.Add(recipe.Name);
+            //}
 
             XamlSetup();
-
-            AddRecipes();
 		}
 
+        List<Cell> itemSorce = new List<Cell>();
         void XamlSetup()
         {
-            //Head
-            Frame_Head.BackgroundColor = Constants.navigationBarColor;
-            Frame_Head.Padding = Constants.navigationBarPadding;
-
-            AbsLayout_Head.HeightRequest = Constants.navigationBarHeight;
-
-            Image_Back.WidthRequest = Constants.navigationBarHeight;
-            Image_Back.HeightRequest = Constants.navigationBarHeight;
-
-            Label_HeadTitle.Text = "Recept";
-            Label_HeadTitle.TextColor = Constants.textColor1;
-            Label_HeadTitle.FontSize = Constants.fontSize1;
-        }
-
-        void AddRecipes()
-        {
-            ListView_Recipes.ItemsSource = new List<Cell>() {
-
-                new Cell()
-                {
-                    Name = meals[0].name, inget = " ", imgsource = meals[0].imageLink,
-                },
-            };
-        }
-
-        // Go to the RecipePage page
-        private async void ListVeiw_Meals_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            string selected = ListVeiw_Meals.SelectedItem.ToString();
-            int index;
-            for (index = 0; index < meals.Length; index++)
+            //Recipes
+            for (int i = 0; i < recipes.Count; i++)
             {
-                if (selected == meals[index].name)
+
+                string[] stars = new string[] {"empty_star.png", "empty_star.png", "empty_star.png", "empty_star.png", "empty_star.png"};
+                for (int j = 0; j < 5; j++)
                 {
-                    break;   
+                    if (recipes[i].Rating - j >= 0.66)
+                    {
+                        stars[j] = "full_star.png";
+                    }
+                    else if (recipes[i].Rating - j >= 0.33)
+                    {
+                        stars[j] = "half_star.png";
+                    }
                 }
+
+                itemSorce.Add(new Cell() {
+                    Name = recipes[i].Name,
+                    imgsource = "food.jpg", //meals[i].ImageLink,
+                    textColor = Constants.textColor1,
+                    TextSize = Constants.fontSize2,
+                    backgroundColor = (i % 2 == 0) ? Constants.listBackgroundColor1 : Constants.listBackgroundColor2,
+                    Margin = Constants.padding3,
+                    Star0 = stars[0],
+                    Star1 = stars[1],
+                    Star2 = stars[2],
+                    Star3 = stars[3],
+                    Star4 = stars[4],
+                    StarSize = 20
+                });
             }
-            await Navigation.PushAsync(new RecipePage(meals[index]) { Title = "Recept"});
+            ListView_Recipes.ItemsSource = itemSorce;
+        }
+
+        //Recipe selected
+        private void ListView_Recipes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            gotoRecipePage(recipes[itemSorce.IndexOf(ListView_Recipes.SelectedItem)]);
+        }
+
+        //Next page
+        async void gotoRecipePage(RecipeDto meal)
+        {
+            await Navigation.PushAsync(new RecipePage(meal) { Title = "Recept" });
         }
 
         //Navigation back button
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        async private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            Application.Current.MainPage.Navigation.PopAsync();
+            //Application.Current.MainPage.Navigation.PopAsync();
+            await Navigation.PopAsync();
         }
     }
 
@@ -86,20 +93,17 @@ namespace FeedMe
 
     public class Cell
     {
-        public string Name
-        {
-            get;
-            set;
-        }
-        public string inget
-        {
-            get;
-            set;
-        }
-        public string imgsource
-        {
-            get;
-            set;
-        }
+        public string Name { get; set; }
+        public string imgsource { get; set; }
+        public Color textColor { get; set; }
+        public double TextSize { get; set; }
+        public Color backgroundColor { get; set; }
+        public int Margin { get; set; }
+        public string Star0 { get; set; }
+        public string Star1 { get; set; }
+        public string Star2 { get; set; }
+        public string Star3 { get; set; }
+        public string Star4 { get; set; }
+        public int StarSize { get; set; }
     }
 }

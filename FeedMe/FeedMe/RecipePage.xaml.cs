@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ramsey.NET.Dto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,13 +13,13 @@ namespace FeedMe
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class RecipePage : ContentPage
 	{
-        Meal meal;
-        public RecipePage (Meal meal_)
+        RecipeDto recipe;
+        public RecipePage (RecipeDto recipe_)
 		{
             InitializeComponent();
-            NavigationPage.SetHasNavigationBar(this, false);
+            //NavigationPage.SetHasNavigationBar(this, false);
 
-            meal = meal_;
+            recipe = recipe_;
             XamlSetup();
 		}
 
@@ -29,7 +30,7 @@ namespace FeedMe
             Frame_Head.Padding = new Thickness(Constants.navigationBarPadding, 0, Constants.navigationBarPadding, Constants.navigationBarPadding);
 
             AbsLayout_Head.HeightRequest = Constants.navigationBarHeight;
-            AbsLayout_Head.Padding = new Thickness(0, 0, 0, Constants.padding);
+            AbsLayout_Head.Padding = new Thickness(0, 0, 0, Constants.padding2);
 
             Image_Back.WidthRequest = Constants.navigationBarHeight;
             Image_Back.HeightRequest = Constants.navigationBarHeight;
@@ -43,7 +44,7 @@ namespace FeedMe
             Label_HeadTL1.TextColor = Constants.textColor1;
             Label_HeadTL1.FontSize = Constants.fontSize2;
 
-            Label_HeadTL2.Text = meal.rating + "/5";
+            Label_HeadTL2.Text = recipe.Rating + "/5";
             Label_HeadTL2.TextColor = Constants.textColor2;
             Label_HeadTL2.FontSize = Constants.fontSize2;
 
@@ -51,7 +52,7 @@ namespace FeedMe
             Label_HeadBL1.TextColor = Constants.textColor1;
             Label_HeadBL1.FontSize = Constants.fontSize2;
 
-            Label_HeadBL2.Text = Convert.ToString(meal.ratings);
+            Label_HeadBL2.Text = Convert.ToString("vet inte");
             Label_HeadBL2.TextColor = Constants.textColor2;
             Label_HeadBL2.FontSize = Constants.fontSize2;
 
@@ -61,47 +62,62 @@ namespace FeedMe
             Button_Rate.BackgroundColor = Constants.mainColor1;
 
             //Recipe Image
-            Image_Recipe.Source = meal.imageLink;
+            Image_Recipe.Source = "food.jpg"; //recipe.ImageLink;
             double reselution = Application.Current.MainPage.Width;
             Image_Recipe.WidthRequest = reselution;
             Image_Recipe.HeightRequest = reselution;
 
             //Recipe Title
-            Label_RecipeName.Text = meal.name;
+            Label_RecipeName.Text = recipe.Name;
             Label_RecipeName.TextColor = Constants.textColor1;
             Label_RecipeName.FontSize = Constants.fontSize1;
 
             //Ingredients
-            Stack_Ingridients.Margin = Constants.padding;
+            Stack_Ingridients.Margin = Constants.padding1;
 
             Label_IngridientsHead.Text = "Ingidienser";
             Label_IngridientsHead.TextColor = Constants.textColor2;
             Label_IngridientsHead.FontSize = Constants.fontSize1;
 
             string dot = "● ";
-
-            Label[] labels = new Label[meal.ingredients.Length];
-            for (int i = 0; i < labels.Length; i++)
+            for (int i = 0; i < recipe.RecipeParts.Count; i++)
             {
-                labels[i] = new Label();
-                labels[i].Text = dot + meal.ingredients[i];
-                labels[i].TextColor = Constants.textColor1;
-                labels[i].FontSize = Constants.fontSize2;
-                labels[i].Margin = Constants.textListMargin;
-                Stack_Ingridients.Children.Add(labels[i]);
+                Stack_Ingridients.Children.Add(new Label()
+                {
+                    Text = dot + recipe.RecipeParts[i].Quantity + " " + recipe.RecipeParts[i].Unit + " ???",
+                    TextColor = Constants.textColor1,
+                    FontSize = Constants.fontSize2,
+                    Margin = Constants.textListMargin
+                });
             }
 
 
             //Instructions
-            Stack_Instructions.Margin = Constants.padding;
+            Stack_Instructions.Margin = Constants.padding1;
 
             Label_InstructionsHead.Text = "Så här gör du";
             Label_InstructionsHead.TextColor = Constants.textColor2;
             Label_InstructionsHead.FontSize = Constants.fontSize1;
 
-            Label_Instructions.Text = meal.recipe;
-            Label_Instructions.TextColor = Constants.textColor1;
-            Label_Instructions.FontSize = Constants.fontSize2;
+
+            for (int i = 0; i < recipe.Directions.Count; i++)
+            {
+                Stack_Instructions.Children.Add(new Label()
+                {
+                    Text = Convert.ToString(i + 1) + ".",
+                    TextColor = Constants.textColor2,
+                    FontSize = Constants.fontSize1,
+                    Margin = Constants.textListMargin
+                });
+
+                Stack_Instructions.Children.Add(new Label()
+                {
+                    Text = recipe.Directions[i].Instruction,
+                    TextColor = Constants.textColor1,
+                    FontSize = Constants.fontSize2,
+                    Margin = Constants.textListMargin
+                });
+            }
         }
 
         //Rate Button
@@ -111,9 +127,10 @@ namespace FeedMe
         }
 
         //Navigation back button
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            Application.Current.MainPage.Navigation.PopAsync();
+            await Navigation.PopAsync();
+            //Application.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

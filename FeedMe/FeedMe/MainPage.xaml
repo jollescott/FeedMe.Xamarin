@@ -6,36 +6,47 @@
              x:Class="FeedMe.MainPage">
 
 
-    <AbsoluteLayout BackgroundColor="Red">
-        <BoxView Color="#8ACC9B"
-                AbsoluteLayout.LayoutBounds="0, 0, 1, 0.1"
-                AbsoluteLayout.LayoutFlags="SizeProportional"/>
+    <StackLayout x:Name="StackLayout_all" Spacing="0">
+        <StackLayout x:Name="Stack_Head" Orientation="Horizontal" HeightRequest="50">
+            <Image x:Name="Image_Page" Source="myFood_icon.png" WidthRequest="40" HeightRequest="40">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <AbsoluteLayout>
+                <SearchBar x:Name="SearchBar_Ingredients" TextChanged="SearchBar_TextChanged" Placeholder="Sök Ingridienser"/>
+                <Label IsVisible="False" x:Name="Label_myFridge" Text="Minna Ingredienser" AbsoluteLayout.LayoutBounds="0.5, 0.5" AbsoluteLayout.LayoutFlags="PositionProportional" />
+            </AbsoluteLayout>
+        </StackLayout>
 
-        <StackLayout BackgroundColor="White"
-                     AbsoluteLayout.LayoutBounds="0.5, 1, 1, 0.9"
-                     AbsoluteLayout.LayoutFlags="All">
-            <ListView x:Name="ListView_selectedEatebles" ItemSelected="ListView_selectedEatebles_ItemSelected" HeightRequest="90" RowHeight="25"/>
-            <SearchBar x:Name="SearchBar_eatebles" TextChanged="SearchBar_TextChanged"/>
-            <ListView x:Name="ListView_Ingredients">
+        <AbsoluteLayout VerticalOptions="FillAndExpand">
+            <Button AbsoluteLayout.LayoutBounds="0.5, 1"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    x:Name="Button_FeedMe"
+                    Text="FeedMe"
+                    Clicked="Button_Clicked"/>
+
+            <ListView IsVisible="False" x:Name="ListView_Ingredients" ItemSelected="ListView_Ingredients_ItemSelected" AbsoluteLayout.LayoutBounds="0.5, 0.5, 1, 1" AbsoluteLayout.LayoutFlags="All">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Name}"/>
+                        <TextCell Text="{Binding Name}" TextColor="Black"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <ListView x:Name="ListView_eatebles" ItemSelected="ListView_eatebles_ItemSelected"/>
-        </StackLayout>
 
-        <Button BackgroundColor="#8AFF9B"
-                TextColor="White"
-                CornerRadius="20"
-                AbsoluteLayout.LayoutBounds="0.5, 0.99, 0.8, 0.1"
-                AbsoluteLayout.LayoutFlags="All"
-                Text="FeedMe"
-                Clicked="Button_Clicked"/>
+            <ListView IsVisible="False" x:Name="ListView_SeletedIngredients2" ItemSelected="ListView_SeletedIngredients2_ItemSelected" AbsoluteLayout.LayoutBounds="0.5, 0.5, 1, 1" AbsoluteLayout.LayoutFlags="All"/>
+
+            <!--ListView x:Name="ListView_SelectedIngredients" BackgroundColor="Green" ItemSelected="ListView_SelectedIngredients_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Name}" TextColor="Black"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </-->
+        </AbsoluteLayout>
+
+    </StackLayout>
 
 
-
-    </AbsoluteLayout>
 
 </ContentPage>

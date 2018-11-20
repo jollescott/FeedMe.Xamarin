@@ -15,14 +15,19 @@ namespace FeedMe
 		public LoadingPage ()
 		{
 			InitializeComponent ();
-            Init();
-            
-            //img0.Source = ImageSource.FromFile("img_0.jpg");
+            XamlSetup();
 		}
 
-        void Init()
+        void XamlSetup()
         {
-            AbsLayout.BackgroundColor = Constants.backgroundColor;
+            BackgroundImage = "background.jpg";
+
+            Image_AppLogo.HeightRequest = Image_AppLogo.Width;
+            Image_AppLogo.Source = "FeedMe_icon.png";
+
+            Image_CompanyLogo.HeightRequest = Image_CompanyLogo.Width;
+            Image_CompanyLogo.Source = "ananasSoftware.png";
+            Image_CompanyLogo.Margin = Constants.padding1;
         }
 
 
@@ -31,7 +36,7 @@ namespace FeedMe
             await Task.Delay(5000);
 
             //Application.Current.MainPage = new NavigationPage(new MainPage());
-            Application.Current.MainPage = new NavigationPage(new MainPage() { Title = "" }) {BarBackgroundColor = Constants.navigationBarColor, BarTextColor = Constants.mainColor1 };
+            Application.Current.MainPage = new NavigationPage(new MainPage() { Title = "" }) {BarBackgroundColor = Constants.navigationBarColor, BarTextColor = Constants.textColor1 };
         }
     }
 }
