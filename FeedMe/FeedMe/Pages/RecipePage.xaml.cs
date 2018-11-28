@@ -1,16 +1,13 @@
-﻿using Ramsey.NET.Dto;
+﻿using Ramsey.Shared.Dto;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace FeedMe
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class RecipePage : ContentPage
 	{
         RecipeDto recipe;
@@ -44,7 +41,7 @@ namespace FeedMe
             Label_HeadTL1.TextColor = Constants.textColor1;
             Label_HeadTL1.FontSize = Constants.fontSize2;
 
-            Label_HeadTL2.Text = recipe.Rating + "/5";
+            //Label_HeadTL2.Text = recipe.Rating + "/5";
             Label_HeadTL2.TextColor = Constants.textColor2;
             Label_HeadTL2.FontSize = Constants.fontSize2;
 
@@ -62,7 +59,7 @@ namespace FeedMe
             Button_Rate.BackgroundColor = Constants.mainColor1;
 
             //Recipe Image
-            Image_Recipe.Source = "food.jpg"; //recipe.ImageLink;
+            Image_Recipe.Source = recipe.Image;
             double reselution = Application.Current.MainPage.Width;
             Image_Recipe.WidthRequest = reselution;
             Image_Recipe.HeightRequest = reselution;
@@ -80,13 +77,13 @@ namespace FeedMe
             Label_IngridientsHead.FontSize = Constants.fontSize1;
 
             string dot = "● ";
-            for (int i = 0; i < recipe.RecipeParts.Count; i++)
+            for (int i = 0; i < recipe.Ingredients.Count; i++)
             {
                 Stack_Ingridients.Children.Add(new Label()
                 {
-                    Text = dot + recipe.RecipeParts[i].Quantity + " " + recipe.RecipeParts[i].Unit + " ???",
+                    Text = dot + recipe.Ingredients[i],
                     TextColor = Constants.textColor1,
-                    FontSize = Constants.fontSize2,
+                    FontSize = Constants.fontSize3,
                     Margin = Constants.textListMargin
                 });
             }
@@ -106,15 +103,15 @@ namespace FeedMe
                 {
                     Text = Convert.ToString(i + 1) + ".",
                     TextColor = Constants.textColor2,
-                    FontSize = Constants.fontSize1,
+                    FontSize = Constants.fontSize2,
                     Margin = Constants.textListMargin
                 });
 
                 Stack_Instructions.Children.Add(new Label()
                 {
-                    Text = recipe.Directions[i].Instruction,
+                    Text = recipe.Directions[i],
                     TextColor = Constants.textColor1,
-                    FontSize = Constants.fontSize2,
+                    FontSize = Constants.fontSize3,
                     Margin = Constants.textListMargin
                 });
             }

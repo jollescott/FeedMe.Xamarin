@@ -11,9 +11,11 @@ namespace FeedMe
         {
             InitializeComponent();
 
-            //MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new MainPage());
 
-            MainPage = new FDMasterPage();
+            //MainPage = new FDMasterPage();
+
+            //MainPage = new MainPage();
         }
 
         protected override void OnStart()

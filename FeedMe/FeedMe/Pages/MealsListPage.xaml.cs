@@ -1,9 +1,6 @@
-﻿using Ramsey.NET.Dto;
+﻿using Ramsey.Shared.Dto;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -11,7 +8,7 @@ using Xamarin.Forms.Xaml;
 
 namespace FeedMe
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class MealsListPage : ContentPage
 	{
         List<RecipeDto> recipes;
@@ -29,7 +26,7 @@ namespace FeedMe
             //}
 
             XamlSetup();
-		}
+        }
 
         List<Cell> itemSorce = new List<Cell>();
         void XamlSetup()
@@ -41,19 +38,19 @@ namespace FeedMe
                 string[] stars = new string[] {"empty_star.png", "empty_star.png", "empty_star.png", "empty_star.png", "empty_star.png"};
                 for (int j = 0; j < 5; j++)
                 {
-                    if (recipes[i].Rating - j >= 0.66)
+                    /*if (recipes[i].Rating - j >= 0.66)
                     {
                         stars[j] = "full_star.png";
                     }
                     else if (recipes[i].Rating - j >= 0.33)
                     {
                         stars[j] = "half_star.png";
-                    }
+                    }*/
                 }
 
                 itemSorce.Add(new Cell() {
                     Name = recipes[i].Name,
-                    imgsource = "food.jpg", //meals[i].ImageLink,
+                    imgsource = recipes[i].Image,
                     textColor = Constants.textColor1,
                     TextSize = Constants.fontSize2,
                     backgroundColor = (i % 2 == 0) ? Constants.listBackgroundColor1 : Constants.listBackgroundColor2,
@@ -72,6 +69,9 @@ namespace FeedMe
         //Recipe selected
         private void ListView_Recipes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
+            //object selected = ListView_Recipes.SelectedItem;
+            //((ListView)sender).SelectedItem = null;
+
             gotoRecipePage(recipes[itemSorce.IndexOf(ListView_Recipes.SelectedItem)]);
         }
 
