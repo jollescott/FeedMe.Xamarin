@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FeedMe.Pages.MasterDetail;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,9 +12,13 @@ namespace FeedMe
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainPage());
+            /*MainPage = new NavigationPage( new MainPage() { Title ="MainPage" })
+            {
+                BarBackgroundColor = Constants.navigationBarColor,
+                BarTextColor = Constants.textColor3
+            };*/
 
-            //MainPage = new FDMasterPage();
+            MainPage = new FDMasterDetailPage();
 
             //MainPage = new MainPage();
         }

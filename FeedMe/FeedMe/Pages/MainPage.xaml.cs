@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Ramsey.Shared.Dto;
@@ -19,6 +20,7 @@ namespace FeedMe
         public MainPage()
         {
             InitializeComponent();
+
             XamlSetup();
         }
 
@@ -177,5 +179,6 @@ namespace FeedMe
             }
             return strIngredients;
         }
+
     }
 }

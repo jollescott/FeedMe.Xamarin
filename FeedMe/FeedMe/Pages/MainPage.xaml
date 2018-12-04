@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:FeedMe"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             x:Class="FeedMe.MainPage">
+             x:Class="FeedMe.MainPage"
+             Title="Sök Recept">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -18,7 +19,7 @@
 
         <Entry x:Name="Entry_Ingredients" Placeholder="Vad har du för ingredienser?" Completed="Entry_Ingredients_Completed"/>
 
-        <ListView x:Name="ListView_myIngredients" ItemSelected="ListView_myIngredients_ItemSelected" BackgroundColor="Wheat">
+        <ListView x:Name="ListView_myIngredients" ItemSelected="ListView_myIngredients_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -46,7 +47,7 @@
         </ListView>
 
         <Button x:Name="Button_FeedMe" Text="FeedMe" Clicked="Button_Clicked"/>
-
+        
     </StackLayout>
 
 

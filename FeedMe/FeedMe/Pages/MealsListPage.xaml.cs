@@ -64,6 +64,9 @@ namespace FeedMe
                 });
             }
             ListView_Recipes.ItemsSource = itemSorce;
+
+            //ListView_Recipes.RowHeight = Convert.ToInt32(ListView_Recipes.Width);
+            //ListView_Recipes.ItemsSource = recipes;
         }
 
         //Recipe selected
