@@ -82,7 +82,31 @@ namespace FeedMe
             //{
             //    ingredientsToPost.Add(ingredient.Name);
             //}
-            PostIngredients(myIngredients);
+
+
+
+            //PostIngredients(myIngredients);
+
+
+
+            List<RecipeDto> list = new List<RecipeDto> {
+                new RecipeDto
+                {
+                    Name = "Köttbullar och potatis",
+                    Image = "food.jpg"
+                },
+                new RecipeDto
+                {
+                    Name = "Mat",
+                    Image = "food.jpg"
+                },
+                new RecipeDto
+                {
+                    Name = "Test test test test test",
+                    Image = "food.jpg"
+                }
+            };
+            gotoMealsListPage(list);
         }
 
 

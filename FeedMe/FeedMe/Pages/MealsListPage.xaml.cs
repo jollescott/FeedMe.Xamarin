@@ -15,15 +15,8 @@ namespace FeedMe
 		public MealsListPage (List<RecipeDto> recipes_)
 		{
             InitializeComponent();
-            //NavigationPage.SetHasNavigationBar(this, false);
 
             recipes = recipes_;
-
-            //List<string> recipeNames = new List<string>();
-            //foreach (var recipe in recipes)
-            //{
-            //    recipeNames.Add(recipe.Name);
-            //}
 
             XamlSetup();
         }
@@ -32,41 +25,8 @@ namespace FeedMe
         void XamlSetup()
         {
             //Recipes
-            for (int i = 0; i < recipes.Count; i++)
-            {
-
-                string[] stars = new string[] {"empty_star.png", "empty_star.png", "empty_star.png", "empty_star.png", "empty_star.png"};
-                for (int j = 0; j < 5; j++)
-                {
-                    /*if (recipes[i].Rating - j >= 0.66)
-                    {
-                        stars[j] = "full_star.png";
-                    }
-                    else if (recipes[i].Rating - j >= 0.33)
-                    {
-                        stars[j] = "half_star.png";
-                    }*/
-                }
-
-                itemSorce.Add(new Cell() {
-                    Name = recipes[i].Name,
-                    imgsource = recipes[i].Image,
-                    textColor = Constants.textColor1,
-                    TextSize = Constants.fontSize2,
-                    backgroundColor = (i % 2 == 0) ? Constants.listBackgroundColor1 : Constants.listBackgroundColor2,
-                    Margin = Constants.padding3,
-                    Star0 = stars[0],
-                    Star1 = stars[1],
-                    Star2 = stars[2],
-                    Star3 = stars[3],
-                    Star4 = stars[4],
-                    StarSize = 20
-                });
-            }
-            ListView_Recipes.ItemsSource = itemSorce;
-
-            //ListView_Recipes.RowHeight = Convert.ToInt32(ListView_Recipes.Width);
-            //ListView_Recipes.ItemsSource = recipes;
+            ListView_Recipes.RowHeight = Convert.ToInt32(Application.Current.MainPage.Width * 3/5);
+            ListView_Recipes.ItemsSource = recipes;
         }
 
         //Recipe selected
@@ -75,13 +35,15 @@ namespace FeedMe
             //object selected = ListView_Recipes.SelectedItem;
             //((ListView)sender).SelectedItem = null;
 
-            gotoRecipePage(recipes[itemSorce.IndexOf(ListView_Recipes.SelectedItem)]);
+            int index = recipes.IndexOf(ListView_Recipes.SelectedItem);
+
+            gotoRecipePage(recipes[index]);
         }
 
         //Next page
         async void gotoRecipePage(RecipeDto meal)
         {
-            await Navigation.PushAsync(new RecipePage(meal) { Title = "Recept" });
+            await Navigation.PushAsync(new RecipePage(meal) { Title = meal.Name });
         }
 
         //Navigation back button

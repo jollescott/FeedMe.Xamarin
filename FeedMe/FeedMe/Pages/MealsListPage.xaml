@@ -1,17 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="FeedMe.MealsListPage">
 
     <StackLayout>
         
         <ScrollView>
-            <ListView x:Name="ListView_Recipes" ItemSelected="ListView_Recipes_ItemSelected" RowHeight="100">
+            <ListView x:Name="ListView_Recipes" ItemSelected="ListView_Recipes_ItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <!--ImageCell Text="{Binding Name}" Detail="{Binding inget}" ImageSource="{Binding imgsource}"/-->
-                            <StackLayout>
+                            <!--StackLayout>
                                 <StackLayout BackgroundColor="{Binding backgroundColor}" Orientation="Horizontal" HorizontalOptions="Fill" Spacing="0" Margin="0" Padding="0">
                                     <Image Source="{Binding imgsource}" Margin="0" Aspect="AspectFill" HorizontalOptions="Start" VerticalOptions="StartAndExpand" WidthRequest="100" HeightRequest="100"/>
                                     <Grid Margin="{Binding Margin}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -36,12 +37,32 @@
                                         <Image Source="{Binding Star4}" Grid.Row="1" Grid.Column="4"/>
                                     </Grid>
                                 </StackLayout>
-                            </StackLayout>
+                            </StackLayout-->
 
-                            <!--AbsoluteLayout BackgroundColor="Blue">
-                                <Image Source="food.jpg" Aspect="AspectFill" HorizontalOptions="Start" VerticalOptions="Start" AbsoluteLayout.LayoutBounds="0.5, 0, 1, 0.8" AbsoluteLayout.LayoutFlags="All"/>
-                            </AbsoluteLayout-->
-                            
+                            <!--AbsoluteLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <ff:CachedImage Source="{Binding Image}" Aspect="AspectFill" AbsoluteLayout.LayoutBounds="0.5, 0, 1, 0.67" AbsoluteLayout.LayoutFlags="All"/>
+                                <Label Text="{Binding Name}" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" BackgroundColor="Red" AbsoluteLayout.LayoutBounds="1, 1, 0.8, 0.33" AbsoluteLayout.LayoutFlags="All"/>
+                                <ff:CachedImage Source="img_0.jpg" Aspect="AspectFit" AbsoluteLayout.LayoutBounds="0, 0.67, 0.33, 1" AbsoluteLayout.LayoutFlags="All"/>
+                            </-->
+
+                            <Grid HorizontalOptions="Fill" VerticalOptions="Fill" Padding="0" RowSpacing="0" ColumnSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="5*"/>
+                                    <ColumnDefinition Width="12*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <ff:CachedImage Source="{Binding Image}" Margin="0" Aspect="AspectFill" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
+                                <Label Text="{Binding Name}" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" BackgroundColor="Red" Grid.Row="2" Grid.Column="2"/>
+                                <ff:CachedImage Source="img_0.jpg" Margin="0" Aspect="AspectFit" HorizontalOptions="Center" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"/>
+
+                            </Grid>
+
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

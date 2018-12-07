@@ -36,8 +36,8 @@ namespace FeedMe.Pages.MasterDetail
                 MenuItems = new ObservableCollection<FDMasterDetailPageMenuItem>(new[]
                 {
                     new FDMasterDetailPageMenuItem { Id = 0, Title = "Sök recept" },
-                    new FDMasterDetailPageMenuItem { Id = 1, Title = "Gillade recept" },
-                    new FDMasterDetailPageMenuItem { Id = 2, Title = "Inköpslista" }
+                    new FDMasterDetailPageMenuItem { Id = 1, Title = "Gillade recept\n(Kommer snart)" },
+                    new FDMasterDetailPageMenuItem { Id = 2, Title = "Inköpslista\n(Kommer snart)" }
                 });
             }
             
