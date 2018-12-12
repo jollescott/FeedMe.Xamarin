@@ -23,10 +23,18 @@ namespace FeedMe
         void XamlSetup()
         {
             //Recipe Image
+            Grid_Images.HeightRequest = Application.Current.MainPage.Width;
             Image_Recipe.Source = recipe.Image;
-            double reselution = Application.Current.MainPage.Width;
-            Image_Recipe.WidthRequest = reselution;
-            Image_Recipe.HeightRequest = reselution;
+            Image_OwnerLogo.Source = recipe.OwnerLogo;
+
+
+            //Owner Info
+            StackLayout_OwnerInfo.BackgroundColor = Color.LightGray;
+            StackLayout_OwnerInfo.Padding = new Thickness(Constants.padding1,Constants.padding3,Constants.padding1,Constants.padding3);
+            Label_OwnerInfoHead.FontSize = Constants.fontSize4;
+            Label_OwnerLink.FontSize = Constants.fontSize4;
+            Label_OwnerLink.Text = recipe.Source;
+            Label_OwnerLink.TextColor = Constants.linkColor;
 
 
             //Spacing
@@ -104,6 +112,11 @@ namespace FeedMe
         {
             await Navigation.PopAsync();
             //Application.Current.MainPage.Navigation.PopAsync();
+        }
+
+        private void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
+        {
+            Device.OpenUri(new Uri(recipe.Source));
         }
     }
 }

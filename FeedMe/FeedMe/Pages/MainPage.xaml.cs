@@ -6,6 +6,7 @@ using Xamarin.Forms.Xaml;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Ramsey.Shared.Dto;
+using Ramsey.Shared.Extensions;
 
 namespace FeedMe
 {
@@ -13,8 +14,8 @@ namespace FeedMe
     {
         private readonly HttpClient httpClient = new HttpClient();
 
+        List<IngredientDto> searchIngredients = new List<IngredientDto>();
         List<IngredientDto> myIngredients = new List<IngredientDto>();
-        List<IngredientDto> baseIngredients = new List<IngredientDto>();
 
 
         public MainPage()
@@ -32,7 +33,12 @@ namespace FeedMe
             StackLayout_all.Margin = Constants.padding2;
             StackLayout_all.Spacing = Constants.padding2;
 
-            Entry_Ingredients.BackgroundColor = Constants.backgroundColor;
+            //Entry_Ingredients.BackgroundColor = Constants.backgroundColor;
+            Frame_SearchBar.BackgroundColor = Constants.mainColor1;
+
+            SearchBar_Ingredients.BackgroundColor = Constants.backgroundColor;
+
+            ListView_SearchIngredients.BackgroundColor = Color.White;
 
             ListView_myIngredients.BackgroundColor = Constants.backgroundColor;
 
@@ -71,7 +77,7 @@ namespace FeedMe
 
 
         // Klicked FeedMe
-        private void Button_Clicked(object sender, EventArgs e)
+        /*private void Button_Clicked(object sender, EventArgs e)
         {
             Button_FeedMe.IsEnabled = false;
             Button_FeedMe.BackgroundColor = Color.Gray;
@@ -85,71 +91,62 @@ namespace FeedMe
 
 
 
-            //PostIngredients(myIngredients);
+            PostIngredients(myIngredients);
 
 
 
-            List<RecipeDto> list = new List<RecipeDto> {
-                new RecipeDto
-                {
-                    Name = "Köttbullar och potatis",
-                    Image = "food.jpg"
-                },
-                new RecipeDto
-                {
-                    Name = "Mat",
-                    Image = "food.jpg"
-                },
-                new RecipeDto
-                {
-                    Name = "Test test test test test",
-                    Image = "food.jpg"
-                }
-            };
-            gotoMealsListPage(list);
-        }
-
-
-        async void gotoMealsListPage(List<RecipeDto> recipeDtos)
-        {
-            await Navigation.PushAsync(new MealsListPage(recipeDtos) { Title = "Bon Appétit" });
-        }
+            //List<RecipeDto> list = new List<RecipeDto> {
+            //    new RecipeDto
+            //    {
+            //        Name = "Köttbullar och potatis",
+            //        Image = "food.jpg"
+            //    },
+            //    new RecipeDto
+            //    {
+            //        Name = "Mat",
+            //        Image = "food.jpg"
+            //    },
+            //    new RecipeDto
+            //    {
+            //        Name = "Test test test test test",
+            //        Image = "food.jpg"
+            //    }
+            //};
+            //gotoMealsListPage(list);
+        }*/
 
 
         async void PostIngredients(List<IngredientDto> ingredientDtos)
         {
-            //List<string> stringList = new List<string> { "tomat", "pasta", "gurka", "kyckling"};
+            //string jsonstring = "[";
+            //foreach (IngredientDto ingredient in ingredientDtos)
+            //{
+            //    jsonstring += "\"" + ingredient.IngredientId + "\", ";
+            //}
+            //jsonstring = jsonstring.Remove(jsonstring.Length - 2) + "]";
 
-            string jsonstring = "[";
-            foreach (IngredientDto ingredient in ingredientDtos)
-            {
-                jsonstring += "\"" + ingredient.Name + "\", ";
-            }
-            jsonstring = jsonstring.Remove(jsonstring.Length - 2) + "]";
             //                      "[   \"ing\", \"ing\", \"ing\"   ]"
 
 
-            //var json = JsonConvert.SerializeObject(ingredientDtos); //skicka ingredientDto
-            //var json = "[\"test\", \"test\"]";//JsonConvert.SerializeObject(stringList);
-
-            var json = jsonstring;
+            var json = JsonConvert.SerializeObject(ingredientDtos); //skicka ingredientDto
+            //var json = jsonstring;
 
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
             try
             {
-                HttpResponseMessage respone = await httpClient.PostAsync(Constants.server_adress_recipe, content);
+                HttpResponseMessage respone = await httpClient.PostAsync(Constants.recipe_suggest, content);
 
                 if (respone.IsSuccessStatusCode)
                 {
-                    var result = await respone.Content.ReadAsStringAsync();
-                    var recipes = JsonConvert.DeserializeObject<List<RecipeDto>>(result);
+                    var result = await respone.Content.ReadAsSwedishStringAsync();
+                    var recipes = JsonConvert.DeserializeObject<List<RecipeMetaDto>>(result);
 
                     gotoMealsListPage(recipes);
                 }
                 else
                 {
-                    await DisplayAlert("An error occurred", "Status code " + (int)respone.StatusCode + ": " + respone.StatusCode.ToString(), "ok");
+                    await DisplayAlert("Response error", "Status code " + (int)respone.StatusCode + ": " + respone.StatusCode.ToString(), "ok");
                 }
             }
             catch (Exception e)
@@ -163,23 +160,8 @@ namespace FeedMe
         }
 
 
-        private void ListView_myIngredients_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            myIngredients.Remove(ListView_myIngredients.SelectedItem as IngredientDto);
-            UpdateMyIngreadientsListView(myIngredients);
-        }
+        // --------------------------------------------- SPAGHETTI ---------------------------------------------------
 
-
-        private void Entry_Ingredients_Completed(object sender, EventArgs e)
-        {
-            string text = Entry_Ingredients.Text;
-            if (text.Length > 1)
-                text = char.ToUpper(text[0]) + text.Substring(1);
-
-            myIngredients.Add(new IngredientDto() {Name = text});
-            Entry_Ingredients.Text = "";
-            UpdateMyIngreadientsListView(myIngredients);
-        }
 
 
         private void UpdateMyIngreadientsListView(List<IngredientDto> ingredients)
@@ -193,16 +175,128 @@ namespace FeedMe
             ListView_myIngredients.ItemsSource = itemsorce;
         }
 
-
         private List<string> IngredientsToStrings(List<IngredientDto> ingredientDtos)
         {
             List<string> strIngredients = new List<string>();
             foreach (IngredientDto ingredient in ingredientDtos)
             {
-                strIngredients.Add(ingredient.Name);
+                strIngredients.Add(ingredient.IngredientId);
             }
             return strIngredients;
         }
 
+        async void GET_ingredientDtos(string _adress)
+        {
+            try
+            {
+                //HttpResponseMessage response = _httpClient.GetAsync(_adress).ConfigureAwait(false).GetAwaiter().GetResult();
+                //HttpResponseMessage response = _httpClient.GetAsync(_adress).GetAwaiter().GetResult();
+                HttpResponseMessage response = await httpClient.GetAsync(_adress);
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    //await DisplayAlert("success", "succeess", "ok");
+                    var result = await response.Content.ReadAsStringAsync();
+                    searchIngredients = JsonConvert.DeserializeObject<List<IngredientDto>>(result);
+                    ListView_SearchIngredients.ItemsSource = IngredientsToStrings(searchIngredients);
+                }
+                else
+                {
+                    await DisplayAlert("Response error", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "ok");
+                }
+            }
+            catch (Exception e)
+            {
+                await DisplayAlert("An error occurred", e.Message, "ok");
+            }
+        }
+
+        async void POST_recipeMetas(List<IngredientDto> ingredientDtos)
+        {
+            var json = JsonConvert.SerializeObject(ingredientDtos); //skicka ingredientDto
+            //var json = jsonstring;
+
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            try
+            {
+                HttpResponseMessage respone = await httpClient.PostAsync(Constants.recipe_suggest, content);
+
+                if (respone.IsSuccessStatusCode)
+                {
+                    var result = await respone.Content.ReadAsSwedishStringAsync();
+                    var recipes = JsonConvert.DeserializeObject<List<RecipeMetaDto>>(result);
+
+                    gotoMealsListPage(recipes);
+                }
+                else
+                {
+                    await DisplayAlert("Response error", "Status code " + (int)respone.StatusCode + ": " + respone.StatusCode.ToString(), "ok");
+                }
+            }
+            catch (Exception e)
+            {
+                await DisplayAlert("An error occurred", e.Message, "ok");
+            }
+
+        }
+
+
+        async void gotoMealsListPage(List<RecipeMetaDto> recipeDtos)
+        {
+            await Navigation.PushAsync(new MealsListPage(recipeDtos) { Title = "Bon Appétit" });
+        }
+
+
+
+
+        // --------------------------------------------- EVENTS ---------------------------------------------------
+
+
+        /*private void Entry_Ingredients_Completed(object sender, EventArgs e)
+        {
+            string text = Entry_Ingredients.Text;
+            if (text.Length > 1)
+                text = char.ToUpper(text[0]) + text.Substring(1);
+
+            myIngredients.Add(new IngredientDto() { IngredientId = text });
+            Entry_Ingredients.Text = "";
+            UpdateMyIngreadientsListView(myIngredients);
+        }*/
+
+        private void ListView_SearchIngredients_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            myIngredients.Add(searchIngredients[IngredientsToStrings(searchIngredients).IndexOf(Convert.ToString(e.SelectedItem))]);
+            UpdateMyIngreadientsListView(myIngredients);
+        }
+
+        private void SearchBar_Ingredients_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchWord = SearchBar_Ingredients.Text.ToLower();
+            string adress = "https://ramsey.azurewebsites.net/ingredient/suggest?search=" + searchWord;
+
+            GET_ingredientDtos(adress);
+        }
+
+        private void ListView_myIngredients_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            myIngredients.Remove(ListView_myIngredients.SelectedItem as IngredientDto);
+            UpdateMyIngreadientsListView(myIngredients);
+        }
+
+        // Klicked FeedMe
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            Button_FeedMe.IsEnabled = false;
+            Button_FeedMe.BackgroundColor = Color.Gray;
+            Button_FeedMe.Text = "Loading...";
+
+            POST_recipeMetas(myIngredients);
+
+            Button_FeedMe.IsEnabled = true;
+            Button_FeedMe.BackgroundColor = Constants.mainColor1;
+            Button_FeedMe.Text = "test test";
+        }
     }
 }

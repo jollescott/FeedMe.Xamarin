@@ -17,7 +17,12 @@
 
     <StackLayout x:Name="StackLayout_all">
 
-        <Entry x:Name="Entry_Ingredients" Placeholder="Vad har du för ingredienser?" Completed="Entry_Ingredients_Completed"/>
+        <!--Entry x:Name="Entry_Ingredients" Placeholder="Vad har du för ingredienser?" Completed="Entry_Ingredients_Completed"/-->
+        <Frame x:Name="Frame_SearchBar">
+            <SearchBar x:Name="SearchBar_Ingredients" Placeholder="Lägg till ingredienser" TextChanged="SearchBar_Ingredients_TextChanged"/>
+        </Frame>
+
+        <ListView x:Name="ListView_SearchIngredients" ItemSelected="ListView_SearchIngredients_ItemSelected"/>
 
         <ListView x:Name="ListView_myIngredients" ItemSelected="ListView_myIngredients_ItemSelected">
             <ListView.ItemTemplate>
@@ -36,7 +41,7 @@
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Label Text="{Binding Name}" VerticalOptions="Center" HorizontalOptions="Start" FontSize="Medium" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"/>
+                            <Label Text="{Binding IngredientId}" VerticalOptions="Center" HorizontalOptions="Start" FontSize="Medium" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"/>
 
                             <Image Source="icon_x.png" VerticalOptions="Center" HorizontalOptions="End" Aspect="AspectFit" Grid.Column="2" Grid.Row="1"/>
 
