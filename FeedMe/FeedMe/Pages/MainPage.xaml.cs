@@ -30,17 +30,21 @@ namespace FeedMe
         {
             BackgroundImage = "background.jpg";
 
-            StackLayout_all.Margin = Constants.padding2;
+            StackLayout_all.Padding = Constants.padding2;
             StackLayout_all.Spacing = Constants.padding2;
 
-            //Entry_Ingredients.BackgroundColor = Constants.backgroundColor;
             Frame_SearchBar.BackgroundColor = Constants.mainColor1;
 
             SearchBar_Ingredients.BackgroundColor = Constants.backgroundColor;
 
             ListView_SearchIngredients.BackgroundColor = Color.White;
 
+            //Label_MyIgredients.TextColor = Constants.textColor1;
+            Label_MyIgredients.FontSize = Constants.fontSize2;
+            Label_MyIgredients.Margin = Constants.padding3;
+
             ListView_myIngredients.BackgroundColor = Constants.backgroundColor;
+            ListView_myIngredients.RowHeight = Convert.ToInt32(SearchBar_Ingredients.Height);
 
             Button_FeedMe.TextColor = Constants.textColor3;
             Button_FeedMe.FontSize = Constants.fontSize1;
@@ -240,6 +244,9 @@ namespace FeedMe
                 await DisplayAlert("An error occurred", e.Message, "ok");
             }
 
+            Button_FeedMe.IsEnabled = true;
+            Button_FeedMe.BackgroundColor = Constants.mainColor1;
+            Button_FeedMe.Text = "FeedMe";
         }
 
 
@@ -248,7 +255,12 @@ namespace FeedMe
             await Navigation.PushAsync(new MealsListPage(recipeDtos) { Title = "Bon Appétit" });
         }
 
-
+        void ResizeListView()
+        {
+            int height = Convert.ToInt32(myIngredients.Count * SearchBar_Ingredients.Height);
+            double adjust = -4 * (myIngredients.Count - 1);
+            ListView_myIngredients.HeightRequest = height + adjust;
+        }
 
 
         // --------------------------------------------- EVENTS ---------------------------------------------------
@@ -290,13 +302,14 @@ namespace FeedMe
         {
             Button_FeedMe.IsEnabled = false;
             Button_FeedMe.BackgroundColor = Color.Gray;
-            Button_FeedMe.Text = "Loading...";
+            Button_FeedMe.Text = "Ladddar...";
 
             POST_recipeMetas(myIngredients);
+        }
 
-            Button_FeedMe.IsEnabled = true;
-            Button_FeedMe.BackgroundColor = Constants.mainColor1;
-            Button_FeedMe.Text = "test test";
+        private void ListView_myIngredients_ItemAppearing(object sender, ItemVisibilityEventArgs e)
+        {
+            ResizeListView();
         }
     }
 }

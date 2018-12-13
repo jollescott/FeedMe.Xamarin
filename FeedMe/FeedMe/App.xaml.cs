@@ -18,9 +18,11 @@ namespace FeedMe
                 BarTextColor = Constants.textColor3
             };*/
 
-            MainPage = new FDMasterDetailPage();
+            //MainPage = new FDMasterDetailPage();
 
             //MainPage = new MainPage();
+
+            MainPage = new LoadingPage();
         }
 
         protected override void OnStart()

@@ -7,11 +7,18 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using System.Net.Http;
+using FeedMe.Pages.MasterDetail;
+
+
 namespace FeedMe
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class LoadingPage : ContentPage
 	{
+
+        HttpClient httpClient = new HttpClient();
+
 		public LoadingPage ()
 		{
 			InitializeComponent ();
@@ -35,8 +42,41 @@ namespace FeedMe
         {
             await Task.Delay(5000);
 
+            test_connection(Constants.ingredient_search);
+
             //Application.Current.MainPage = new NavigationPage(new MainPage());
-            Application.Current.MainPage = new NavigationPage(new MainPage() { Title = "" }) {BarBackgroundColor = Constants.navigationBarColor, BarTextColor = Constants.textColor1 };
+            //Application.Current.MainPage = new NavigationPage(new MainPage() { Title = "" }) {BarBackgroundColor = Constants.navigationBarColor, BarTextColor = Constants.textColor1 };
+        }
+
+
+        async void test_connection(string _adress)
+        {
+            bool repet = true;
+            do
+            {
+                try
+                {
+                    HttpResponseMessage response = await httpClient.GetAsync(_adress);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        repet = false;
+
+                        //await DisplayAlert("success", "succeess", "ok");
+                        //Application.Current.MainPage = new NavigationPage(new MainPage() { Title = "" }) { BarBackgroundColor = Constants.navigationBarColor, BarTextColor = Constants.textColor1 };
+                        Application.Current.MainPage = new FDMasterDetailPage();
+                    }
+                    else
+                    {
+                        await DisplayAlert("Can't connect to server", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "try again");
+                    }
+                }
+                catch (Exception e)
+                {
+                    await DisplayAlert("Can't connect to server", e.Message, "try again");
+                }
+
+            } while (repet);
         }
     }
 }
