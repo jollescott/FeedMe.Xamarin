@@ -18,6 +18,8 @@ namespace FeedMe.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+
+            Android.Gms.Ads.MobileAds.Initialize(ApplicationContext, "YOUR ANDROID APP ID HERE");
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             LoadApplication(new App());
