@@ -175,7 +175,7 @@ namespace FeedMe
             {
                 itemsorce.Insert(0, ingredient);
             }
-            
+
             ListView_myIngredients.ItemsSource = itemsorce;
         }
 

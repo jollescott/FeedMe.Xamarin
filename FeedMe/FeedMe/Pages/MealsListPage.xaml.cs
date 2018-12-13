@@ -1,74 +1,49 @@
 ﻿using Ramsey.Shared.Dto;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net.Http;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
+using Newtonsoft.Json;
+using FeedMe.Models;
+using System.Linq;
+
 namespace FeedMe
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class MealsListPage : ContentPage
-	{
-        List<RecipeDto> recipes;
-		public MealsListPage (List<RecipeDto> recipes_)
-		{
+    public partial class MealsListPage : ContentPage
+    {
+        List<RecipeMetaModel> recipes;
+        HttpClient httpClient = new HttpClient();
+        public MealsListPage(List<RecipeMetaDto> recipes_)
+        {
             InitializeComponent();
-            //NavigationPage.SetHasNavigationBar(this, false);
 
-            recipes = recipes_;
+            var models = recipes_.Select(x => new RecipeMetaModel
+            {
+                Image = x.Image,
+                Name = x.Name,
+                Owner = x.Owner,
+                OwnerLogo = x.OwnerLogo,
+                Source = x.Source,
+                RecipeID = x.RecipeID
+            }).ToList();
 
-            //List<string> recipeNames = new List<string>();
-            //foreach (var recipe in recipes)
-            //{
-            //    recipeNames.Add(recipe.Name);
-            //}
+            models.Where((x, i) => (i + 1) % 5 == 0).ForEach(x => x.IsAd = true);
 
+            recipes = models;
             XamlSetup();
         }
 
-        List<Cell> itemSorce = new List<Cell>();
         void XamlSetup()
         {
-            //Recipes
-            for (int i = 0; i < recipes.Count; i++)
-            {
-
-                string[] stars = new string[] {"empty_star.png", "empty_star.png", "empty_star.png", "empty_star.png", "empty_star.png"};
-                for (int j = 0; j < 5; j++)
-                {
-                    /*if (recipes[i].Rating - j >= 0.66)
-                    {
-                        stars[j] = "full_star.png";
-                    }
-                    else if (recipes[i].Rating - j >= 0.33)
-                    {
-                        stars[j] = "half_star.png";
-                    }*/
-                }
-
-                itemSorce.Add(new Cell() {
-                    Name = recipes[i].Name,
-                    imgsource = recipes[i].Image,
-                    textColor = Constants.textColor1,
-                    TextSize = Constants.fontSize2,
-                    backgroundColor = (i % 2 == 0) ? Constants.listBackgroundColor1 : Constants.listBackgroundColor2,
-                    Margin = Constants.padding3,
-                    Star0 = stars[0],
-                    Star1 = stars[1],
-                    Star2 = stars[2],
-                    Star3 = stars[3],
-                    Star4 = stars[4],
-                    StarSize = 20
-                });
-
-                itemSorce.Where((x, j) => j % 5 == 0).ForEach(x =>
-                {
-                    x.IsAd = true;
-                });
-            }
-            ListView_Recipes.ItemsSource = itemSorce;
+            BackgroundColor = Color.LightGray;
+            ListView_Recipes.BackgroundColor = Color.Transparent;
+            ListView_Recipes.RowHeight = Convert.ToInt32(Application.Current.MainPage.Width * 3 / 5);
+            ListView_Recipes.ItemsSource = recipes;
         }
 
         //Recipe selected
@@ -77,40 +52,55 @@ namespace FeedMe
             //object selected = ListView_Recipes.SelectedItem;
             //((ListView)sender).SelectedItem = null;
 
-            gotoRecipePage(recipes[itemSorce.IndexOf(ListView_Recipes.SelectedItem)]);
+            var selected = ListView_Recipes.SelectedItem;
+            if (selected != null)
+            {
+                int index = recipes.IndexOf(selected);
+
+                GET_recipeDto(Constants.recipe_retrive + recipes[index].RecipeID);
+            }
         }
 
         //Next page
         async void gotoRecipePage(RecipeDto meal)
         {
-            await Navigation.PushAsync(new RecipePage(meal) { Title = "Recept" });
+            await Navigation.PushAsync(new RecipePage(meal) { Title = meal.Name });
+
+            ListView_Recipes.SelectedItem = null;
         }
 
         //Navigation back button
         async private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            //Application.Current.MainPage.Navigation.PopAsync();
             await Navigation.PopAsync();
+        }
+
+        async void GET_recipeDto(string _adress)
+        {
+            try
+            {
+
+
+                HttpResponseMessage response = await httpClient.GetAsync(_adress);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    //await DisplayAlert("success", "succeess", "ok");
+                    var result = await response.Content.ReadAsStringAsync();
+                    RecipeDto recipe = JsonConvert.DeserializeObject<RecipeDto>(result);
+
+                    gotoRecipePage(recipe);
+                }
+                else
+                {
+                    await DisplayAlert("Response error", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "ok");
+                }
+            }
+            catch (Exception e)
+            {
+                await DisplayAlert("An error occurred", e.Message, "ok");
+            }
         }
     }
 
-
-
-    public class Cell
-    {
-        public string Name { get; set; }
-        public string imgsource { get; set; }
-        public Color textColor { get; set; }
-        public double TextSize { get; set; }
-        public Color backgroundColor { get; set; }
-        public int Margin { get; set; }
-        public string Star0 { get; set; }
-        public string Star1 { get; set; }
-        public string Star2 { get; set; }
-        public string Star3 { get; set; }
-        public string Star4 { get; set; }
-        public int StarSize { get; set; }
-
-        public bool IsAd { get; set; }
-    }
 }

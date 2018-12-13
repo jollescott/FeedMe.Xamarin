@@ -33,7 +33,7 @@
                 </ViewCell>
             </DataTemplate>
             <DataTemplate x:Key="adTemplate">
-                <cells:AdListCell/>
+                <cells:AdListCell Height="75"/>
             </DataTemplate>
             
             <selectors:RecipeListTemplateSelector x:Key="recipeDataTemplateSelector"

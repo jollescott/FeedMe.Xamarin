@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FeedMe.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
@@ -12,7 +13,7 @@ namespace FeedMe.Controls.Selectors
 
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
-            return (item as Cell).IsAd ? AdTemplate : RecipeTemplate;
+            return (item as RecipeMetaModel).IsAd ? AdTemplate : RecipeTemplate;
         }
     }
 }

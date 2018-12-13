@@ -28,7 +28,7 @@
 
             <Frame Padding="0">
                 <StackLayout Margin="0" Padding="0">
-                    
+
                     <Label x:Name="Label_MyIgredients" Text="Minna Ingredienser" HorizontalOptions="Center" VerticalOptions="Center"/>
 
                     <ListView x:Name="ListView_myIngredients" ItemSelected="ListView_myIngredients_ItemSelected" ItemAppearing="ListView_myIngredients_ItemAppearing">
@@ -57,7 +57,7 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    
+
                 </StackLayout>
             </Frame>
 
