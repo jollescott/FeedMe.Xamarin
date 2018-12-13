@@ -1,45 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:selectors="clr-namespace:FeedMe.Controls.Selectors"
+             xmlns:cells="clr-namespace:FeedMe.Controls.Cells"
              x:Class="FeedMe.MealsListPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="recipeTemplate">
+                <ViewCell>
+                    <!--ImageCell Text="{Binding Name}" Detail="{Binding inget}" ImageSource="{Binding imgsource}"/-->
+                    <StackLayout>
+                        <StackLayout BackgroundColor="{Binding backgroundColor}" Orientation="Horizontal" HorizontalOptions="Fill" Spacing="0" Margin="0" Padding="0">
+                            <Image Source="{Binding imgsource}" Margin="0" Aspect="AspectFill" HorizontalOptions="Start" VerticalOptions="StartAndExpand" WidthRequest="100" HeightRequest="100"/>
+                            <Grid Margin="{Binding Margin}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="8*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Text="{Binding Name}" TextColor="{Binding textColor}" FontSize="{Binding TextSize}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6"/>
+                                <Image Source="{Binding Star0}" VerticalOptions="End" Grid.Row="1" Grid.Column="0"/>
+                                <Image Source="{Binding Star1}" VerticalOptions="Start" Grid.Row="1" Grid.Column="1"/>
+                                <Image Source="{Binding Star2}" VerticalOptions="StartAndExpand" Grid.Row="1" Grid.Column="2"/>
+                                <Image Source="{Binding Star3}" VerticalOptions="EndAndExpand" Grid.Row="1" Grid.Column="3"/>
+                                <Image Source="{Binding Star4}" Grid.Row="1" Grid.Column="4"/>
+                            </Grid>
+                        </StackLayout>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="adTemplate">
+                <cells:AdListCell/>
+            </DataTemplate>
+            
+            <selectors:RecipeListTemplateSelector x:Key="recipeDataTemplateSelector"
+                RecipeTemplate="{StaticResource recipeTemplate}"
+                AdTemplate="{StaticResource adTemplate}" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <StackLayout>
         
         <ScrollView>
-            <ListView x:Name="ListView_Recipes" ItemSelected="ListView_Recipes_ItemSelected" RowHeight="100">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <!--ImageCell Text="{Binding Name}" Detail="{Binding inget}" ImageSource="{Binding imgsource}"/-->
-                            <StackLayout>
-                                <StackLayout BackgroundColor="{Binding backgroundColor}" Orientation="Horizontal" HorizontalOptions="Fill" Spacing="0" Margin="0" Padding="0">
-                                    <Image Source="{Binding imgsource}" Margin="0" Aspect="AspectFill" HorizontalOptions="Start" VerticalOptions="StartAndExpand" WidthRequest="100" HeightRequest="100"/>
-                                    <Grid Margin="{Binding Margin}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="5*"/>
-                                            <RowDefinition Height="1*"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="8*"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Label Text="{Binding Name}" TextColor="{Binding textColor}" FontSize="{Binding TextSize}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6"/>
-                                        <Image Source="{Binding Star0}" VerticalOptions="End" Grid.Row="1" Grid.Column="0"/>
-                                        <Image Source="{Binding Star1}" VerticalOptions="Start" Grid.Row="1" Grid.Column="1"/>
-                                        <Image Source="{Binding Star2}" VerticalOptions="StartAndExpand" Grid.Row="1" Grid.Column="2"/>
-                                        <Image Source="{Binding Star3}" VerticalOptions="EndAndExpand" Grid.Row="1" Grid.Column="3"/>
-                                        <Image Source="{Binding Star4}" Grid.Row="1" Grid.Column="4"/>
-                                    </Grid>
-                                </StackLayout>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+            <ListView x:Name="ListView_Recipes" ItemTemplate="{StaticResource recipeDataTemplateSelector}" ItemSelected="ListView_Recipes_ItemSelected" RowHeight="100">
             </ListView>
         </ScrollView>
     </StackLayout>

@@ -1,7 +1,7 @@
 ﻿using Ramsey.Shared.Dto;
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
@@ -62,6 +62,11 @@ namespace FeedMe
                     Star4 = stars[4],
                     StarSize = 20
                 });
+
+                itemSorce.Where((x, j) => j % 5 == 0).ForEach(x =>
+                {
+                    x.IsAd = true;
+                });
             }
             ListView_Recipes.ItemsSource = itemSorce;
         }
@@ -105,5 +110,7 @@ namespace FeedMe
         public string Star3 { get; set; }
         public string Star4 { get; set; }
         public int StarSize { get; set; }
+
+        public bool IsAd { get; set; }
     }
 }
