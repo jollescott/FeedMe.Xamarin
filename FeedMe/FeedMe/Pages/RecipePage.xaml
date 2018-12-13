@@ -3,77 +3,60 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FeedMe.RecipePage">
     <ContentPage.Content>
-        <StackLayout Spacing="0">
 
+        <ScrollView>
+            <StackLayout Spacing="0">
+                
+                <!--Image-->
+                <Grid x:Name="Grid_Images" Margin="0" Padding="0">
 
-            <Frame x:Name="Frame_Head" Margin="0">
-                <StackLayout>
-                    <AbsoluteLayout Margin="0" x:Name="AbsLayout_Head">
-                        <Label x:Name="Label_HeadTitle"
-                               AbsoluteLayout.LayoutBounds="0.5, 0"
-                               AbsoluteLayout.LayoutFlags="PositionProportional"/>
-                        <Image x:Name="Image_Back"  Source="back.png" AbsoluteLayout.LayoutBounds="0, 0" AbsoluteLayout.LayoutFlags="PositionProportional">
-                            <Image.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" NumberOfTapsRequired="1" />
-                            </Image.GestureRecognizers>
-                        </Image>
-
-                    </AbsoluteLayout>
-
-                    <Grid Margin="0" Padding="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
-                            <Label x:Name="Label_HeadTL1" Text="Top Left"/>
-                            <Label x:Name="Label_HeadTL2" Text="Top Left"/>
-                        </StackLayout>
-
-                        <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
-                            <Label x:Name="Label_HeadBL1" Text="Bottom Left"/>
-                            <Label x:Name="Label_HeadBL2" Text="Bottom Left"/>
-                        </StackLayout>
-
-                        <Button x:Name="Button_Rate" CornerRadius="5" Text="Button" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Clicked="Button_Rate_Clicked"/>
-
-                    </Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Image x:Name="Image_Recipe" Aspect="AspectFill" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                    <Image x:Name="Image_OwnerLogo" Aspect="AspectFit" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Grid>
+                
+                <!--Owner Info-->
+                <StackLayout x:Name="StackLayout_OwnerInfo">
+                    <Label x:Name="Label_OwnerInfoHead" Text="Recept hämtat från:"/>
+                    <Label x:Name="Label_OwnerLink">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1"/>
+                        </Label.GestureRecognizers>
+                    </Label>
                 </StackLayout>
 
-            </Frame>
+                <!--Spacing-->
+                <ContentView x:Name="ContentView_Spacing1" Margin="0" Padding="0"/>
 
+                <!--Ingredients Head-->
+                <Frame x:Name="Frame_IngredientsHead" Margin="0" CornerRadius="0">
+                    <Label x:Name="Label_IngridientsHead" VerticalTextAlignment="Center" FontFamily=""/>
+                </Frame>
 
-            <ScrollView>
-                <StackLayout>
-                    <!--Image-->
-                    <Image Margin="0" x:Name="Image_Recipe" Aspect="AspectFill"  HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
+                <!--Ingredients-->
+                <StackLayout x:Name="Stack_Ingridients"/>
 
-                    <!--Recipe Name-->
-                    <Label x:Name="Label_RecipeName"
-                           LineBreakMode="WordWrap"
-                           HorizontalTextAlignment="Center"/>
-                    
-                    <!--Ingridients-->
-                    <StackLayout x:Name="Stack_Ingridients">
-                        <Label x:Name="Label_IngridientsHead"/>
+                <!--Instructions Head-->
+                <Frame x:Name="Frame_InstructionsHead" Margin="0" CornerRadius="0">
+                    <Label x:Name="Label_InstructionsHead" VerticalTextAlignment="Center"/>
+                </Frame>
 
-                    </StackLayout>
+                <!--Instructions-->
+                <StackLayout x:Name="Stack_Instructions"/>
 
-                    <!--Instructions-->
-                    <StackLayout x:Name="Stack_Instructions">
-                        <Label x:Name="Label_InstructionsHead"/>
+                <!--Spacing-->
+                <ContentView x:Name="ContentView_Spacing2" Margin="0" Padding="0"/>
 
-                    </StackLayout>
-                    
-                </StackLayout>
-            </ScrollView>
-
-
-        </StackLayout>
+            </StackLayout>
+        </ScrollView>
+            
     </ContentPage.Content>
 </ContentPage>

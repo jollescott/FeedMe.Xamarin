@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:FeedMe"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             x:Class="FeedMe.MainPage">
+             x:Class="FeedMe.MainPage"
+             Title="Sök Recept">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -13,42 +14,54 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
+    <ScrollView>
+        <StackLayout x:Name="StackLayout_all">
 
-    <StackLayout x:Name="StackLayout_all">
+            <!--Entry x:Name="Entry_Ingredients" Placeholder="Vad har du för ingredienser?" Completed="Entry_Ingredients_Completed"/-->
+            <Frame x:Name="Frame_SearchBar">
+                <SearchBar x:Name="SearchBar_Ingredients" Placeholder="Lägg till ingredienser" TextChanged="SearchBar_Ingredients_TextChanged"/>
+            </Frame>
 
-        <Entry x:Name="Entry_Ingredients" Placeholder="Vad har du för ingredienser?" Completed="Entry_Ingredients_Completed"/>
+            <ListView x:Name="ListView_SearchIngredients" ItemSelected="ListView_SearchIngredients_ItemSelected"/>
 
-        <ListView x:Name="ListView_myIngredients" ItemSelected="ListView_myIngredients_ItemSelected" BackgroundColor="Wheat">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="2.5*"/>
-                                <RowDefinition Height="5*"/>
-                                <RowDefinition Height="2.5*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="7*"/>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
+            <Button x:Name="Button_FeedMe" Text="FeedMe" Clicked="Button_Clicked"/>
 
-                            <Label Text="{Binding Name}" VerticalOptions="Center" HorizontalOptions="Start" FontSize="Medium" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"/>
+            <Frame Padding="0">
+                <StackLayout Margin="0" Padding="0">
+                    
+                    <Label x:Name="Label_MyIgredients" Text="Minna Ingredienser" HorizontalOptions="Center" VerticalOptions="Center"/>
 
-                            <Image Source="icon_x.png" VerticalOptions="Center" HorizontalOptions="End" Aspect="AspectFit" Grid.Column="2" Grid.Row="1"/>
+                    <ListView x:Name="ListView_myIngredients" ItemSelected="ListView_myIngredients_ItemSelected" ItemAppearing="ListView_myIngredients_ItemAppearing">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="2.5*"/>
+                                            <RowDefinition Height="5*"/>
+                                            <RowDefinition Height="2.5*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="7*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
 
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                                        <Label Text="{Binding IngredientId}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"/>
 
-        <Button x:Name="Button_FeedMe" Text="FeedMe" Clicked="Button_Clicked"/>
+                                        <Image Source="icon_x.png" VerticalOptions="Center" HorizontalOptions="End" Aspect="AspectFit" Grid.Column="2" Grid.Row="1"/>
 
-    </StackLayout>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    
+                </StackLayout>
+            </Frame>
 
-
+        </StackLayout>
+    </ScrollView>
 
 </ContentPage>
