@@ -26,7 +26,9 @@ namespace FeedMe
         public static double fontSize3 = Device.GetNamedSize(NamedSize.Small, typeof(Label));
         public static double fontSize4 = Device.GetNamedSize(NamedSize.Micro, typeof(Label));
 
-        public static int buttonCornerRadius = 10;
+        public static int cornerRadius1 = 15;
+        public static int cornerRadius2 = 5;
+
 
         public static int padding1 = 20;
         public static int padding2 = 15;

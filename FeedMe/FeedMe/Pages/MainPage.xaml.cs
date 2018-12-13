@@ -30,26 +30,31 @@ namespace FeedMe
         {
             BackgroundImage = "background.jpg";
 
-            StackLayout_all.Padding = Constants.padding2;
-            StackLayout_all.Spacing = Constants.padding2;
+            //Search
 
-            Frame_SearchBar.BackgroundColor = Constants.mainColor1;
+            Frame_Search.BackgroundColor = Constants.mainColor1;
+            StackLayout_Search.Padding = new Thickness(Constants.padding2, 0, Constants.padding2, Constants.padding2);
+            SearchBar_Ingredients.BackgroundColor = Color.White;
+            ListView_SearchIngredients.BackgroundColor = Constants.backgroundColor;
 
-            SearchBar_Ingredients.BackgroundColor = Constants.backgroundColor;
 
-            ListView_SearchIngredients.BackgroundColor = Color.White;
-
-            //Label_MyIgredients.TextColor = Constants.textColor1;
-            Label_MyIgredients.FontSize = Constants.fontSize2;
-            Label_MyIgredients.Margin = Constants.padding3;
-
-            ListView_myIngredients.BackgroundColor = Constants.backgroundColor;
-            ListView_myIngredients.RowHeight = Convert.ToInt32(SearchBar_Ingredients.Height);
+            //Main
+            
+            StackLayout_main.Padding = Constants.padding2;
+            StackLayout_main.Spacing = Constants.padding2;
 
             Button_FeedMe.TextColor = Constants.textColor3;
             Button_FeedMe.FontSize = Constants.fontSize1;
             Button_FeedMe.BackgroundColor = Constants.mainColor2;
-            Button_FeedMe.CornerRadius = Constants.buttonCornerRadius;
+            Button_FeedMe.CornerRadius = Constants.cornerRadius1;
+
+            Frame_MyIngredients.CornerRadius = Constants.cornerRadius1;
+            Label_MyIgredients.FontSize = Constants.fontSize2;
+            Label_MyIgredients.Margin = Constants.padding3;
+            ListView_myIngredients.BackgroundColor = Constants.backgroundColor;
+            ListView_myIngredients.RowHeight = Convert.ToInt32(SearchBar_Ingredients.Height);
+            ListView_myIngredients.HeightRequest = 50; //
+
         }
 
 
@@ -177,6 +182,8 @@ namespace FeedMe
             }
             
             ListView_myIngredients.ItemsSource = itemsorce;
+
+            ResizeListView(ListView_myIngredients, myIngredients.Count);
         }
 
         private List<string> IngredientsToStrings(List<IngredientDto> ingredientDtos)
@@ -203,7 +210,7 @@ namespace FeedMe
                     //await DisplayAlert("success", "succeess", "ok");
                     var result = await response.Content.ReadAsStringAsync();
                     searchIngredients = JsonConvert.DeserializeObject<List<IngredientDto>>(result);
-                    ListView_SearchIngredients.ItemsSource = IngredientsToStrings(searchIngredients);
+                    ListView_SearchIngredients.ItemsSource = searchIngredients;
                 }
                 else
                 {
@@ -255,11 +262,29 @@ namespace FeedMe
             await Navigation.PushAsync(new MealsListPage(recipeDtos) { Title = "Bon Appétit" });
         }
 
-        void ResizeListView()
+        void ResizeListView(ListView listView, int length)
         {
-            int height = Convert.ToInt32(myIngredients.Count * SearchBar_Ingredients.Height);
-            double adjust = -4 * (myIngredients.Count - 1);
+            if (length < 1)
+            {
+                length = 1;
+            }
+            double height = length * SearchBar_Ingredients.Height;
+            double adjust = -4 * (length - 1);
             ListView_myIngredients.HeightRequest = height + adjust;
+        }
+
+        void HideSearchView()
+        {
+            ListView_SearchIngredients.IsVisible = false;
+            ListView_SearchIngredients.IsEnabled = false;
+        }
+
+        void ShowSearchView()
+        {
+            ListView_SearchIngredients.HeightRequest = StackLayout_all.Height - SearchBar_Ingredients.Height - Constants.padding2;
+            ListView_SearchIngredients.MinimumHeightRequest = StackLayout_all.Height - SearchBar_Ingredients.Height - Constants.padding2;
+            ListView_SearchIngredients.IsVisible = true;
+            ListView_SearchIngredients.IsEnabled = true;
         }
 
 
@@ -279,16 +304,30 @@ namespace FeedMe
 
         private void ListView_SearchIngredients_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            myIngredients.Add(searchIngredients[IngredientsToStrings(searchIngredients).IndexOf(Convert.ToString(e.SelectedItem))]);
+            myIngredients.Add((IngredientDto)e.SelectedItem);
             UpdateMyIngreadientsListView(myIngredients);
         }
 
+        bool searching = false;
         private void SearchBar_Ingredients_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchWord = SearchBar_Ingredients.Text.ToLower();
-            string adress = "https://ramsey.azurewebsites.net/ingredient/suggest?search=" + searchWord;
 
-            GET_ingredientDtos(adress);
+            if (searchWord.Length > 0)
+            {
+                if (!searching)
+                {
+                    searching = true;
+                    ShowSearchView();
+                }
+
+                string adress = Constants.ingredient_search + searchWord;
+                GET_ingredientDtos(adress);
+            }
+            else{
+                searching = false;
+                HideSearchView();
+            }
         }
 
         private void ListView_myIngredients_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -302,14 +341,9 @@ namespace FeedMe
         {
             Button_FeedMe.IsEnabled = false;
             Button_FeedMe.BackgroundColor = Color.Gray;
-            Button_FeedMe.Text = "Ladddar...";
+            Button_FeedMe.Text = "Laddar...";
 
             POST_recipeMetas(myIngredients);
-        }
-
-        private void ListView_myIngredients_ItemAppearing(object sender, ItemVisibilityEventArgs e)
-        {
-            ResizeListView();
         }
     }
 }
