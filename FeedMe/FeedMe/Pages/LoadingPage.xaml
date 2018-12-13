@@ -12,10 +12,14 @@
 
     <AbsoluteLayout x:Name="AbsLayout">
         <Image x:Name="Image_AppLogo"
-               AbsoluteLayout.LayoutBounds ="0.5, 0.5, 0.5, 0.5"
+               AbsoluteLayout.LayoutBounds ="0.5, 0.5, 0.4, 0.4"
                AbsoluteLayout.LayoutFlags="All"/>
+        <Label Text="Väntar på servern..."
+               Margin="5"
+               AbsoluteLayout.LayoutBounds="0.5, 1"
+               AbsoluteLayout.LayoutFlags="PositionProportional"/>
         <Image x:Name="Image_CompanyLogo"
-               AbsoluteLayout.LayoutBounds ="0, 1, 0.25, 0.25"
+               AbsoluteLayout.LayoutBounds ="0, 1, 0.3, 0.3"
                AbsoluteLayout.LayoutFlags="All"/>
     </AbsoluteLayout>
 </ContentPage>

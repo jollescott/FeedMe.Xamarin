@@ -20,6 +20,8 @@ namespace FeedMe.Droid
             base.OnCreate(savedInstanceState);
 
             Android.Gms.Ads.MobileAds.Initialize(ApplicationContext, "ca-app-pub-3940256099942544");
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(false);
+
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             LoadApplication(new App());
