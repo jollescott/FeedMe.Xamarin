@@ -34,22 +34,18 @@ namespace FeedMe
             Label_OwnerInfoHead.FontSize = Constants.fontSize4;
             Label_OwnerLink.FontSize = Constants.fontSize4;
             Label_OwnerLink.Text = recipe.Source;
-            Label_OwnerLink.TextColor = Constants.linkColor;
-
-
-            //Spacing
-            ContentView_Spacing1.HeightRequest = Constants.padding1;
+            Label_OwnerLink.TextColor = Constants.AppColor.text_link;
 
 
             //Ingredients
-            Frame_IngredientsHead.BackgroundColor = Constants.mainColor1;
+            Frame_IngredientsHead.BackgroundColor = Constants.AppColor.green;
+            Frame_IngredientsHead.Margin = new Thickness(0, Constants.padding1, 0, 0);
 
             Label_IngridientsHead.Text = "Ingredienser";
-            Label_IngridientsHead.TextColor = Constants.textColor3;
+            Label_IngridientsHead.TextColor = Constants.AppColor.text_white;
             Label_IngridientsHead.FontSize = Constants.fontSize1;
 
             Stack_Ingridients.Margin = Constants.padding1;
-
 
             string dot = "- ";
             for (int i = 0; i < recipe.Ingredients.Count; i++)
@@ -57,7 +53,7 @@ namespace FeedMe
                 Stack_Ingridients.Children.Add(new Label()
                 {
                     Text = dot + recipe.Ingredients[i],
-                    TextColor = Constants.textColor1,
+                    TextColor = Constants.AppColor.text_black,
                     FontSize = Constants.fontSize3,
                     Margin = Constants.textListMargin
                 });
@@ -65,46 +61,63 @@ namespace FeedMe
 
 
             //Instructions
-            Frame_InstructionsHead.BackgroundColor = Constants.mainColor1;
+            Frame_InstructionsHead.BackgroundColor = Constants.AppColor.green;
             Frame_InstructionsHead.Padding = Constants.padding1;
 
             Label_InstructionsHead.Text = "Tillagning";
-            Label_InstructionsHead.TextColor = Constants.textColor3;
+            Label_InstructionsHead.TextColor = Constants.AppColor.text_white;
             Label_InstructionsHead.FontSize = Constants.fontSize1;
 
-            Stack_Instructions.Margin = Constants.padding1;
+            Stack_Instructions.Margin = new Thickness( Constants.padding2, Constants.padding2, Constants.padding2, 3 * Constants.padding2 );
 
-
+            int n = 1;
             for (int i = 0; i < recipe.Directions.Count; i++)
             {
-                Stack_Instructions.Children.Add(new Label()
-                {
-                    Text = Convert.ToString(i + 1) + ".",
-                    TextColor = Constants.textColor2,
-                    FontSize = Constants.fontSize2,
-                    Margin = Constants.textListMargin
-                });
-
                 string text = recipe.Directions[i].TrimStart();
-                // Remove start numbers if they exist
-                while (char.IsDigit(text[0]) || text[0] == '.')
+
+                if (char.IsDigit(text[0]))
                 {
-                    text = text.Substring(1);
+                    //Add number
+                    Stack_Instructions.Children.Add(new Label()
+                    {
+                        Text = Convert.ToString(n) + ".",
+                        TextColor = Constants.AppColor.green,
+                        FontSize = Constants.fontSize2,
+                        Margin = Constants.textListMargin
+                    });
+                    n++;
+
+                    // Remove start numbers (if they exist)
+                    while (char.IsDigit(text[0]) || text[0] == '.')
+                    {
+                        text = text.Substring(1);
+                    }
+                    text = text.TrimStart();
+
+                    //Add instruction
+                    Stack_Instructions.Children.Add(new Label()
+                    {
+                        Text = text,
+                        TextColor = Constants.AppColor.text_black,
+                        FontSize = Constants.fontSize3,
+                        Margin = Constants.textListMargin
+                    });
                 }
-                text = text.TrimStart();
-
-                Stack_Instructions.Children.Add(new Label()
+                else
                 {
-                    Text = text,
-                    TextColor = Constants.textColor1,
-                    FontSize = Constants.fontSize3,
-                    Margin = Constants.textListMargin
-                });
+                    n = 1; //reset step count
+
+                    //Add sub heading
+                    Stack_Instructions.Children.Add(new Label()
+                    {
+                        Text = recipe.Directions[i].TrimStart(),
+                        TextColor = Constants.AppColor.text_green,
+                        FontSize = Constants.fontSize2,
+                        Margin = new Thickness(Constants.textListMargin, Constants.padding3, Constants.textListMargin, Constants.textListMargin),
+                        HorizontalTextAlignment = TextAlignment.Center
+                    });
+                }
             }
-
-
-            //Spacing
-            ContentView_Spacing2.HeightRequest = 5 * Constants.padding1;
         }
 
         //Navigation back button

@@ -21,7 +21,7 @@ namespace FeedMe.Pages.MasterDetail
         {
             InitializeComponent();
 
-            Grid_MenuBackground.BackgroundColor = Constants.navigationBarColor;
+            Grid_MenuBackground.BackgroundColor = Constants.AppColor.navigationBarColor;
 
             BindingContext = new FDMasterDetailPageMasterViewModel();
             ListView = MenuItemsListView;

@@ -38,10 +38,8 @@ namespace FeedMe
         }
 
 
-        protected async override void OnAppearing()
+        protected override void OnAppearing()
         {
-            await Task.Delay(5000);
-
             test_connection(Constants.ingredient_search);
 
             //Application.Current.MainPage = new NavigationPage(new MainPage());
@@ -71,9 +69,9 @@ namespace FeedMe
                         await DisplayAlert("Can't connect to server", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "try again");
                     }
                 }
-                catch (Exception e)
+                catch(Exception)
                 {
-                    await DisplayAlert("Can't connect to server", e.Message, "try again");
+                    await DisplayAlert("Can't connect to server", "Server conection failed", "try again");
                 }
 
             } while (repet);

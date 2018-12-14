@@ -33,9 +33,6 @@
                     </Label>
                 </StackLayout>
 
-                <!--Spacing-->
-                <ContentView x:Name="ContentView_Spacing1" Margin="0" Padding="0"/>
-
                 <!--Ingredients Head-->
                 <Frame x:Name="Frame_IngredientsHead" Margin="0" CornerRadius="0">
                     <Label x:Name="Label_IngridientsHead" VerticalTextAlignment="Center" FontFamily=""/>
@@ -51,9 +48,6 @@
 
                 <!--Instructions-->
                 <StackLayout x:Name="Stack_Instructions"/>
-
-                <!--Spacing-->
-                <ContentView x:Name="ContentView_Spacing2" Margin="0" Padding="0"/>
 
             </StackLayout>
         </ScrollView>

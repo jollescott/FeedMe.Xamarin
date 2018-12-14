@@ -11,7 +11,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Frame Margin="5" Padding="0" CornerRadius="0">
+                            <Frame x:Name="Frame_List" Margin="15, 7.5, 15, 7.5" Padding="0" CornerRadius="0">
 
                                 <Grid Padding="0" HorizontalOptions="Fill" VerticalOptions="Fill" RowSpacing="0" ColumnSpacing="0">
                                     <Grid.RowDefinitions>
