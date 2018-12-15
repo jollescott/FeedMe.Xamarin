@@ -34,8 +34,12 @@ namespace FeedMe
             //Search
 
             Frame_Search.BackgroundColor = Constants.AppColor.green;
+
             StackLayout_Search.Padding = new Thickness(Constants.padding2, 0, Constants.padding2, Constants.padding2);
+
             SearchBar_Ingredients.BackgroundColor = Color.White;
+            SearchBar_Ingredients.HeightRequest = Constants.textHeight;
+
             ListView_SearchIngredients.BackgroundColor = Constants.AppColor.lightGray;
 
 
@@ -50,11 +54,14 @@ namespace FeedMe
             Button_FeedMe.CornerRadius = Constants.cornerRadius1;
 
             Frame_MyIngredients.CornerRadius = Constants.cornerRadius1;
+
             Label_MyIgredients.FontSize = Constants.fontSize2;
             Label_MyIgredients.Margin = Constants.padding3;
+            Label_MyIgredients.HeightRequest = Constants.textHeight;
+
             ListView_myIngredients.BackgroundColor = Constants.AppColor.lightGray;
-            ListView_myIngredients.RowHeight = Convert.ToInt32(SearchBar_Ingredients.Height);
-            ListView_myIngredients.HeightRequest = 50; //
+            ListView_myIngredients.RowHeight = Constants.textHeight; //Convert.ToInt32(SearchBar_Ingredients.Height);
+            ListView_myIngredients.HeightRequest = Constants.textHeight;
 
         }
 
@@ -215,8 +222,8 @@ namespace FeedMe
             {
                 length = 1;
             }
-            double height = length * SearchBar_Ingredients.Height;
-            double adjust = -3.6 * (length - 1);
+            double height = length * Constants.textHeight;
+            double adjust = 1 + (length - 1) * 0.36;
             ListView_myIngredients.HeightRequest = height + adjust;
         }
 

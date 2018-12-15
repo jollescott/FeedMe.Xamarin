@@ -23,6 +23,8 @@ namespace FeedMe
             public static Color text_link = Color.FromHex("#0000EE");
         }
 
+        public static int textHeight = 50;
+
 
         public static double fontSize1 = Device.GetNamedSize(NamedSize.Large, typeof(Label));
         public static double fontSize2 = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
