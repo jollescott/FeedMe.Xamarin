@@ -41,6 +41,7 @@ namespace FeedMe
             SearchBar_Ingredients.HeightRequest = Constants.textHeight;
 
             ListView_SearchIngredients.BackgroundColor = Constants.AppColor.lightGray;
+            ListView_SearchIngredients.RowHeight = Constants.textHeight;
 
 
             //Main
@@ -56,62 +57,16 @@ namespace FeedMe
             Frame_MyIngredients.CornerRadius = Constants.cornerRadius1;
 
             Label_MyIgredients.FontSize = Constants.fontSize2;
-            Label_MyIgredients.Margin = Constants.padding3;
             Label_MyIgredients.HeightRequest = Constants.textHeight;
 
             ListView_myIngredients.BackgroundColor = Constants.AppColor.lightGray;
-            ListView_myIngredients.RowHeight = Constants.textHeight; //Convert.ToInt32(SearchBar_Ingredients.Height);
+            ListView_myIngredients.RowHeight = Constants.textHeight;
             ListView_myIngredients.HeightRequest = Constants.textHeight;
 
         }
 
 
-        /*async void PostIngredients(List<IngredientDto> ingredientDtos)
-        {
-            //string jsonstring = "[";
-            //foreach (IngredientDto ingredient in ingredientDtos)
-            //{
-            //    jsonstring += "\"" + ingredient.IngredientId + "\", ";
-            //}
-            //jsonstring = jsonstring.Remove(jsonstring.Length - 2) + "]";
-
-            //                      "[   \"ing\", \"ing\", \"ing\"   ]"
-
-
-            var json = JsonConvert.SerializeObject(ingredientDtos); //skicka ingredientDto
-            //var json = jsonstring;
-
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            try
-            {
-                HttpResponseMessage respone = await httpClient.PostAsync(Constants.recipe_suggest, content);
-
-                if (respone.IsSuccessStatusCode)
-                {
-                    var result = await respone.Content.ReadAsSwedishStringAsync();
-                    var recipes = JsonConvert.DeserializeObject<List<RecipeMetaDto>>(result);
-
-                    gotoMealsListPage(recipes);
-                }
-                else
-                {
-                    await DisplayAlert("Response error", "Status code " + (int)respone.StatusCode + ": " + respone.StatusCode.ToString(), "ok");
-                }
-            }
-            catch (Exception e)
-            {
-                await DisplayAlert("An error occurred", e.Message, "ok");
-            }
-
-            Button_FeedMe.IsEnabled = true;
-            Button_FeedMe.BackgroundColor = Constants.AppColor.green;
-            Button_FeedMe.Text = "FeedMe";
-        }*/
-
-
         // --------------------------------------------- SPAGHETTI ---------------------------------------------------
-
 
 
         private void UpdateMyIngreadientsListView(List<IngredientDto> ingredients)

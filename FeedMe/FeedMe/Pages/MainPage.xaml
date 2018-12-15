@@ -56,9 +56,9 @@
                 <Button x:Name="Button_FeedMe" Text="FeedMe" Clicked="Button_Clicked"/>
 
                 <Frame x:Name="Frame_MyIngredients" Padding="0">
-                    <StackLayout Margin="0" Padding="0">
+                    <StackLayout Margin="0" Padding="0" Spacing="0">
 
-                        <Label x:Name="Label_MyIgredients" Text="Mina Ingredienser" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Label Margin="0" x:Name="Label_MyIgredients" Text="Mina Ingredienser" HorizontalOptions="Center" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
 
                         <ListView x:Name="ListView_myIngredients" ItemSelected="ListView_myIngredients_ItemSelected">
                             <ListView.ItemTemplate>
