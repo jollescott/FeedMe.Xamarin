@@ -200,7 +200,7 @@ namespace FeedMe
             }
             catch (Exception e)
             {
-                await DisplayAlert("An error occurred", e.Message, "ok");
+                await DisplayAlert("An error occurred", "Server conection failed", "ok");
             }
         }
 

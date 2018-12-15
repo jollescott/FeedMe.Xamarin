@@ -69,13 +69,10 @@ namespace FeedMe
         {
             try
             {
-
-
                 HttpResponseMessage response = await httpClient.GetAsync(_adress);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    //await DisplayAlert("success", "succeess", "ok");
                     var result = await response.Content.ReadAsStringAsync();
                     RecipeDto recipe = JsonConvert.DeserializeObject<RecipeDto>(result);
 
@@ -88,7 +85,7 @@ namespace FeedMe
             }
             catch (Exception e)
             {
-                await DisplayAlert("An error occurred", e.Message, "ok");
+                await DisplayAlert("An error occurred", "Server conection failed", "ok");
             }
         }
     }
