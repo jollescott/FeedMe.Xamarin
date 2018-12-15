@@ -105,72 +105,6 @@ namespace FeedMe
             return strIngredients;
         }
 
-        async void GET_ingredientDtos(string _adress)
-        {
-            try
-            {
-                //HttpResponseMessage response = _httpClient.GetAsync(_adress).ConfigureAwait(false).GetAwaiter().GetResult();
-                //HttpResponseMessage response = _httpClient.GetAsync(_adress).GetAwaiter().GetResult();
-                HttpResponseMessage response = await httpClient.GetAsync(_adress);
-
-
-                if (response.IsSuccessStatusCode)
-                {
-                    //await DisplayAlert("success", "succeess", "ok");
-                    var result = await response.Content.ReadAsStringAsync();
-                    searchIngredients = SortIngredientsByLenght(JsonConvert.DeserializeObject<List<IngredientDto>>(result));
-                    UpdateSearchIngreadientsListView(searchIngredients);
-                }
-                else
-                {
-                    await DisplayAlert("Response error", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "ok");
-                }
-            }
-            catch (Exception e)
-            {
-                await DisplayAlert("An error occurred", e.Message, "ok");
-            }
-        }
-
-        async void POST_recipeMetas(List<IngredientDto> ingredientDtos)
-        {
-            var json = JsonConvert.SerializeObject(ingredientDtos); //skicka ingredientDto
-            //var json = jsonstring;
-
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            try
-            {
-                HttpResponseMessage respone = await httpClient.PostAsync(Constants.recipe_suggest, content);
-
-                if (respone.IsSuccessStatusCode)
-                {
-                    var result = await respone.Content.ReadAsSwedishStringAsync();
-                    var recipes = JsonConvert.DeserializeObject<List<RecipeMetaDto>>(result);
-
-                    gotoMealsListPage(recipes);
-                }
-                else
-                {
-                    await DisplayAlert("Response error", "Status code " + (int)respone.StatusCode + ": " + respone.StatusCode.ToString(), "ok");
-                }
-            }
-            catch (Exception)
-            {
-                await DisplayAlert("An error occurred", "Server conection failed", "ok");
-            }
-
-            Button_FeedMe.IsEnabled = true;
-            Button_FeedMe.BackgroundColor = Constants.AppColor.green;
-            Button_FeedMe.Text = "FeedMe";
-        }
-
-
-        async void gotoMealsListPage(List<RecipeMetaDto> recipeDtos)
-        {
-            await Navigation.PushAsync(new MealsListPage(recipeDtos) { Title = "Bon Appétit" });
-        }
-
         void ResizeListView(ListView listView, int length)
         {
             if (length < 1)
@@ -225,9 +159,81 @@ namespace FeedMe
             return false;
         }
 
+
+        // --------------------------------------------- ASYNC SPAGHETTI ---------------------------------------------------
+
+
         async void Alert(string title, string message, string cancel)
         {
             await DisplayAlert(title, message, cancel);
+        }
+
+        async void gotoMealsListPage(List<RecipeMetaDto> recipeDtos)
+        {
+            await Navigation.PushAsync(new MealsListPage(recipeDtos) { Title = "Bon Appétit" });
+        }
+
+
+        // --------------------------------------------- REQUESTS ---------------------------------------------------
+
+
+        async void GET_ingredientDtos(string _adress)
+        {
+            try
+            {
+                //HttpResponseMessage response = _httpClient.GetAsync(_adress).ConfigureAwait(false).GetAwaiter().GetResult();
+                //HttpResponseMessage response = _httpClient.GetAsync(_adress).GetAwaiter().GetResult();
+                HttpResponseMessage response = await httpClient.GetAsync(_adress);
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    //await DisplayAlert("success", "succeess", "ok");
+                    var result = await response.Content.ReadAsStringAsync();
+                    searchIngredients = SortIngredientsByLenght(JsonConvert.DeserializeObject<List<IngredientDto>>(result));
+                    UpdateSearchIngreadientsListView(searchIngredients);
+                }
+                else
+                {
+                    await DisplayAlert("Response error", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "ok");
+                }
+            }
+            catch (Exception e)
+            {
+                await DisplayAlert("An error occurred", e.Message, "ok");
+            }
+        }
+
+        async void POST_recipeMetas(List<IngredientDto> ingredientDtos)
+        {
+            var json = JsonConvert.SerializeObject(ingredientDtos); //skicka ingredientDto
+
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            try
+            {
+                HttpResponseMessage respone = await httpClient.PostAsync(Constants.recipe_suggest, content);
+
+                if (respone.IsSuccessStatusCode)
+                {
+                    var result = await respone.Content.ReadAsStringAsync(); //ReadAsSwedishStringAsync();
+                    var recipes = JsonConvert.DeserializeObject<List<RecipeMetaDto>>(result);
+
+                    gotoMealsListPage(recipes);
+                }
+                else
+                {
+                    await DisplayAlert("Response error", "Status code " + (int)respone.StatusCode + ": " + respone.StatusCode.ToString(), "ok");
+                }
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("An error occurred", "Server conection failed", "ok");
+            }
+
+            Button_FeedMe.IsEnabled = true;
+            Button_FeedMe.BackgroundColor = Constants.AppColor.green;
+            Button_FeedMe.Text = "FeedMe";
         }
 
 
