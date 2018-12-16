@@ -198,7 +198,7 @@ namespace FeedMe
                     await DisplayAlert("Response error", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "ok");
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 await DisplayAlert("An error occurred", "Server conection failed", "ok");
             }

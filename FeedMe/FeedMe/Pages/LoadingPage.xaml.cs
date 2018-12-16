@@ -30,10 +30,10 @@ namespace FeedMe
             BackgroundImage = "background.jpg";
 
             Image_AppLogo.HeightRequest = Image_AppLogo.Width;
-            Image_AppLogo.Source = "FeedMe_icon.png";
+            Image_AppLogo.Source = "logo_app.png";
 
             Image_CompanyLogo.HeightRequest = Image_CompanyLogo.Width;
-            Image_CompanyLogo.Source = "ananasSoftware.png";
+            Image_CompanyLogo.Source = "logo_company.png";
             Image_CompanyLogo.Margin = Constants.padding1;
         }
 

@@ -14,12 +14,13 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
+
     <StackLayout x:Name="StackLayout_all" Spacing="0" Padding="0">
 
         <Frame Margin="0" Padding="0" x:Name="Frame_Search" CornerRadius="0">
             <StackLayout x:Name="StackLayout_Search" Spacing="0">
                 <SearchBar x:Name="SearchBar_Ingredients" Placeholder="Lägg till ingredienser" HorizontalOptions="Fill" TextChanged="SearchBar_Ingredients_TextChanged"/>
-                
+
                 <ListView IsEnabled="False" IsVisible="False" x:Name="ListView_SearchIngredients" ItemSelected="ListView_SearchIngredients_ItemSelected">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -46,13 +47,13 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                
+
             </StackLayout>
         </Frame>
 
         <ScrollView x:Name="ScrollView_main">
             <StackLayout x:Name="StackLayout_main">
-                
+
                 <Button x:Name="Button_FeedMe" Text="FeedMe" Clicked="Button_Clicked"/>
 
                 <Frame x:Name="Frame_MyIngredients" Padding="0">

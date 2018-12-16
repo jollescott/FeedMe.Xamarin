@@ -5,7 +5,6 @@
              x:Class="FeedMe.MealsListPage">
 
     <StackLayout>
-        
         <ScrollView>
             <ListView x:Name="ListView_Recipes" ItemSelected="ListView_Recipes_ItemSelected">
                 <ListView.ItemTemplate>
