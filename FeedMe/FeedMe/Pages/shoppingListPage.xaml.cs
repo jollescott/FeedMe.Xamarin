@@ -22,7 +22,7 @@ namespace FeedMe.Pages
 
         void XamlSetup()
         {
-            ListView_ShoppingList.BackgroundColor = Constants.backgroundColor;
+            ListView_ShoppingList.BackgroundColor = Constants.AppColor.lightGray;
             //ListView_ShoppingList.ItemsSource = 
         }
 	}

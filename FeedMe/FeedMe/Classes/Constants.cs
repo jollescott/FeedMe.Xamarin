@@ -7,26 +7,33 @@ namespace FeedMe
 {
     class Constants
     {
-        public static Color backgroundColor = Color.FromRgb(230, 230, 230);
-        public static Color navigationBarColor = Color.FromHex("#00CC66");
-        public static Color mainColor1 = Color.FromHex("#00CC66");
-        public static Color mainColor2 = Color.FromHex("#00CC66");
+        public class AppColor
+        {
+            //public static Color backgroundColor = Color.FromRgb(230, 230, 230);
+            public static Color navigationBarColor = Color.FromHex("#00CC66");
 
-        public static Color textColor1 = Color.FromRgb(0, 0, 0);
-        public static Color textColor2 = Color.FromHex("#00CC66");
-        public static Color textColor3 = Color.White;
+            public static Color green = Color.FromHex("#00CC66");
+            public static Color white = Color.FromHex("#FFFFFF");
+            public static Color lightGray = Color.FromHex("#D8D8D8");
 
-        public static Color listBackgroundColor1 = Color.FromRgb(230, 230, 230);
-        public static Color listBackgroundColor2 = Color.FromRgb(220, 220, 220);
+            public static Color text_green = Color.FromHex("#00CC66");
+            public static Color text_black = Color.FromHex("#202020");
+            public static Color text_gray = Color.FromHex("#777777");
+            public static Color text_white = Color.White;
+            public static Color text_link = Color.FromHex("#0000EE");
+        }
 
-        public static Color linkColor = Color.FromHex("#0000EE");
+        public static int textHeight = 50;
+
 
         public static double fontSize1 = Device.GetNamedSize(NamedSize.Large, typeof(Label));
         public static double fontSize2 = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
         public static double fontSize3 = Device.GetNamedSize(NamedSize.Small, typeof(Label));
         public static double fontSize4 = Device.GetNamedSize(NamedSize.Micro, typeof(Label));
 
-        public static int buttonCornerRadius = 10;
+        public static int cornerRadius1 = 15;
+        public static int cornerRadius2 = 5;
+
 
         public static int padding1 = 20;
         public static int padding2 = 15;

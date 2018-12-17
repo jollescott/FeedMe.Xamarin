@@ -8,33 +8,20 @@ using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 using Newtonsoft.Json;
-using FeedMe.Models;
-using System.Linq;
 
 namespace FeedMe
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MealsListPage : ContentPage
-    {
-        List<RecipeMetaModel> recipes;
+	public partial class MealsListPage : ContentPage
+	{
+        List<RecipeMetaDto> recipes;
         HttpClient httpClient = new HttpClient();
-        public MealsListPage(List<RecipeMetaDto> recipes_)
-        {
+		public MealsListPage (List<RecipeMetaDto> recipes_)
+		{
             InitializeComponent();
 
-            var models = recipes_.Select(x => new RecipeMetaModel
-            {
-                Image = x.Image,
-                Name = x.Name,
-                Owner = x.Owner,
-                OwnerLogo = x.OwnerLogo,
-                Source = x.Source,
-                RecipeID = x.RecipeID
-            }).ToList();
+            recipes = recipes_;
 
-            models.Where((x, i) => (i + 1) % 5 == 0).ForEach(x => x.IsAd = true);
-
-            recipes = models;
             XamlSetup();
         }
 
@@ -42,7 +29,10 @@ namespace FeedMe
         {
             BackgroundColor = Color.LightGray;
             ListView_Recipes.BackgroundColor = Color.Transparent;
-            ListView_Recipes.RowHeight = Convert.ToInt32(Application.Current.MainPage.Width * 3 / 5);
+            ListView_Recipes.RowHeight = Convert.ToInt32(Application.Current.MainPage.Width * 3/5);
+            ListView_Recipes.Margin = new Thickness(0, Constants.padding2 / 2, 0, Constants.padding1);
+            //Frame_List.Margin = Constants.padding2; //c# hittar inte xml namn?
+
             ListView_Recipes.ItemsSource = recipes;
         }
 
@@ -79,13 +69,10 @@ namespace FeedMe
         {
             try
             {
-
-
                 HttpResponseMessage response = await httpClient.GetAsync(_adress);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    //await DisplayAlert("success", "succeess", "ok");
                     var result = await response.Content.ReadAsStringAsync();
                     RecipeDto recipe = JsonConvert.DeserializeObject<RecipeDto>(result);
 
@@ -96,9 +83,9 @@ namespace FeedMe
                     await DisplayAlert("Response error", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "ok");
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                await DisplayAlert("An error occurred", e.Message, "ok");
+                await DisplayAlert("An error occurred", "Server conection failed", "ok");
             }
         }
     }

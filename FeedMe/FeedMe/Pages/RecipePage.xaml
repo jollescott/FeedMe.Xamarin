@@ -1,72 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:FeedMe.Controls"
              x:Class="FeedMe.RecipePage">
     <ContentPage.Content>
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="9*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
+        <ScrollView>
+            <StackLayout Spacing="0">
+                
+                <!--Image-->
+                <Grid x:Name="Grid_Images" Margin="0" Padding="0">
 
-
-            <ScrollView Grid.Row="0">
-                <StackLayout Spacing="0">
-
-                    <!--Image-->
-                    <Grid x:Name="Grid_Images" Margin="0" Padding="0">
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="3*"/>
-                            <RowDefinition Height="1*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Image x:Name="Image_Recipe" Aspect="AspectFill" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-                        <Image x:Name="Image_OwnerLogo" Aspect="AspectFit" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
-                    </Grid>
-
-                    <!--Owner Info-->
-                    <StackLayout x:Name="StackLayout_OwnerInfo">
-                        <Label x:Name="Label_OwnerInfoHead" Text="Recept hämtat från:"/>
-                        <Label x:Name="Label_OwnerLink">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1"/>
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </StackLayout>
-
-                    <!--Spacing-->
-                    <ContentView x:Name="ContentView_Spacing1" Margin="0" Padding="0"/>
-
-                    <!--Ingredients Head-->
-                    <Frame x:Name="Frame_IngredientsHead" Margin="0" CornerRadius="0">
-                        <Label x:Name="Label_IngridientsHead" VerticalTextAlignment="Center" FontFamily=""/>
-                    </Frame>
-
-                    <!--Ingredients-->
-                    <StackLayout x:Name="Stack_Ingridients"/>
-
-                    <!--Instructions Head-->
-                    <Frame x:Name="Frame_InstructionsHead" Margin="0" CornerRadius="0">
-                        <Label x:Name="Label_InstructionsHead" VerticalTextAlignment="Center"/>
-                    </Frame>
-
-                    <!--Instructions-->
-                    <StackLayout x:Name="Stack_Instructions"/>
-
-                    <!--Spacing-->
-                    <ContentView x:Name="ContentView_Spacing2" Margin="0" Padding="0"/>
-
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Image x:Name="Image_Recipe" Aspect="AspectFill" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                    <Image x:Name="Image_OwnerLogo" Aspect="AspectFit" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Grid>
+                
+                <!--Owner Info-->
+                <StackLayout x:Name="StackLayout_OwnerInfo">
+                    <Label x:Name="Label_OwnerInfoHead" Text="Recept hämtat från:"/>
+                    <Label x:Name="Label_OwnerLink">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1"/>
+                        </Label.GestureRecognizers>
+                    </Label>
                 </StackLayout>
-            </ScrollView>
-            <controls:AdmobView AdUnit="ca-app-pub-3940256099942544/6300978111" Grid.Row="1"/>
-        </Grid>
 
+                <!--Ingredients Head-->
+                <Frame x:Name="Frame_IngredientsHead" Margin="0" CornerRadius="0">
+                    <Label x:Name="Label_IngridientsHead" VerticalTextAlignment="Center" FontFamily=""/>
+                </Frame>
+
+                <!--Ingredients-->
+                <StackLayout x:Name="Stack_Ingridients"/>
+
+                <!--Instructions Head-->
+                <Frame x:Name="Frame_InstructionsHead" Margin="0" CornerRadius="0">
+                    <Label x:Name="Label_InstructionsHead" VerticalTextAlignment="Center"/>
+                </Frame>
+
+                <!--Instructions-->
+                <StackLayout x:Name="Stack_Instructions"/>
+
+            </StackLayout>
+        </ScrollView>
+            
     </ContentPage.Content>
 </ContentPage>

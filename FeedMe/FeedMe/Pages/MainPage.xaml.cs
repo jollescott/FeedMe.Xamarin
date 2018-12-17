@@ -7,6 +7,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Ramsey.Shared.Dto;
 using Ramsey.Shared.Extensions;
+using FeedMe.Classes;
 
 namespace FeedMe
 {
@@ -30,142 +31,42 @@ namespace FeedMe
         {
             BackgroundImage = "background.jpg";
 
-            StackLayout_all.Padding = Constants.padding2;
-            StackLayout_all.Spacing = Constants.padding2;
+            //Search
 
-            Frame_SearchBar.BackgroundColor = Constants.mainColor1;
+            Frame_Search.BackgroundColor = Constants.AppColor.green;
 
-            SearchBar_Ingredients.BackgroundColor = Constants.backgroundColor;
+            StackLayout_Search.Padding = new Thickness(Constants.padding2, 0, Constants.padding2, Constants.padding2);
 
-            ListView_SearchIngredients.BackgroundColor = Color.White;
+            SearchBar_Ingredients.BackgroundColor = Color.White;
+            SearchBar_Ingredients.HeightRequest = Constants.textHeight;
 
-            //Label_MyIgredients.TextColor = Constants.textColor1;
-            Label_MyIgredients.FontSize = Constants.fontSize2;
-            Label_MyIgredients.Margin = Constants.padding3;
+            ListView_SearchIngredients.BackgroundColor = Constants.AppColor.lightGray;
+            ListView_SearchIngredients.RowHeight = Constants.textHeight;
 
-            ListView_myIngredients.BackgroundColor = Constants.backgroundColor;
-            ListView_myIngredients.RowHeight = Convert.ToInt32(SearchBar_Ingredients.Height);
 
-            Button_FeedMe.TextColor = Constants.textColor3;
+            //Main
+            
+            StackLayout_main.Padding = Constants.padding2;
+            StackLayout_main.Spacing = Constants.padding2;
+
+            Button_FeedMe.TextColor = Constants.AppColor.text_white;
             Button_FeedMe.FontSize = Constants.fontSize1;
-            Button_FeedMe.BackgroundColor = Constants.mainColor2;
-            Button_FeedMe.CornerRadius = Constants.buttonCornerRadius;
-        }
+            Button_FeedMe.BackgroundColor = Constants.AppColor.green;
+            Button_FeedMe.CornerRadius = Constants.cornerRadius1;
 
+            Frame_MyIngredients.CornerRadius = Constants.cornerRadius1;
 
-        /*private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string searchWord = SearchBar_Ingredients.Text.ToLower();
+            Label_MyIgredients.FontSize = Constants.fontSize2;
+            Label_MyIgredients.HeightRequest = Constants.textHeight;
 
+            ListView_myIngredients.BackgroundColor = Constants.AppColor.lightGray;
+            ListView_myIngredients.RowHeight = Constants.textHeight;
+            ListView_myIngredients.HeightRequest = Constants.textHeight;
 
-            if (searchWord != "")
-            {
-                //http GET
-                /*httpClient.GetAsync(Constants.server_adress + searchWord).ContinueWith(async (t) =>
-                {
-                    var response = t.Result;
-
-                    var json = await response.Content.ReadAsStringAsync();
-                    filterdEatebles = JsonConvert.DeserializeObject<List<IngredientDto>>(json, new JsonSerializerSettings {
-                        NullValueHandling = NullValueHandling.Ignore });
-
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        //Update xaml ListView
-                        ListView_Ingredients.ItemsSource = filterdEatebles;
-                    });
-                });
-
-            }
-        }*/
-
-
-        // Klicked FeedMe
-        /*private void Button_Clicked(object sender, EventArgs e)
-        {
-            Button_FeedMe.IsEnabled = false;
-            Button_FeedMe.BackgroundColor = Color.Gray;
-            Button_FeedMe.Text = "Loading...";
-
-            //List<string> ingredientsToPost = new List<string>();
-            //foreach (IngredientDto ingredient in myIngredients)
-            //{
-            //    ingredientsToPost.Add(ingredient.Name);
-            //}
-
-
-
-            PostIngredients(myIngredients);
-
-
-
-            //List<RecipeDto> list = new List<RecipeDto> {
-            //    new RecipeDto
-            //    {
-            //        Name = "Köttbullar och potatis",
-            //        Image = "food.jpg"
-            //    },
-            //    new RecipeDto
-            //    {
-            //        Name = "Mat",
-            //        Image = "food.jpg"
-            //    },
-            //    new RecipeDto
-            //    {
-            //        Name = "Test test test test test",
-            //        Image = "food.jpg"
-            //    }
-            //};
-            //gotoMealsListPage(list);
-        }*/
-
-
-        async void PostIngredients(List<IngredientDto> ingredientDtos)
-        {
-            //string jsonstring = "[";
-            //foreach (IngredientDto ingredient in ingredientDtos)
-            //{
-            //    jsonstring += "\"" + ingredient.IngredientId + "\", ";
-            //}
-            //jsonstring = jsonstring.Remove(jsonstring.Length - 2) + "]";
-
-            //                      "[   \"ing\", \"ing\", \"ing\"   ]"
-
-
-            var json = JsonConvert.SerializeObject(ingredientDtos); //skicka ingredientDto
-            //var json = jsonstring;
-
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            try
-            {
-                HttpResponseMessage respone = await httpClient.PostAsync(Constants.recipe_suggest, content);
-
-                if (respone.IsSuccessStatusCode)
-                {
-                    var result = await respone.Content.ReadAsSwedishStringAsync();
-                    var recipes = JsonConvert.DeserializeObject<List<RecipeMetaDto>>(result);
-
-                    gotoMealsListPage(recipes);
-                }
-                else
-                {
-                    await DisplayAlert("Response error", "Status code " + (int)respone.StatusCode + ": " + respone.StatusCode.ToString(), "ok");
-                }
-            }
-            catch (Exception e)
-            {
-                await DisplayAlert("An error occurred", e.Message, "ok");
-            }
-
-            Button_FeedMe.IsEnabled = true;
-            Button_FeedMe.BackgroundColor = Constants.mainColor1;
-            Button_FeedMe.Text = "FeedMe";
         }
 
 
         // --------------------------------------------- SPAGHETTI ---------------------------------------------------
-
 
 
         private void UpdateMyIngreadientsListView(List<IngredientDto> ingredients)
@@ -175,8 +76,23 @@ namespace FeedMe
             {
                 itemsorce.Insert(0, ingredient);
             }
-
+            
             ListView_myIngredients.ItemsSource = itemsorce;
+
+            ResizeListView(ListView_myIngredients, myIngredients.Count);
+        }
+
+        private void UpdateSearchIngreadientsListView(List<IngredientDto> ingredients)
+        {
+            List<ListItem> items = new List<ListItem>();
+            foreach (IngredientDto ingredient in ingredients)
+            {
+                items.Add(new ListItem {
+                    Name = ingredient.IngredientId,
+                    IconSource = (ExistsIn(ingredient, myIngredients)) ? "icon_remove.png" : "icon_add.png"
+            });
+            }
+            ListView_SearchIngredients.ItemsSource = items;
         }
 
         private List<string> IngredientsToStrings(List<IngredientDto> ingredientDtos)
@@ -188,6 +104,78 @@ namespace FeedMe
             }
             return strIngredients;
         }
+
+        void ResizeListView(ListView listView, int length)
+        {
+            if (length < 1)
+            {
+                length = 1;
+            }
+            double height = length * Constants.textHeight;
+            double adjust = 1 + (length - 1) * 0.36;
+            ListView_myIngredients.HeightRequest = height + adjust;
+        }
+
+        void HideSearchView()
+        {
+            ListView_SearchIngredients.IsVisible = false;
+            ListView_SearchIngredients.IsEnabled = false;
+        }
+
+        void ShowSearchView()
+        {
+            ListView_SearchIngredients.HeightRequest = StackLayout_all.Height - SearchBar_Ingredients.Height - Constants.padding2;
+            ListView_SearchIngredients.MinimumHeightRequest = StackLayout_all.Height - SearchBar_Ingredients.Height - Constants.padding2;
+            ListView_SearchIngredients.IsVisible = true;
+            ListView_SearchIngredients.IsEnabled = true;
+        }
+
+        List<IngredientDto> SortIngredientsByLenght(List<IngredientDto> ingredients)
+        {
+            for (int i = 1; i < ingredients.Count; i++)
+            {
+                int j = 0;
+                while (ingredients[i].IngredientId.Length > ingredients[j].IngredientId.Length)
+                {
+                    j++;
+                }
+                IngredientDto item = ingredients[i];
+                ingredients.RemoveAt(i);
+                ingredients.Insert(j, item);
+            }
+
+            return ingredients;
+        }
+
+        bool ExistsIn(IngredientDto searchItem, List<IngredientDto> list)
+        {
+            foreach (IngredientDto item in list)
+            {
+                if (item.IngredientId == searchItem.IngredientId)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        // --------------------------------------------- ASYNC SPAGHETTI ---------------------------------------------------
+
+
+        async void Alert(string title, string message, string cancel)
+        {
+            await DisplayAlert(title, message, cancel);
+        }
+
+        async void gotoMealsListPage(List<RecipeMetaDto> recipeDtos)
+        {
+            await Navigation.PushAsync(new MealsListPage(recipeDtos) { Title = "Bon Appétit" });
+        }
+
+
+        // --------------------------------------------- REQUESTS ---------------------------------------------------
+
 
         async void GET_ingredientDtos(string _adress)
         {
@@ -202,24 +190,23 @@ namespace FeedMe
                 {
                     //await DisplayAlert("success", "succeess", "ok");
                     var result = await response.Content.ReadAsStringAsync();
-                    searchIngredients = JsonConvert.DeserializeObject<List<IngredientDto>>(result);
-                    ListView_SearchIngredients.ItemsSource = IngredientsToStrings(searchIngredients);
+                    searchIngredients = SortIngredientsByLenght(JsonConvert.DeserializeObject<List<IngredientDto>>(result));
+                    UpdateSearchIngreadientsListView(searchIngredients);
                 }
                 else
                 {
                     await DisplayAlert("Response error", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "ok");
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                await DisplayAlert("An error occurred", e.Message, "ok");
+                await DisplayAlert("An error occurred", "Server conection failed", "ok");
             }
         }
 
         async void POST_recipeMetas(List<IngredientDto> ingredientDtos)
         {
             var json = JsonConvert.SerializeObject(ingredientDtos); //skicka ingredientDto
-            //var json = jsonstring;
 
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -229,7 +216,7 @@ namespace FeedMe
 
                 if (respone.IsSuccessStatusCode)
                 {
-                    var result = await respone.Content.ReadAsSwedishStringAsync();
+                    var result = await respone.Content.ReadAsStringAsync(); //ReadAsSwedishStringAsync();
                     var recipes = JsonConvert.DeserializeObject<List<RecipeMetaDto>>(result);
 
                     gotoMealsListPage(recipes);
@@ -239,56 +226,62 @@ namespace FeedMe
                     await DisplayAlert("Response error", "Status code " + (int)respone.StatusCode + ": " + respone.StatusCode.ToString(), "ok");
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                await DisplayAlert("An error occurred", e.Message, "ok");
+                await DisplayAlert("An error occurred", "Server conection failed", "ok");
             }
 
             Button_FeedMe.IsEnabled = true;
-            Button_FeedMe.BackgroundColor = Constants.mainColor1;
+            Button_FeedMe.BackgroundColor = Constants.AppColor.green;
             Button_FeedMe.Text = "FeedMe";
-        }
-
-
-        async void gotoMealsListPage(List<RecipeMetaDto> recipeDtos)
-        {
-            await Navigation.PushAsync(new MealsListPage(recipeDtos) { Title = "Bon Appétit" });
-        }
-
-        void ResizeListView()
-        {
-            int height = Convert.ToInt32(myIngredients.Count * SearchBar_Ingredients.Height);
-            double adjust = -4 * (myIngredients.Count - 1);
-            ListView_myIngredients.HeightRequest = height + adjust;
         }
 
 
         // --------------------------------------------- EVENTS ---------------------------------------------------
 
 
-        /*private void Entry_Ingredients_Completed(object sender, EventArgs e)
-        {
-            string text = Entry_Ingredients.Text;
-            if (text.Length > 1)
-                text = char.ToUpper(text[0]) + text.Substring(1);
-
-            myIngredients.Add(new IngredientDto() { IngredientId = text });
-            Entry_Ingredients.Text = "";
-            UpdateMyIngreadientsListView(myIngredients);
-        }*/
-
         private void ListView_SearchIngredients_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            myIngredients.Add(searchIngredients[IngredientsToStrings(searchIngredients).IndexOf(Convert.ToString(e.SelectedItem))]);
+            IngredientDto selectedIngredient = searchIngredients[((List<ListItem>)ListView_SearchIngredients.ItemsSource).IndexOf((ListItem)e.SelectedItem)];
+            if (ExistsIn(selectedIngredient, myIngredients))
+            {
+                foreach (IngredientDto ingredient in myIngredients)
+                {
+                    if (ingredient.IngredientId == selectedIngredient.IngredientId)
+                    {
+                        myIngredients.Remove(ingredient);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                myIngredients.Add(selectedIngredient);
+            }
+            UpdateSearchIngreadientsListView(searchIngredients);
             UpdateMyIngreadientsListView(myIngredients);
         }
 
+        bool searching = false;
         private void SearchBar_Ingredients_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchWord = SearchBar_Ingredients.Text.ToLower();
-            string adress = "https://ramsey.azurewebsites.net/ingredient/suggest?search=" + searchWord;
 
-            GET_ingredientDtos(adress);
+            if (searchWord.Length > 0)
+            {
+                if (!searching)
+                {
+                    searching = true;
+                    ShowSearchView();
+                }
+
+                string adress = Constants.ingredient_search + searchWord;
+                GET_ingredientDtos(adress);
+            }
+            else{
+                searching = false;
+                HideSearchView();
+            }
         }
 
         private void ListView_myIngredients_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -300,16 +293,18 @@ namespace FeedMe
         // Klicked FeedMe
         private void Button_Clicked(object sender, EventArgs e)
         {
-            Button_FeedMe.IsEnabled = false;
-            Button_FeedMe.BackgroundColor = Color.Gray;
-            Button_FeedMe.Text = "Ladddar...";
+            if (myIngredients.Count > 0)
+            {
+                Button_FeedMe.IsEnabled = false;
+                Button_FeedMe.BackgroundColor = Color.Gray;
+                Button_FeedMe.Text = "Laddar...";
 
-            POST_recipeMetas(myIngredients);
-        }
-
-        private void ListView_myIngredients_ItemAppearing(object sender, ItemVisibilityEventArgs e)
-        {
-            ResizeListView();
+                POST_recipeMetas(myIngredients);
+            }
+            else
+            {
+                Alert("Ingredienser saknas", "Du måste lägga till ingredienser för att kunna söka efter recept", "ok");
+            }
         }
     }
 }

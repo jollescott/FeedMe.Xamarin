@@ -6,10 +6,6 @@
   <!-- Base theme applied no matter what API -->
   <style name="MainTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
 
-    <!--Remove all caps for buttons.    ...and maybe other stuff too-->
-    <item name="android:textAllCaps">false</item>
-
-
     <!--If you are using revision 22.1 please use just windowNoTitle. Without android:-->
     <item name="windowNoTitle">true</item>
     <!--We will be using the toolbar so no need to show ActionBar-->
@@ -21,16 +17,29 @@
     <item name="colorPrimaryDark">#00AA55</item>
     <!-- colorAccent is used as the default value for colorControlActivated
          which is used to tint widgets -->
-    <item name="colorAccent">#FF4081</item>
+    <item name="colorAccent">#00CC66</item>
     <!-- You can also set colorControlNormal, colorControlActivated
          colorControlHighlight and colorSwitchThumbNormal. -->
     <item name="windowActionModeOverlay">true</item>
 
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
+
+
+
+    <!--Remove all caps for buttons-->
+    <item name="android:textAllCaps">false</item>
+    <!--Background-->
+    <item name="android:windowBackground">@drawable/splash_background</item>
+    
+    
   </style>
 
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
-    <item name="colorAccent">#FF4081</item>
+    <item name="colorAccent">#00CC66</item>
+  </style>
+
+  <style name="MyTheme.Splash" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="android:windowBackground">@drawable/splash_background</item>
   </style>
   
 </resources>
