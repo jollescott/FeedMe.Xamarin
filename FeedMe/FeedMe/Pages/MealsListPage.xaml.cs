@@ -22,7 +22,7 @@ namespace FeedMe
 		{
             InitializeComponent();
 
-            recipes = recipes_.Select((x, i) =>
+            recipes = recipes_.Select(x =>
             {
                 return new RecipeMetaModel
                 {
@@ -31,10 +31,17 @@ namespace FeedMe
                     Name = x.Name,
                     Owner = x.Owner,
                     OwnerLogo = x.OwnerLogo,
-                    RecipeID = x.RecipeID,
-                    IsAd = i % 4 == 0
+                    RecipeID = x.RecipeID
                 };
             }).ToList();
+
+            for (int i = 0; i < recipes.Count; i++)
+            {
+                if (i % 4 == 0)
+                {
+                    recipes.Insert(i, new RecipeMetaModel { IsAd = true});
+                }
+            }
 
             XamlSetup();
         }
