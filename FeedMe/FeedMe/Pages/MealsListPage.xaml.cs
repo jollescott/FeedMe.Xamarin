@@ -41,12 +41,10 @@ namespace FeedMe
 
         void XamlSetup()
         {
-            BackgroundColor = Color.LightGray;
             ListView_Recipes.BackgroundColor = Color.Transparent;
-            ListView_Recipes.RowHeight = Convert.ToInt32(Application.Current.MainPage.Width * 3/5);
-            ListView_Recipes.Margin = new Thickness(0, Constants.padding2 / 2, 0, Constants.padding1);
-            //Frame_List.Margin = Constants.padding2; //c# hittar inte xml namn?
+            //ListView_Recipes.Margin = new Thickness(0, Constants.padding2 / 2, 0, Constants.padding1);
 
+            //Frame_List.Margin = Constants.padding2; //går inte för den är i view cell
             ListView_Recipes.ItemsSource = recipes;
         }
 

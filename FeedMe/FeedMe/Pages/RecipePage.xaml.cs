@@ -14,7 +14,6 @@ namespace FeedMe
         public RecipePage (RecipeDto recipe_)
 		{
             InitializeComponent();
-            //NavigationPage.SetHasNavigationBar(this, false);
 
             recipe = recipe_;
             XamlSetup();

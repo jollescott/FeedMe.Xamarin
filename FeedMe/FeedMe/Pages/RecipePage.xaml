@@ -5,7 +5,7 @@
              x:Class="FeedMe.RecipePage">
     <ContentPage.Content>
 
-        <Grid>
+        <Grid RowSpacing="0" ColumnSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
@@ -58,7 +58,7 @@
 
                 </StackLayout>
             </ScrollView>
-            <controls:AdmobView AdUnit="ca-app-pub-3940256099942544/6300978111"/>
+            <controls:AdmobView AdUnit="ca-app-pub-3940256099942544/6300978111" Grid.Row="1" />
         </Grid>
             
     </ContentPage.Content>

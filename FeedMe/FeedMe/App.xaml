@@ -4,5 +4,10 @@
              x:Class="FeedMe.App">
     <Application.Resources>
 
+        <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+            <Setter x:Name="Setter_BackgroundColor" Property="BackgroundColor" Value="#F2F2F2"/>
+        </Style>
+
+
     </Application.Resources>
 </Application>

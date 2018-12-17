@@ -14,7 +14,7 @@
 
             <DataTemplate x:Key="recipeTemplate">
                 <ViewCell>
-                    <Frame x:Name="Frame_List" Margin="15, 7.5, 15, 7.5" Padding="0" CornerRadius="0">
+                    <Frame x:Name="Frame_List" Margin="15, 7.5, 15, 7.5" Padding="0" CornerRadius="0" HeightRequest="220">
 
                         <Grid Padding="0" HorizontalOptions="Fill" VerticalOptions="Fill" RowSpacing="0" ColumnSpacing="0">
                             <Grid.RowDefinitions>
@@ -43,10 +43,8 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout>
-        <ScrollView>
-            <ListView x:Name="ListView_Recipes" ItemsSource="{x:StaticResource recipeDataTemplateSelector}" ItemSelected="ListView_Recipes_ItemSelected">
-            </ListView>
-        </ScrollView>
+    <StackLayout Padding="0" Margin="0">
+        <ListView x:Name="ListView_Recipes" HasUnevenRows="True" ItemTemplate="{x:StaticResource recipeDataTemplateSelector}" ItemSelected="ListView_Recipes_ItemSelected">
+        </ListView>
     </StackLayout>
 </ContentPage>

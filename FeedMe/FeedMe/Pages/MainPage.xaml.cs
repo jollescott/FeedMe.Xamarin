@@ -29,7 +29,7 @@ namespace FeedMe
 
         void XamlSetup()
         {
-            BackgroundImage = "background.jpg";
+            //BackgroundImage = "background.jpg";
 
             //Search
 

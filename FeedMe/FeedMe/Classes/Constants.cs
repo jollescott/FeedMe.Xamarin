@@ -9,12 +9,12 @@ namespace FeedMe
     {
         public class AppColor
         {
-            //public static Color backgroundColor = Color.FromRgb(230, 230, 230);
+            public static Color backgroundColor = Color.FromHex("#F2F2F2");
             public static Color navigationBarColor = Color.FromHex("#00CC66");
 
             public static Color green = Color.FromHex("#00CC66");
             public static Color white = Color.FromHex("#FFFFFF");
-            public static Color lightGray = Color.FromHex("#D8D8D8");
+            public static Color lightGray = Color.FromHex("#E6E6E6");
 
             public static Color text_green = Color.FromHex("#00CC66");
             public static Color text_black = Color.FromHex("#202020");

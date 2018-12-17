@@ -23,18 +23,20 @@ namespace FeedMe
 		{
 			InitializeComponent ();
             XamlSetup();
+
+            BackgroundColor = Color.White;
 		}
 
         void XamlSetup()
         {
-            BackgroundImage = "background.jpg";
+            //BackgroundImage = "background.jpg";
 
             Image_AppLogo.HeightRequest = Image_AppLogo.Width;
             Image_AppLogo.Source = "logo_app.png";
 
-            Image_CompanyLogo.HeightRequest = Image_CompanyLogo.Width;
-            Image_CompanyLogo.Source = "logo_company.png";
-            Image_CompanyLogo.Margin = Constants.padding1;
+            //Image_CompanyLogo.HeightRequest = Image_CompanyLogo.Width;
+            //Image_CompanyLogo.Source = "logo_company.png";
+            //Image_CompanyLogo.Margin = Constants.padding1;
         }
 
 
