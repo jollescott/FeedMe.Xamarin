@@ -8,19 +8,33 @@ using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 using Newtonsoft.Json;
+using System.Linq;
+using FeedMe.Models;
 
 namespace FeedMe
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class MealsListPage : ContentPage
 	{
-        List<RecipeMetaDto> recipes;
+        List<RecipeMetaModel> recipes;
         HttpClient httpClient = new HttpClient();
 		public MealsListPage (List<RecipeMetaDto> recipes_)
 		{
             InitializeComponent();
 
-            recipes = recipes_;
+            recipes = recipes_.Select((x, i) =>
+            {
+                return new RecipeMetaModel
+                {
+                    Image = x.Image,
+                    Source = x.Source,
+                    Name = x.Name,
+                    Owner = x.Owner,
+                    OwnerLogo = x.OwnerLogo,
+                    RecipeID = x.RecipeID,
+                    IsAd = i % 4 == 0
+                };
+            }).ToList();
 
             XamlSetup();
         }

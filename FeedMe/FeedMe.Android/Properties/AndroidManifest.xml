@@ -4,6 +4,5 @@
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
   <activity android:name="com.google.android.gms.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" android:theme="@android:style/Theme.Translucent" />
-	<application android:label="FeedMe.Android"></application>
 	<application android:label="FeedMe.Android" android:icon="@drawable/logo_app"></application>
 </manifest>
