@@ -1,4 +1,7 @@
-﻿using System;
+﻿using FeedMe.Interfaces;
+using FeedMe.Pages.Popups;
+using Rg.Plugins.Popup.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,6 +36,12 @@ namespace FeedMe.Pages.MasterDetail
             {
                 case 0:
                     Detail = new NavigationPage(new MainPage());
+                    break;
+                case 1:
+                    
+                    if(DependencyService.Get<IFacebook>().UserId == null)
+                        PopupNavigation.Instance.PushAsync(new LoginPage());
+
                     break;
             }
 
