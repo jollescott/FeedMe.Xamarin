@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:FeedMe.Controls;assembly=FeedMe"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fft="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              x:Class="FeedMe.RecipePage">
     <ContentPage.Content>
 
@@ -27,18 +29,24 @@
                         </Grid.ColumnDefinitions>
 
                         <Image x:Name="Image_Recipe" Aspect="AspectFill" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-                        <Image x:Name="Image_OwnerLogo" Aspect="AspectFit" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <ff:CachedImage x:Name="Image_OwnerLogo" Aspect="AspectFit" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
+                            <ff:CachedImage.Transformations>
+                                <fft:CircleTransformation BorderHexColor="#000000" BorderSize="5"/>
+                            </ff:CachedImage.Transformations>
+                        </ff:CachedImage>
                     </Grid>
 
                     <!--Owner Info-->
-                    <StackLayout x:Name="StackLayout_OwnerInfo">
-                        <Label x:Name="Label_OwnerInfoHead" Text="Recept hämtat från:"/>
-                        <Label x:Name="Label_OwnerLink">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1"/>
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </StackLayout>
+                    <Frame Padding="0">
+                        <StackLayout x:Name="StackLayout_OwnerInfo">
+                            <Label x:Name="Label_OwnerInfoHead" Text="Recept hämtat från:"/>
+                            <Label x:Name="Label_OwnerLink">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+                    </Frame>
 
                     <!--Ingredients Head-->
                     <Frame x:Name="Frame_IngredientsHead" Margin="0" CornerRadius="0">
