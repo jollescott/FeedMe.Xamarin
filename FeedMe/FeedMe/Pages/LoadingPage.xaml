@@ -11,9 +11,9 @@
     </ContentPage.Content>
 
     <AbsoluteLayout x:Name="AbsLayout">
-        <Image x:Name="Image_AppLogo"
+        <!--Image x:Name="Image_AppLogo"
                AbsoluteLayout.LayoutBounds ="0.5, 0.5, 0.4, 0.4"
-               AbsoluteLayout.LayoutFlags="All"/>
+               AbsoluteLayout.LayoutFlags="All"/-->
         
         <!--Image x:Name="Image_CompanyLogo"
                AbsoluteLayout.LayoutBounds ="0, 1, 0.3, 0.3"

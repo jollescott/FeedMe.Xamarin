@@ -170,7 +170,7 @@ namespace FeedMe
 
         async void gotoMealsListPage(List<RecipeMetaDto> recipeDtos)
         {
-            await Navigation.PushAsync(new MealsListPage(recipeDtos) { Title = "Bon Appétit" });
+            await Navigation.PushAsync(new MealsListPage(recipeDtos, myIngredients) { Title = "Bon Appétit" });
         }
 
 

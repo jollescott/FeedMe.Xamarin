@@ -102,7 +102,7 @@
 
         </StackLayout>
 
-        <controls:AdmobView AdUnit="ca-app-pub-3940256099942544/6300978111" Grid.Row="1" />
+        <controls:AdmobView Grid.Row="1" />
 
     </Grid>
 

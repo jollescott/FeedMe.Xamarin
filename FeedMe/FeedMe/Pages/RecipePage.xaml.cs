@@ -1,5 +1,6 @@
 ﻿using Ramsey.Shared.Dto;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Xamarin.Forms;
@@ -11,11 +12,13 @@ namespace FeedMe
 	public partial class RecipePage : ContentPage
 	{
         RecipeDto recipe;
-        public RecipePage (RecipeDto recipe_)
+        List<IngredientDto> myIngredients;
+        public RecipePage (RecipeDto recipe, List<IngredientDto> myIngredients)
 		{
             InitializeComponent();
 
-            recipe = recipe_;
+            this.recipe = recipe;
+            this.myIngredients = myIngredients;
             XamlSetup();
 		}
 

@@ -29,10 +29,10 @@ namespace FeedMe
 
         void XamlSetup()
         {
-            //BackgroundImage = "background.jpg";
+            BackgroundImage = "background_loading.png";
 
-            Image_AppLogo.HeightRequest = Image_AppLogo.Width;
-            Image_AppLogo.Source = "logo_app.png";
+            //Image_AppLogo.HeightRequest = Image_AppLogo.Width;
+            //Image_AppLogo.Source = "logo_app.png";
 
             //Image_CompanyLogo.HeightRequest = Image_CompanyLogo.Width;
             //Image_CompanyLogo.Source = "logo_company.png";

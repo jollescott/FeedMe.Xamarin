@@ -17,10 +17,13 @@ namespace FeedMe
 	public partial class MealsListPage : ContentPage
 	{
         List<RecipeMetaModel> recipes;
+        List<IngredientDto> myIngredients;
         HttpClient httpClient = new HttpClient();
-		public MealsListPage (List<RecipeMetaDto> recipes_)
+		public MealsListPage (List<RecipeMetaDto> recipes_, List<IngredientDto> myIngredients)
 		{
             InitializeComponent();
+
+            this.myIngredients = myIngredients;
 
             recipes = recipes_.Select(x =>
             {
@@ -73,7 +76,7 @@ namespace FeedMe
         //Next page
         async void gotoRecipePage(RecipeDto meal)
         {
-            await Navigation.PushAsync(new RecipePage(meal) { Title = meal.Name });
+            await Navigation.PushAsync(new RecipePage(meal, myIngredients) { Title = meal.Name });
 
             ListView_Recipes.SelectedItem = null;
         }

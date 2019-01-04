@@ -5,7 +5,7 @@
           x:Class="FeedMe.Controls.Cells.AdListCell">
   <ViewCell.View>
       <StackLayout>
-            <controls:AdmobView AdUnit="ca-app-pub-3940256099942544/6300978111"/>
+            <controls:AdmobView/>
        </StackLayout>
   </ViewCell.View>
 </ViewCell>
