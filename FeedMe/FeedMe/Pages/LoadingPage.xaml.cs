@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
 using System.Net.Http;
 using FeedMe.Pages.MasterDetail;
-
+using Ramsey.Shared.Misc;
 
 namespace FeedMe
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class LoadingPage : ContentPage
 	{
 
@@ -56,7 +50,7 @@ namespace FeedMe
             {
                 try
                 {
-                    HttpResponseMessage response = await httpClient.GetAsync(_adress);
+                    HttpResponseMessage response = await httpClient.GetAsync(RamseyApi.V2.Ingredient.Suggest);
 
                     if (response.IsSuccessStatusCode)
                     {

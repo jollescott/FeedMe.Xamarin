@@ -43,6 +43,10 @@ namespace FeedMe.Pages.MasterDetail
                         PopupNavigation.Instance.PushAsync(new LoginPage());
 
                     break;
+
+                case 2:
+                    Detail = new NavigationPage(new shoppingListPage());
+                    break;
             }
 
             /*var page = (Page)Activator.CreateInstance(item.TargetType);

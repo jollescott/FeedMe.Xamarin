@@ -1,4 +1,5 @@
 ﻿using Ramsey.Shared.Dto;
+using Ramsey.Shared.Dto.V2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,9 @@ namespace FeedMe
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class RecipePage : ContentPage
 	{
-        RecipeDto recipe;
-        List<IngredientDto> myIngredients;
-        public RecipePage (RecipeDto recipe, List<IngredientDto> myIngredients)
+        RecipeDtoV2 recipe;
+        List<IngredientDtoV2> myIngredients;
+        public RecipePage (RecipeDtoV2 recipe, List<IngredientDtoV2> myIngredients)
 		{
             InitializeComponent();
 
@@ -50,11 +51,11 @@ namespace FeedMe
             Stack_Ingridients.Margin = Constants.padding1;
 
             string dot = "- ";
-            for (int i = 0; i < recipe.Ingredients.Count; i++)
+            for (int i = 0; i < recipe.Ingredients.Count(); i++)
             {
                 Stack_Ingridients.Children.Add(new Label()
                 {
-                    Text = dot + recipe.Ingredients[i],
+                    Text = dot + recipe.Ingredients.ToList()[i],
                     TextColor = Constants.AppColor.text_black,
                     FontSize = Constants.fontSize3,
                     Margin = Constants.textListMargin
@@ -73,9 +74,9 @@ namespace FeedMe
             Stack_Instructions.Margin = new Thickness( Constants.padding2, Constants.padding2, Constants.padding2, 3 * Constants.padding2 );
 
             int n = 1;
-            for (int i = 0; i < recipe.Directions.Count; i++)
+            for (int i = 0; i < recipe.Directions.Count(); i++)
             {
-                string text = recipe.Directions[i].TrimStart();
+                string text = recipe.Directions.ToList()[i].TrimStart();
 
                 if (char.IsDigit(text[0]))
                 {
@@ -112,7 +113,7 @@ namespace FeedMe
                     //Add sub heading
                     Stack_Instructions.Children.Add(new Label()
                     {
-                        Text = recipe.Directions[i].TrimStart(),
+                        Text = recipe.Directions.ToList()[i].TrimStart(),
                         TextColor = Constants.AppColor.text_green,
                         FontSize = Constants.fontSize2,
                         Margin = new Thickness(Constants.textListMargin, Constants.padding3, Constants.textListMargin, Constants.textListMargin),

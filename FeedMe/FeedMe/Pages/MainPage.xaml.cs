@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 using Ramsey.Shared.Dto;
 using Ramsey.Shared.Extensions;
 using FeedMe.Classes;
+using Ramsey.Shared.Misc;
+using Ramsey.Shared.Dto.V2;
 
 namespace FeedMe
 {
@@ -15,14 +17,13 @@ namespace FeedMe
     {
         private readonly HttpClient httpClient = new HttpClient();
 
-        List<IngredientDto> searchIngredients = new List<IngredientDto>();
-        List<IngredientDto> myIngredients = new List<IngredientDto>();
+        List<IngredientDtoV2> searchIngredients = new List<IngredientDtoV2>();
+        List<IngredientDtoV2> myIngredients = new List<IngredientDtoV2>();
 
 
         public MainPage()
         {
             InitializeComponent();
-
             XamlSetup();
         }
 
@@ -69,10 +70,10 @@ namespace FeedMe
         // --------------------------------------------- SPAGHETTI ---------------------------------------------------
 
 
-        private void UpdateMyIngreadientsListView(List<IngredientDto> ingredients)
+        private void UpdateMyIngreadientsListView(List<IngredientDtoV2> ingredients)
         {
-            List<IngredientDto> itemsorce = new List<IngredientDto>();
-            foreach (IngredientDto ingredient in myIngredients)
+            List<IngredientDtoV2> itemsorce = new List<IngredientDtoV2>();
+            foreach (IngredientDtoV2 ingredient in myIngredients)
             {
                 itemsorce.Insert(0, ingredient);
             }
@@ -82,10 +83,10 @@ namespace FeedMe
             ResizeListView(ListView_myIngredients, myIngredients.Count);
         }
 
-        private void UpdateSearchIngreadientsListView(List<IngredientDto> ingredients)
+        private void UpdateSearchIngreadientsListView(List<IngredientDtoV2> ingredients)
         {
             List<ListItem> items = new List<ListItem>();
-            foreach (IngredientDto ingredient in ingredients)
+            foreach (var ingredient in ingredients)
             {
                 items.Add(new ListItem {
                     Name = ingredient.IngredientId,
@@ -95,10 +96,10 @@ namespace FeedMe
             ListView_SearchIngredients.ItemsSource = items;
         }
 
-        private List<string> IngredientsToStrings(List<IngredientDto> ingredientDtos)
+        private List<string> IngredientsToStrings(List<IngredientDtoV2> ingredientDtos)
         {
             List<string> strIngredients = new List<string>();
-            foreach (IngredientDto ingredient in ingredientDtos)
+            foreach (IngredientDtoV2 ingredient in ingredientDtos)
             {
                 strIngredients.Add(ingredient.IngredientId);
             }
@@ -130,7 +131,7 @@ namespace FeedMe
             ListView_SearchIngredients.IsEnabled = true;
         }
 
-        List<IngredientDto> SortIngredientsByLenght(List<IngredientDto> ingredients)
+        List<IngredientDtoV2> SortIngredientsByLenght(List<IngredientDtoV2> ingredients)
         {
             for (int i = 1; i < ingredients.Count; i++)
             {
@@ -139,7 +140,7 @@ namespace FeedMe
                 {
                     j++;
                 }
-                IngredientDto item = ingredients[i];
+                IngredientDtoV2 item = ingredients[i];
                 ingredients.RemoveAt(i);
                 ingredients.Insert(j, item);
             }
@@ -147,9 +148,9 @@ namespace FeedMe
             return ingredients;
         }
 
-        bool ExistsIn(IngredientDto searchItem, List<IngredientDto> list)
+        bool ExistsIn(IngredientDtoV2 searchItem, List<IngredientDtoV2> list)
         {
-            foreach (IngredientDto item in list)
+            foreach (IngredientDtoV2 item in list)
             {
                 if (item.IngredientId == searchItem.IngredientId)
                 {
@@ -168,7 +169,7 @@ namespace FeedMe
             await DisplayAlert(title, message, cancel);
         }
 
-        async void gotoMealsListPage(List<RecipeMetaDto> recipeDtos)
+        async void gotoMealsListPage(List<RecipeMetaDtoV2> recipeDtos)
         {
             await Navigation.PushAsync(new MealsListPage(recipeDtos, myIngredients) { Title = "Bon Appétit" });
         }
@@ -177,20 +178,20 @@ namespace FeedMe
         // --------------------------------------------- REQUESTS ---------------------------------------------------
 
 
-        async void GET_ingredientDtos(string _adress)
+        async void GET_ingredientDtos(string search)
         {
             try
             {
                 //HttpResponseMessage response = _httpClient.GetAsync(_adress).ConfigureAwait(false).GetAwaiter().GetResult();
                 //HttpResponseMessage response = _httpClient.GetAsync(_adress).GetAwaiter().GetResult();
-                HttpResponseMessage response = await httpClient.GetAsync(_adress);
+                HttpResponseMessage response = await httpClient.GetAsync(RamseyApi.V2.Ingredient.Suggest + "?search=" + search);
 
 
                 if (response.IsSuccessStatusCode)
                 {
                     //await DisplayAlert("success", "succeess", "ok");
                     var result = await response.Content.ReadAsStringAsync();
-                    searchIngredients = SortIngredientsByLenght(JsonConvert.DeserializeObject<List<IngredientDto>>(result));
+                    searchIngredients = SortIngredientsByLenght(JsonConvert.DeserializeObject<List<IngredientDtoV2>>(result));
                     UpdateSearchIngreadientsListView(searchIngredients);
                 }
                 else
@@ -204,7 +205,7 @@ namespace FeedMe
             }
         }
 
-        async void POST_recipeMetas(List<IngredientDto> ingredientDtos)
+        async void POST_recipeMetas(List<IngredientDtoV2> ingredientDtos)
         {
             var json = JsonConvert.SerializeObject(ingredientDtos); //skicka ingredientDto
 
@@ -212,12 +213,12 @@ namespace FeedMe
 
             try
             {
-                HttpResponseMessage respone = await httpClient.PostAsync(Constants.recipe_suggest, content);
+                HttpResponseMessage respone = await httpClient.PostAsync(RamseyApi.V2.Recipe.Suggest, content);
 
                 if (respone.IsSuccessStatusCode)
                 {
                     var result = await respone.Content.ReadAsStringAsync(); //ReadAsSwedishStringAsync();
-                    var recipes = JsonConvert.DeserializeObject<List<RecipeMetaDto>>(result);
+                    var recipes = JsonConvert.DeserializeObject<List<RecipeMetaDtoV2>>(result);
 
                     gotoMealsListPage(recipes);
                 }
@@ -237,15 +238,19 @@ namespace FeedMe
         }
 
 
+        // -------------------------------------------- Save/Load -------------------------------------------------
+
+
+
         // --------------------------------------------- EVENTS ---------------------------------------------------
 
 
         private void ListView_SearchIngredients_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            IngredientDto selectedIngredient = searchIngredients[((List<ListItem>)ListView_SearchIngredients.ItemsSource).IndexOf((ListItem)e.SelectedItem)];
+            IngredientDtoV2 selectedIngredient = searchIngredients[((List<ListItem>)ListView_SearchIngredients.ItemsSource).IndexOf((ListItem)e.SelectedItem)];
             if (ExistsIn(selectedIngredient, myIngredients))
             {
-                foreach (IngredientDto ingredient in myIngredients)
+                foreach (IngredientDtoV2 ingredient in myIngredients)
                 {
                     if (ingredient.IngredientId == selectedIngredient.IngredientId)
                     {
@@ -275,8 +280,8 @@ namespace FeedMe
                     ShowSearchView();
                 }
 
-                string adress = Constants.ingredient_search + searchWord;
-                GET_ingredientDtos(adress);
+                //string adress = Constants.ingredient_search + searchWord;
+                GET_ingredientDtos(searchWord);
             }
             else{
                 searching = false;
@@ -286,7 +291,7 @@ namespace FeedMe
 
         private void ListView_myIngredients_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            myIngredients.Remove(ListView_myIngredients.SelectedItem as IngredientDto);
+            myIngredients.Remove(ListView_myIngredients.SelectedItem as IngredientDtoV2);
             UpdateMyIngreadientsListView(myIngredients);
         }
 

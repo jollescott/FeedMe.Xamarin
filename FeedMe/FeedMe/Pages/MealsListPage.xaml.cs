@@ -10,6 +10,7 @@ using Xamarin.Forms.Xaml;
 using Newtonsoft.Json;
 using System.Linq;
 using FeedMe.Models;
+using Ramsey.Shared.Dto.V2;
 
 namespace FeedMe
 {
@@ -17,9 +18,9 @@ namespace FeedMe
 	public partial class MealsListPage : ContentPage
 	{
         List<RecipeMetaModel> recipes;
-        List<IngredientDto> myIngredients;
+        List<IngredientDtoV2> myIngredients;
         HttpClient httpClient = new HttpClient();
-		public MealsListPage (List<RecipeMetaDto> recipes_, List<IngredientDto> myIngredients)
+		public MealsListPage (List<RecipeMetaDtoV2> recipes_, List<IngredientDtoV2> myIngredients)
 		{
             InitializeComponent();
 
@@ -74,7 +75,7 @@ namespace FeedMe
         }
 
         //Next page
-        async void gotoRecipePage(RecipeDto meal)
+        async void gotoRecipePage(RecipeDtoV2 meal)
         {
             await Navigation.PushAsync(new RecipePage(meal, myIngredients) { Title = meal.Name });
 
@@ -96,7 +97,7 @@ namespace FeedMe
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
-                    RecipeDto recipe = JsonConvert.DeserializeObject<RecipeDto>(result);
+                    RecipeDtoV2 recipe = JsonConvert.DeserializeObject<RecipeDtoV2>(result);
 
                     gotoRecipePage(recipe);
                 }
