@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using FeedMe.Models;
 using Ramsey.Shared.Dto.V2;
+using Ramsey.Shared.Misc;
 
 namespace FeedMe
 {
@@ -70,7 +71,7 @@ namespace FeedMe
             {
                 int index = recipes.IndexOf(selected);
 
-                GET_recipeDto(Constants.recipe_retrive + recipes[index].RecipeID);
+                GET_recipeDto(recipes[index].RecipeID);
             }
         }
 
@@ -88,11 +89,11 @@ namespace FeedMe
             await Navigation.PopAsync();
         }
 
-        async void GET_recipeDto(string _adress)
+        async void GET_recipeDto(string id)
         {
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync(_adress);
+                HttpResponseMessage response = await httpClient.GetAsync(RamseyApi.V2.Recipe.Retreive + "?id=" + id);
 
                 if (response.IsSuccessStatusCode)
                 {

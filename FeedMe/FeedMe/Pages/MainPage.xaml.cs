@@ -24,6 +24,7 @@ namespace FeedMe
         public MainPage()
         {
             InitializeComponent();
+            myIngredients = JsonConvert.DeserializeObject<List<IngredientDtoV2>>(User.User.SavedIngredinets);
             XamlSetup();
         }
 
@@ -62,7 +63,9 @@ namespace FeedMe
 
             ListView_myIngredients.BackgroundColor = Constants.AppColor.lightGray;
             ListView_myIngredients.RowHeight = Constants.textHeight;
-            ListView_myIngredients.HeightRequest = Constants.textHeight;
+            //ListView_myIngredients.HeightRequest = Constants.textHeight;
+
+            UpdateMyIngreadientsListView(myIngredients);
 
         }
 
@@ -174,6 +177,11 @@ namespace FeedMe
             await Navigation.PushAsync(new MealsListPage(recipeDtos, myIngredients) { Title = "Bon Appétit" });
         }
 
+        void UpdateSavedIngredients(List<IngredientDtoV2> ingredients)
+        {
+            User.User.SavedIngredinets = JsonConvert.SerializeObject(ingredients);
+        }
+
 
         // --------------------------------------------- REQUESTS ---------------------------------------------------
 
@@ -238,9 +246,6 @@ namespace FeedMe
         }
 
 
-        // -------------------------------------------- Save/Load -------------------------------------------------
-
-
 
         // --------------------------------------------- EVENTS ---------------------------------------------------
 
@@ -265,6 +270,7 @@ namespace FeedMe
             }
             UpdateSearchIngreadientsListView(searchIngredients);
             UpdateMyIngreadientsListView(myIngredients);
+            UpdateSavedIngredients(myIngredients);
         }
 
         bool searching = false;
@@ -293,6 +299,7 @@ namespace FeedMe
         {
             myIngredients.Remove(ListView_myIngredients.SelectedItem as IngredientDtoV2);
             UpdateMyIngreadientsListView(myIngredients);
+            UpdateSavedIngredients(myIngredients);
         }
 
         // Klicked FeedMe
