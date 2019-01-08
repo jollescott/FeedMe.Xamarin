@@ -55,7 +55,7 @@ namespace FeedMe
             {
                 Stack_Ingridients.Children.Add(new Label()
                 {
-                    Text = dot + recipe.Ingredients.ToList()[i],
+                    Text = dot + recipe.Ingredients.ToList()[i].Trim(),
                     TextColor = Constants.AppColor.text_black,
                     FontSize = Constants.fontSize3,
                     Margin = Constants.textListMargin
