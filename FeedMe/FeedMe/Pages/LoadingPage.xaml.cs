@@ -50,6 +50,7 @@ namespace FeedMe
             {
                 try
                 {
+                    string str = RamseyApi.V2.Ingredient.Suggest;
                     HttpResponseMessage response = await httpClient.GetAsync(RamseyApi.V2.Ingredient.Suggest);
 
                     if (response.IsSuccessStatusCode)
@@ -62,7 +63,8 @@ namespace FeedMe
                     }
                     else
                     {
-                        await DisplayAlert("Can't connect to server", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "try again");
+                        //await DisplayAlert("Can't connect to server", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "try again");
+                        await DisplayAlert("Error", "", "reload");
                     }
                 }
                 catch(Exception)

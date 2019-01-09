@@ -38,14 +38,15 @@ namespace FeedMe.Pages.MasterDetail
                     Detail = new NavigationPage(new MainPage());
                     break;
                 case 1:
-                    
-                    if(DependencyService.Get<IFacebook>().UserId == null)
-                        PopupNavigation.Instance.PushAsync(new LoginPage());
 
+                    if (DependencyService.Get<IFacebook>().UserId == null)
+                    {
+                        //PopupNavigation.Instance.PushAsync(new LoginPage());  // BORTTAGET FÖR BETA RELEASE
+                    }
                     break;
 
                 case 2:
-                    Detail = new NavigationPage(new shoppingListPage());
+                    //Detail = new NavigationPage(new shoppingListPage());  // BORTTAGET FÖR BETA RELEASE
                     break;
             }
 
