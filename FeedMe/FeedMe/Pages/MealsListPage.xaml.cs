@@ -63,9 +63,6 @@ namespace FeedMe
         //Recipe selected
         private void ListView_Recipes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            //object selected = ListView_Recipes.SelectedItem;
-            //((ListView)sender).SelectedItem = null;
-
             var selected = ListView_Recipes.SelectedItem;
             if (selected != null)
             {
@@ -73,6 +70,8 @@ namespace FeedMe
 
                 GET_recipeDto(recipes[index].RecipeID);
             }
+
+            ((ListView)sender).SelectedItem = null;
         }
 
         //Next page

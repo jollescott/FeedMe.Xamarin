@@ -24,7 +24,13 @@ namespace FeedMe
         public MainPage()
         {
             InitializeComponent();
-            myIngredients = JsonConvert.DeserializeObject<List<IngredientDtoV2>>(User.User.SavedIngredinets);
+
+            string savedIngredients = User.User.SavedIngredinets;
+            if (savedIngredients != null && savedIngredients != "")
+            {
+                myIngredients = JsonConvert.DeserializeObject<List<IngredientDtoV2>>(savedIngredients);
+            }
+
             XamlSetup();
         }
 

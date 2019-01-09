@@ -54,7 +54,8 @@
                     </Frame>
 
                     <!--Ingredients-->
-                    <StackLayout x:Name="Stack_Ingridients"/>
+                    <StackLayout x:Name="Stack_Ingredients"/>
+                    <Grid x:Name="Grid_Ingredients"/>
 
                     <!--Instructions Head-->
                     <Frame x:Name="Frame_InstructionsHead" Margin="0" CornerRadius="0">

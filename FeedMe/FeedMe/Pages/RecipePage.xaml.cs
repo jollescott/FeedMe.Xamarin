@@ -40,7 +40,7 @@ namespace FeedMe
             Label_OwnerLink.TextColor = Constants.AppColor.text_link;
 
 
-            //Ingredients
+            //Ingredients head
             Frame_IngredientsHead.BackgroundColor = Constants.AppColor.green;
             Frame_IngredientsHead.Margin = new Thickness(0, Constants.padding1, 0, 0);
 
@@ -48,10 +48,11 @@ namespace FeedMe
             Label_IngridientsHead.TextColor = Constants.AppColor.text_white;
             Label_IngridientsHead.FontSize = Constants.fontSize1;
 
-            Stack_Ingridients.Margin = Constants.padding1;
+            //Ingredients
+            //Stack_Ingridients.Margin = Constants.padding1;
 
-            string dot = "- ";
-            for (int i = 0; i < recipe.Ingredients.Count(); i++)
+            //string dot = "- ";
+            /*for (int i = 0; i < recipe.Ingredients.Count(); i++)
             {
                 Stack_Ingridients.Children.Add(new Label()
                 {
@@ -60,10 +61,39 @@ namespace FeedMe
                     FontSize = Constants.fontSize3,
                     Margin = Constants.textListMargin
                 });
+            }*/
+
+            Grid_Ingredients.Margin = Constants.padding2;
+
+            for (int i = 0; i < recipe.Directions.Count(); i++)
+            {
+                Grid_Ingredients.RowDefinitions.Add(new RowDefinition { Height = Constants.textHeight });
+            }
+            Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(6, GridUnitType.Star) });
+            Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(4, GridUnitType.Star) });
+
+            for (int i = 0; i < recipe.Directions.Count(); i++)
+            {
+                Grid_Ingredients.Children.Add(new Label()
+                {
+                    Text = recipe.RecipeParts.ToList()[i].IngredientID.Trim(),
+                    TextColor = Constants.AppColor.text_black,
+                    FontSize = Constants.fontSize3,
+                    Margin = Constants.textListMargin
+                },
+                0, i);
+                Grid_Ingredients.Children.Add(new Label()
+                {
+                    Text = recipe.RecipeParts.ToList()[i].Quantity.ToString().Trim() + " " + recipe.RecipeParts.ToList()[i].Unit.Trim(),
+                    TextColor = Constants.AppColor.text_black,
+                    FontSize = Constants.fontSize3,
+                    Margin = Constants.textListMargin
+                },
+                1, i);
             }
 
 
-            //Instructions
+            //Instructions head
             Frame_InstructionsHead.BackgroundColor = Constants.AppColor.green;
             Frame_InstructionsHead.Padding = Constants.padding1;
 
@@ -71,6 +101,7 @@ namespace FeedMe
             Label_InstructionsHead.TextColor = Constants.AppColor.text_white;
             Label_InstructionsHead.FontSize = Constants.fontSize1;
 
+            //Instructions
             Stack_Instructions.Margin = new Thickness( Constants.padding2, Constants.padding2, Constants.padding2, 3 * Constants.padding2 );
 
             int n = 1;
