@@ -14,6 +14,8 @@ namespace FeedMe.Models
         public string OwnerLogo { get; set; }
         public string Image { get; set; }
 
+        public string CoverageMessage { get; set; }
+
         public bool IsAd { get; set; }
     }
 }

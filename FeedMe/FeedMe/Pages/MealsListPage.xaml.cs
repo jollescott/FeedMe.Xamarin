@@ -36,6 +36,7 @@ namespace FeedMe
                     Name = x.Name,
                     Owner = x.Owner,
                     OwnerLogo = x.OwnerLogo,
+                    CoverageMessage = "Du har: " + ((int)(x.Coverage * 100)).ToString() + "%  av alla ingredienser",
                     RecipeID = x.RecipeID
                 };
             }).ToList();
