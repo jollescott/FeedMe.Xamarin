@@ -10,6 +10,8 @@ using Xamarin.Forms.Xaml;
 using Newtonsoft.Json;
 using System.Linq;
 using FeedMe.Models;
+using Ramsey.Shared.Dto.V2;
+using Ramsey.Shared.Misc;
 
 namespace FeedMe
 {
@@ -17,10 +19,13 @@ namespace FeedMe
 	public partial class MealsListPage : ContentPage
 	{
         List<RecipeMetaModel> recipes;
+        List<IngredientDtoV2> myIngredients;
         HttpClient httpClient = new HttpClient();
-		public MealsListPage (List<RecipeMetaDto> recipes_)
+		public MealsListPage (List<RecipeMetaDtoV2> recipes_, List<IngredientDtoV2> myIngredients)
 		{
             InitializeComponent();
+
+            this.myIngredients = myIngredients;
 
             recipes = recipes_.Select(x =>
             {
@@ -31,6 +36,7 @@ namespace FeedMe
                     Name = x.Name,
                     Owner = x.Owner,
                     OwnerLogo = x.OwnerLogo,
+                    CoverageMessage = "Du har: " + ((int)(x.Coverage * 100)).ToString() + "%  av alla ingredienser",
                     RecipeID = x.RecipeID
                 };
             }).ToList();
@@ -58,22 +64,21 @@ namespace FeedMe
         //Recipe selected
         private void ListView_Recipes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            //object selected = ListView_Recipes.SelectedItem;
-            //((ListView)sender).SelectedItem = null;
-
             var selected = ListView_Recipes.SelectedItem;
             if (selected != null)
             {
                 int index = recipes.IndexOf(selected);
 
-                GET_recipeDto(Constants.recipe_retrive + recipes[index].RecipeID);
+                GET_recipeDto(recipes[index].RecipeID);
             }
+
+            ((ListView)sender).SelectedItem = null;
         }
 
         //Next page
-        async void gotoRecipePage(RecipeDto meal)
+        async void gotoRecipePage(RecipeDtoV2 meal)
         {
-            await Navigation.PushAsync(new RecipePage(meal) { Title = meal.Name });
+            await Navigation.PushAsync(new RecipePage(meal, myIngredients) { Title = meal.Name });
 
             ListView_Recipes.SelectedItem = null;
         }
@@ -84,16 +89,16 @@ namespace FeedMe
             await Navigation.PopAsync();
         }
 
-        async void GET_recipeDto(string _adress)
+        async void GET_recipeDto(string id)
         {
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync(_adress);
+                HttpResponseMessage response = await httpClient.GetAsync(RamseyApi.V2.Recipe.Retreive + "?id=" + id);
 
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
-                    RecipeDto recipe = JsonConvert.DeserializeObject<RecipeDto>(result);
+                    RecipeDtoV2 recipe = JsonConvert.DeserializeObject<RecipeDtoV2>(result);
 
                     gotoRecipePage(recipe);
                 }

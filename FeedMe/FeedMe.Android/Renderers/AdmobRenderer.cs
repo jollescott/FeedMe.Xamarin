@@ -43,7 +43,7 @@ namespace FeedMe.Droid.Renderers
         {
             var adView = new AdView(Context)
             {
-                AdSize = AdSize.SmartBanner,
+                AdSize = AdSize.LargeBanner,
                 AdUnitId = Element.AdUnit
             };
 

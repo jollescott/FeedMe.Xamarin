@@ -48,5 +48,6 @@ namespace FeedMe
         public static string recipe_suggest = "https://ramsey.azurewebsites.net/recipe/suggest";
         public static string recipe_retrive = "https://ramsey.azurewebsites.net/recipe/retrieve?id=";
 
+        public static string myIngredientsSave = "myIngredients";
     }
 }

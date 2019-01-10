@@ -20,18 +20,18 @@
                     <Grid x:Name="Grid_Images" Margin="0" Padding="0">
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="3*"/>
-                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="8*"/>
+                            <RowDefinition Height="2*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="8*"/>
+                            <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
 
                         <Image x:Name="Image_Recipe" Aspect="AspectFill" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-                        <ff:CachedImage x:Name="Image_OwnerLogo" Aspect="AspectFit" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
+                        <ff:CachedImage x:Name="Image_OwnerLogo" Aspect="AspectFit" Grid.Row="1" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill">
                             <ff:CachedImage.Transformations>
-                                <fft:CircleTransformation BorderHexColor="#000000" BorderSize="5"/>
+                                <fft:CircleTransformation BorderHexColor="#777777" BorderSize="5"/>
                             </ff:CachedImage.Transformations>
                         </ff:CachedImage>
                     </Grid>
@@ -54,7 +54,7 @@
                     </Frame>
 
                     <!--Ingredients-->
-                    <StackLayout x:Name="Stack_Ingridients"/>
+                    <Grid x:Name="Grid_Ingredients"/>
 
                     <!--Instructions Head-->
                     <Frame x:Name="Frame_InstructionsHead" Margin="0" CornerRadius="0">
@@ -66,7 +66,7 @@
 
                 </StackLayout>
             </ScrollView>
-            <controls:AdmobView AdUnit="ca-app-pub-3940256099942544/6300978111" Grid.Row="1" />
+            <controls:AdmobView Grid.Row="1" />
         </Grid>
             
     </ContentPage.Content>

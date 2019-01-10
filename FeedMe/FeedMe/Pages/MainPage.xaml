@@ -21,7 +21,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackLayout x:Name="StackLayout_all" Spacing="0" Padding="0">
+        <StackLayout Grid.Row="0" x:Name="StackLayout_all" Spacing="0" Padding="0">
 
             <Frame Margin="0" Padding="0" x:Name="Frame_Search" CornerRadius="0">
                 <StackLayout x:Name="StackLayout_Search" Spacing="0">
@@ -102,7 +102,7 @@
 
         </StackLayout>
 
-        <controls:AdmobView AdUnit="ca-app-pub-3940256099942544/6300978111" Grid.Row="1" />
+        <controls:AdmobView Grid.Row="1" />
 
     </Grid>
 

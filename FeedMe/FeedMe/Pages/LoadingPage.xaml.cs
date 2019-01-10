@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
 using System.Net.Http;
 using FeedMe.Pages.MasterDetail;
-
+using Ramsey.Shared.Misc;
 
 namespace FeedMe
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class LoadingPage : ContentPage
 	{
 
@@ -29,10 +23,10 @@ namespace FeedMe
 
         void XamlSetup()
         {
-            //BackgroundImage = "background.jpg";
+            BackgroundImage = "background_loading.png";
 
-            Image_AppLogo.HeightRequest = Image_AppLogo.Width;
-            Image_AppLogo.Source = "logo_app.png";
+            //Image_AppLogo.HeightRequest = Image_AppLogo.Width;
+            //Image_AppLogo.Source = "logo_app.png";
 
             //Image_CompanyLogo.HeightRequest = Image_CompanyLogo.Width;
             //Image_CompanyLogo.Source = "logo_company.png";
@@ -56,7 +50,8 @@ namespace FeedMe
             {
                 try
                 {
-                    HttpResponseMessage response = await httpClient.GetAsync(_adress);
+                    string str = RamseyApi.V2.Ingredient.Suggest;
+                    HttpResponseMessage response = await httpClient.GetAsync(RamseyApi.V2.Ingredient.Suggest);
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -68,7 +63,8 @@ namespace FeedMe
                     }
                     else
                     {
-                        await DisplayAlert("Can't connect to server", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "try again");
+                        //await DisplayAlert("Can't connect to server", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "try again");
+                        await DisplayAlert("Error", "", "reload");
                     }
                 }
                 catch(Exception)

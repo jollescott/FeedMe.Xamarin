@@ -15,5 +15,16 @@ namespace FeedMe.Controls
             get => (string)GetValue(AdUnitProperty);
             set => SetValue(AdUnitProperty, value);
         }
+
+        public AdmobView()
+        {
+#if DEBUG
+            //AdUnit = "ca-app-pub-3940256099942544/6300978111";  // not real ads
+            //AdUnit = "ca-app-pub-4571482486671250/2065611163";  // real ads
+            AdUnit = "ca-app-pub-4571482486671250/8453711492";  // real ads 2
+#else
+            AdUnit = "ca-app-pub-4571482486671250/2065611163";
+#endif
+        }
     }
 }
