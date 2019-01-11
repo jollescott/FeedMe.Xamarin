@@ -12,22 +12,56 @@ using System.Linq;
 using FeedMe.Models;
 using Ramsey.Shared.Dto.V2;
 using Ramsey.Shared.Misc;
+using System.Text;
 
 namespace FeedMe
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class MealsListPage : ContentPage
 	{
-        List<RecipeMetaModel> recipes;
+        List<RecipeMetaModel> recipeMetaModels;
+        List<RecipeMetaDtoV2> recipeMetas;
         List<IngredientDtoV2> myIngredients;
         HttpClient httpClient = new HttpClient();
-		public MealsListPage (List<RecipeMetaDtoV2> recipes_, List<IngredientDtoV2> myIngredients)
+		public MealsListPage (List<IngredientDtoV2> myIngredients)
 		{
             InitializeComponent();
-
             this.myIngredients = myIngredients;
+            POST_recipeMetas(myIngredients);
+        }
 
-            recipes = recipes_.Select(x =>
+        // Get the recipeMetas with POST request
+        async void POST_recipeMetas(List<IngredientDtoV2> ingredientDtos)
+        {
+            var json = JsonConvert.SerializeObject(ingredientDtos); //skicka ingredientDto
+
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            try
+            {
+                HttpResponseMessage respone = await httpClient.PostAsync(RamseyApi.V2.Recipe.Suggest, content);
+
+                if (respone.IsSuccessStatusCode)
+                {
+                    var result = await respone.Content.ReadAsStringAsync(); //ReadAsSwedishStringAsync();
+                    recipeMetas = JsonConvert.DeserializeObject<List<RecipeMetaDtoV2>>(result);
+
+                    XamlSetup();
+                }
+                else
+                {
+                    await DisplayAlert("Response error", "Status code " + (int)respone.StatusCode + ": " + respone.StatusCode.ToString(), "ok");
+                }
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("An error occurred", "Server conection failed", "ok");
+            }
+        }
+
+        void XamlSetup()
+        {
+            recipeMetaModels = recipeMetas.Select(x =>
             {
                 return new RecipeMetaModel
                 {
@@ -36,29 +70,24 @@ namespace FeedMe
                     Name = x.Name,
                     Owner = x.Owner,
                     OwnerLogo = x.OwnerLogo,
-                    CoverageMessage = "Du har: " + ((int)(x.Coverage * 100)).ToString() + "%  av alla ingredienser",
+                    CoverageMessage = "Du har " + ((int)(x.Coverage * 100)).ToString() + "%  av alla ingredienser",
                     RecipeID = x.RecipeID
                 };
             }).ToList();
 
-            for (int i = 0; i < recipes.Count; i++)
+            for (int i = 0; i < recipeMetaModels.Count; i++)
             {
                 if (i % 4 == 0)
                 {
-                    recipes.Insert(i, new RecipeMetaModel { IsAd = true});
+                    recipeMetaModels.Insert(i, new RecipeMetaModel { IsAd = true });
                 }
             }
 
-            XamlSetup();
-        }
 
-        void XamlSetup()
-        {
             ListView_Recipes.BackgroundColor = Color.Transparent;
-            //ListView_Recipes.Margin = new Thickness(0, Constants.padding2 / 2, 0, Constants.padding1);
+            ListView_Recipes.ItemsSource = recipeMetaModels;
 
-            //Frame_List.Margin = Constants.padding2; //går inte för den är i view cell
-            ListView_Recipes.ItemsSource = recipes;
+            ActivityIndicatior_WaitingForServer.IsRunning = false;
         }
 
         //Recipe selected
@@ -67,18 +96,19 @@ namespace FeedMe
             var selected = ListView_Recipes.SelectedItem;
             if (selected != null)
             {
-                int index = recipes.IndexOf(selected);
+                int selectedItemIndex = recipeMetaModels.IndexOf(selected);
+                int index = selectedItemIndex - (int)(selectedItemIndex / 4f) - 1;
 
-                GET_recipeDto(recipes[index].RecipeID);
+                GotoRecipePage(recipeMetas[index]);
             }
 
             ((ListView)sender).SelectedItem = null;
         }
 
         //Next page
-        async void gotoRecipePage(RecipeDtoV2 meal)
+        async void GotoRecipePage(RecipeMetaDtoV2 recipeMeta)
         {
-            await Navigation.PushAsync(new RecipePage(meal, myIngredients) { Title = meal.Name });
+            await Navigation.PushAsync(new RecipePage(recipeMeta, myIngredients) { Title = recipeMeta.Name });
 
             ListView_Recipes.SelectedItem = null;
         }
@@ -89,29 +119,6 @@ namespace FeedMe
             await Navigation.PopAsync();
         }
 
-        async void GET_recipeDto(string id)
-        {
-            try
-            {
-                HttpResponseMessage response = await httpClient.GetAsync(RamseyApi.V2.Recipe.Retreive + "?id=" + id);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = await response.Content.ReadAsStringAsync();
-                    RecipeDtoV2 recipe = JsonConvert.DeserializeObject<RecipeDtoV2>(result);
-
-                    gotoRecipePage(recipe);
-                }
-                else
-                {
-                    await DisplayAlert("Response error", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "ok");
-                }
-            }
-            catch (Exception)
-            {
-                await DisplayAlert("An error occurred", "Server conection failed", "ok");
-            }
-        }
     }
 
 }

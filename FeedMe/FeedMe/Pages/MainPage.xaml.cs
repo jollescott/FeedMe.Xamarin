@@ -178,9 +178,9 @@ namespace FeedMe
             await DisplayAlert(title, message, cancel);
         }
 
-        async void gotoMealsListPage(List<RecipeMetaDtoV2> recipeDtos)
+        async void GotoMealsListPage()
         {
-            await Navigation.PushAsync(new MealsListPage(recipeDtos, myIngredients) { Title = "Bon Appétit" });
+            await Navigation.PushAsync(new MealsListPage(myIngredients) { Title = "Bon Appétit" });
         }
 
         void UpdateSavedIngredients(List<IngredientDtoV2> ingredients)
@@ -219,37 +219,37 @@ namespace FeedMe
             }
         }
 
-        async void POST_recipeMetas(List<IngredientDtoV2> ingredientDtos)
-        {
-            var json = JsonConvert.SerializeObject(ingredientDtos); //skicka ingredientDto
+        //async void POST_recipeMetas(List<IngredientDtoV2> ingredientDtos)
+        //{
+        //    var json = JsonConvert.SerializeObject(ingredientDtos); //skicka ingredientDto
 
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+        //    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            try
-            {
-                HttpResponseMessage respone = await httpClient.PostAsync(RamseyApi.V2.Recipe.Suggest, content);
+        //    try
+        //    {
+        //        HttpResponseMessage respone = await httpClient.PostAsync(RamseyApi.V2.Recipe.Suggest, content);
 
-                if (respone.IsSuccessStatusCode)
-                {
-                    var result = await respone.Content.ReadAsStringAsync(); //ReadAsSwedishStringAsync();
-                    var recipes = JsonConvert.DeserializeObject<List<RecipeMetaDtoV2>>(result);
+        //        if (respone.IsSuccessStatusCode)
+        //        {
+        //            var result = await respone.Content.ReadAsStringAsync(); //ReadAsSwedishStringAsync();
+        //            var recipes = JsonConvert.DeserializeObject<List<RecipeMetaDtoV2>>(result);
 
-                    gotoMealsListPage(recipes);
-                }
-                else
-                {
-                    await DisplayAlert("Response error", "Status code " + (int)respone.StatusCode + ": " + respone.StatusCode.ToString(), "ok");
-                }
-            }
-            catch (Exception)
-            {
-                await DisplayAlert("An error occurred", "Server conection failed", "ok");
-            }
+        //            gotoMealsListPage(recipes);
+        //        }
+        //        else
+        //        {
+        //            await DisplayAlert("Response error", "Status code " + (int)respone.StatusCode + ": " + respone.StatusCode.ToString(), "ok");
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        await DisplayAlert("An error occurred", "Server conection failed", "ok");
+        //    }
 
-            Button_FeedMe.IsEnabled = true;
-            Button_FeedMe.BackgroundColor = Constants.AppColor.green;
-            Button_FeedMe.Text = "FeedMe";
-        }
+        //    Button_FeedMe.IsEnabled = true;
+        //    Button_FeedMe.BackgroundColor = Constants.AppColor.green;
+        //    Button_FeedMe.Text = "FeedMe";
+        //}
 
 
 
@@ -313,11 +313,7 @@ namespace FeedMe
         {
             if (myIngredients.Count > 0)
             {
-                Button_FeedMe.IsEnabled = false;
-                Button_FeedMe.BackgroundColor = Color.Gray;
-                Button_FeedMe.Text = "Laddar...";
-
-                POST_recipeMetas(myIngredients);
+                GotoMealsListPage();
             }
             else
             {

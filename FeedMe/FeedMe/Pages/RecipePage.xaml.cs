@@ -3,32 +3,59 @@ using Ramsey.Shared.Dto.V2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Net.Http;
+using Newtonsoft.Json;
+using Ramsey.Shared.Misc;
 
 namespace FeedMe
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class RecipePage : ContentPage
 	{
+        HttpClient httpClient = new HttpClient();
+        RecipeMetaDtoV2 recipeMeta;
         RecipeDtoV2 recipe;
         List<IngredientDtoV2> myIngredients;
-        public RecipePage (RecipeDtoV2 recipe, List<IngredientDtoV2> myIngredients)
+        public RecipePage (RecipeMetaDtoV2 recipeMeta, List<IngredientDtoV2> myIngredients)
 		{
             InitializeComponent();
 
-            this.recipe = recipe;
+            this.recipeMeta = recipeMeta;
             this.myIngredients = myIngredients;
-            XamlSetup();
+            XamlSetup1();
+            GET_recipeDto(recipeMeta.RecipeID);
 		}
 
-        void XamlSetup()
+        async void GET_recipeDto(string id)
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync(RamseyApi.V2.Recipe.Retreive + "?id=" + id);
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    recipe = JsonConvert.DeserializeObject<RecipeDtoV2>(result);
+                    XamlSetup2();
+                }
+                else
+                {
+                    await DisplayAlert("Response error", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "ok");
+                }
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("An error occurred", "Server conection failed", "ok");
+            }
+        }
+
+        void XamlSetup1()
         {
             //Recipe Image
             Grid_Images.HeightRequest = Application.Current.MainPage.Width;
-            Image_Recipe.Source = recipe.Image;
-            Image_OwnerLogo.Source = recipe.OwnerLogo;
+            Image_Recipe.Source = recipeMeta.Image;
+            Image_OwnerLogo.Source = recipeMeta.OwnerLogo;
 
 
             //Owner Info
@@ -36,7 +63,7 @@ namespace FeedMe
             StackLayout_OwnerInfo.Padding = new Thickness(Constants.padding1,Constants.padding3,Constants.padding1,Constants.padding3);
             Label_OwnerInfoHead.FontSize = Constants.fontSize4;
             Label_OwnerLink.FontSize = Constants.fontSize4;
-            Label_OwnerLink.Text = recipe.Source;
+            Label_OwnerLink.Text = recipeMeta.Source;
             Label_OwnerLink.TextColor = Constants.AppColor.text_link;
 
 
@@ -51,33 +78,41 @@ namespace FeedMe
             //Ingredients
             Grid_Ingredients.Margin = Constants.padding2;
 
-            for (int i = 0; i < recipe.RecipeParts.Count(); i++)
+            for (int i = 0; i < recipeMeta.RecipeParts.Count() + 1; i++)
             {
                 Grid_Ingredients.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             }
-            Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(6, GridUnitType.Star) });
+            Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(4, GridUnitType.Star) });
 
-            for (int i = 0; i < recipe.RecipeParts.Count(); i++)
+            for (int i = 0; i < recipeMeta.RecipeParts.Count(); i++)
             {
+                // quantity and unit
                 Grid_Ingredients.Children.Add(new Label()
                 {
-                    Text = recipe.RecipeParts.ToList()[i].IngredientID.Trim(),
+                    Text = (recipeMeta.RecipeParts.ToList()[i].Quantity != 0) ? recipeMeta.RecipeParts.ToList()[i].Quantity.ToString().Trim() + " " + recipeMeta.RecipeParts.ToList()[i].Unit.Trim() : "",
+                    TextColor = Constants.AppColor.text_gray,
+                    FontSize = Constants.fontSize3,
+                    Margin = Constants.textListMargin,
+                    HorizontalTextAlignment = TextAlignment.End
+                }, 0, i);
+                // ingredient name
+                Grid_Ingredients.Children.Add(new Label()
+                {
+                    Text = recipeMeta.RecipeParts.ToList()[i].IngredientID.Trim(),
                     TextColor = Constants.AppColor.text_black,
                     FontSize = Constants.fontSize3,
                     Margin = Constants.textListMargin
-                },
-                0, i);
-                Grid_Ingredients.Children.Add(new Label()
+                }, 1, i);
+                // separation line
+                Grid_Ingredients.Children.Add(new BoxView()
                 {
-                    Text = recipe.RecipeParts.ToList()[i].Quantity.ToString().Trim() + " " + recipe.RecipeParts.ToList()[i].Unit.Trim(),
-                    TextColor = Constants.AppColor.text_black,
-                    FontSize = Constants.fontSize3,
-                    Margin = Constants.textListMargin
-                },
-                1, i);
+                    BackgroundColor = Constants.AppColor.gray,
+                    HeightRequest = 1,
+                    VerticalOptions = LayoutOptions.End,
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                }, 0, 2, i, i + 1);
             }
-
 
             //Instructions head
             Frame_InstructionsHead.BackgroundColor = Constants.AppColor.green;
@@ -86,7 +121,10 @@ namespace FeedMe
             Label_InstructionsHead.Text = "Tillagning";
             Label_InstructionsHead.TextColor = Constants.AppColor.text_white;
             Label_InstructionsHead.FontSize = Constants.fontSize1;
-
+        }
+        
+        void XamlSetup2()
+        {
             //Instructions
             bool startsWithNum = false;
             if (recipe.Owner == RecipeProvider.Hemmets)
@@ -162,9 +200,12 @@ namespace FeedMe
             //Application.Current.MainPage.Navigation.PopAsync();
         }
 
+
+        // Source link
         private void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
         {
-            Device.OpenUri(new Uri(recipe.Source));
+            // open source in browser
+            Device.OpenUri(new Uri(recipeMeta.Source));
         }
     }
 }

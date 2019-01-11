@@ -17,9 +17,9 @@
                 <ViewCell>
                     <Frame x:Name="Frame_List" Margin="15, 7.5, 15, 7.5" Padding="0" CornerRadius="0" HeightRequest="220">
 
-                        <Grid BackgroundColor="Red" Padding="0" HorizontalOptions="Fill" VerticalOptions="Fill" RowSpacing="0" ColumnSpacing="0">
+                        <Grid Padding="0" HorizontalOptions="Fill" VerticalOptions="Fill" RowSpacing="0" ColumnSpacing="0">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="3*"/>
                                 <RowDefinition Height="3*"/>
                                 <RowDefinition Height="3*"/>
@@ -30,8 +30,8 @@
                                 <ColumnDefinition Width="7.5*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Label Text="{Binding CoverageMessage}" TextColor="White" FontSize="Micro" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"/>
-                            <ff:CachedImage Source="{Binding Image}" Margin="0" Aspect="AspectFill" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
+                            <Label Text="{Binding CoverageMessage}" FontSize="Micro" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"/>
+                            <ff:CachedImage BackgroundColor="Red" Source="{Binding Image}" Margin="0" Aspect="AspectFill" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
                             <Label Text="{Binding Name}" FontSize="Medium"  Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="3" Grid.Column="2"/>
                             <ff:CachedImage Source="{Binding OwnerLogo}" Margin="0" HorizontalOptions="Fill" Aspect="AspectFit" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2">
                                 <ff:CachedImage.Transformations>
@@ -50,8 +50,10 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout Padding="0" Margin="0">
+    <Grid Padding="0" Margin="0">
         <ListView x:Name="ListView_Recipes" HasUnevenRows="True" ItemTemplate="{x:StaticResource recipeDataTemplateSelector}" ItemSelected="ListView_Recipes_ItemSelected">
         </ListView>
-    </StackLayout>
+        
+        <ActivityIndicator x:Name="ActivityIndicatior_WaitingForServer" IsRunning="True" VerticalOptions="Center"/>
+    </Grid>
 </ContentPage>

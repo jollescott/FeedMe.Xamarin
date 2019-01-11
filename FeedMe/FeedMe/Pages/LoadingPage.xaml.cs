@@ -36,14 +36,14 @@ namespace FeedMe
 
         protected override void OnAppearing()
         {
-            test_connection(Constants.ingredient_search);
+            Test_connection();
 
             //Application.Current.MainPage = new NavigationPage(new MainPage());
             //Application.Current.MainPage = new NavigationPage(new MainPage() { Title = "" }) {BarBackgroundColor = Constants.navigationBarColor, BarTextColor = Constants.textColor1 };
         }
 
 
-        async void test_connection(string _adress)
+        async void Test_connection()
         {
             bool repet = true;
             do
@@ -57,14 +57,12 @@ namespace FeedMe
                     {
                         repet = false;
 
-                        //await DisplayAlert("success", "succeess", "ok");
-                        //Application.Current.MainPage = new NavigationPage(new MainPage() { Title = "" }) { BarBackgroundColor = Constants.navigationBarColor, BarTextColor = Constants.textColor1 };
                         Application.Current.MainPage = new FDMasterDetailPage();
                     }
                     else
                     {
-                        //await DisplayAlert("Can't connect to server", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "try again");
-                        await DisplayAlert("Error", "", "reload");
+                        await DisplayAlert("Can't connect to server", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "try again");
+                        //await DisplayAlert("Error", "", "reload");
                     }
                 }
                 catch(Exception)
