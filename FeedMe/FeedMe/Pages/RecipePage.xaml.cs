@@ -18,6 +18,7 @@ namespace FeedMe
         RecipeMetaDtoV2 recipeMeta;
         RecipeDtoV2 recipe;
         List<IngredientDtoV2> myIngredients;
+        List<Label> ingredentPortionLabels = new List<Label>();
         public RecipePage (RecipeMetaDtoV2 recipeMeta, List<IngredientDtoV2> myIngredients)
 		{
             InitializeComponent();
@@ -75,6 +76,10 @@ namespace FeedMe
             Label_IngridientsHead.TextColor = Constants.AppColor.text_white;
             Label_IngridientsHead.FontSize = Constants.fontSize1;
 
+            //Portions
+            Grid_Portions.Margin = Constants.padding2;
+            Label_Portions.FontSize = Constants.fontSize3;
+
             //Ingredients
             Grid_Ingredients.Margin = Constants.padding2;
 
@@ -83,20 +88,22 @@ namespace FeedMe
                 Grid_Ingredients.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             }
             Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(4, GridUnitType.Star) });
+            Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
 
             for (int i = 0; i < recipeMeta.RecipeParts.Count(); i++)
             {
                 // quantity and unit
-                Grid_Ingredients.Children.Add(new Label()
+                ingredentPortionLabels.Add(new Label()
                 {
-                    Text = (recipeMeta.RecipeParts.ToList()[i].Quantity != 0) ? recipeMeta.RecipeParts.ToList()[i].Quantity.ToString().Trim() + " " + recipeMeta.RecipeParts.ToList()[i].Unit.Trim() : "",
+                    //Text = (recipeMeta.RecipeParts.ToList()[i].Quantity != 0) ? recipeMeta.RecipeParts.ToList()[i].Quantity.ToString().Trim() + " " + recipeMeta.RecipeParts.ToList()[i].Unit.Trim() : "",
                     TextColor = Constants.AppColor.text_gray,
                     FontSize = Constants.fontSize3,
                     Margin = Constants.textListMargin,
                     HorizontalTextAlignment = TextAlignment.End
-                }, 0, i);
-                // ingredient name
+                });
+                Grid_Ingredients.Children.Add(ingredentPortionLabels[i], 0, i);
+
+                // ingredient names
                 Grid_Ingredients.Children.Add(new Label()
                 {
                     Text = recipeMeta.RecipeParts.ToList()[i].IngredientID.Trim(),
@@ -104,7 +111,25 @@ namespace FeedMe
                     FontSize = Constants.fontSize3,
                     Margin = Constants.textListMargin
                 }, 1, i);
-                // separation line
+
+                // has ingredient icons
+                foreach (var myIngredient in myIngredients)
+                {
+                    if (recipeMeta.RecipeParts.ToList()[i].IngredientID.Contains(myIngredient.IngredientId))
+                    {
+                        Grid_Ingredients.Children.Add(new Image()
+                        {
+                            Source = "icon_check.png",
+                            HorizontalOptions = LayoutOptions.End,
+                            VerticalOptions = LayoutOptions.Center,
+                            Aspect = Aspect.AspectFit,
+                            HeightRequest = 15,
+                            Margin = new Thickness(0, 0, 5, 0)
+                        }, 1, i);
+                    }
+                }
+
+                // separation lines
                 Grid_Ingredients.Children.Add(new BoxView()
                 {
                     BackgroundColor = Constants.AppColor.gray,
@@ -113,6 +138,9 @@ namespace FeedMe
                     HorizontalOptions = LayoutOptions.FillAndExpand,
                 }, 0, 2, i, i + 1);
             }
+
+            UpdateIngredientPortions((int)Stepper_Portions.Value);
+
 
             //Instructions head
             Frame_InstructionsHead.BackgroundColor = Constants.AppColor.green;
@@ -193,11 +221,20 @@ namespace FeedMe
             }
         }
 
+        void UpdateIngredientPortions(int portions)
+        {
+            double portionMuliplier = 0.5;
+            Label_Portions.Text = (portions == 1) ? portions.ToString() + " portion" : portions.ToString() + " portioner";
+            for (int i = 0; i < ingredentPortionLabels.Count; i++)
+            {
+                ingredentPortionLabels[i].Text = (recipeMeta.RecipeParts.ToList()[i].Quantity != 0) ? (recipeMeta.RecipeParts.ToList()[i].Quantity * portions * portionMuliplier).ToString().Trim() + " " + recipeMeta.RecipeParts.ToList()[i].Unit.Trim() : "";
+            }
+        }
+
         //Navigation back button
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
-            //Application.Current.MainPage.Navigation.PopAsync();
         }
 
 
@@ -206,6 +243,11 @@ namespace FeedMe
         {
             // open source in browser
             Device.OpenUri(new Uri(recipeMeta.Source));
+        }
+
+        private void Stepper_Portions_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            UpdateIngredientPortions((int)Stepper_Portions.Value);
         }
     }
 }

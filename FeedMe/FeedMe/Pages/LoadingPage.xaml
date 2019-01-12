@@ -5,18 +5,9 @@
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="FeedMe.LoadingPage">
     <ContentPage.Content>
-        <StackLayout>
-            <ff:CachedImage x:Name="ffimg"/>
-        </StackLayout>
+        <Grid>
+            <ff:CachedImage x:Name="ff_Background" Margin="0" Aspect="AspectFill"/>
+            <ActivityIndicator Margin="30" Color="#777777" x:Name="ActivityIndicatior_WaitingForServer" VerticalOptions="End" HorizontalOptions="Center" IsRunning="True"/>
+        </Grid>
     </ContentPage.Content>
-
-    <AbsoluteLayout x:Name="AbsLayout">
-        <!--Image x:Name="Image_AppLogo"
-               AbsoluteLayout.LayoutBounds ="0.5, 0.5, 0.4, 0.4"
-               AbsoluteLayout.LayoutFlags="All"/-->
-        
-        <!--Image x:Name="Image_CompanyLogo"
-               AbsoluteLayout.LayoutBounds ="0, 1, 0.3, 0.3"
-               AbsoluteLayout.LayoutFlags="All"/-->
-    </AbsoluteLayout>
 </ContentPage>

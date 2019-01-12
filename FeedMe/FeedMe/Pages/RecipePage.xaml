@@ -20,15 +20,17 @@
                     <Grid x:Name="Grid_Images" Margin="0" Padding="0">
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="8*"/>
-                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="7*"/>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="5"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="8*"/>
-                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="7*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="5"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image x:Name="Image_Recipe" Aspect="AspectFill" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                        <Image x:Name="Image_Recipe" Aspect="AspectFill" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
                         <ff:CachedImage x:Name="Image_OwnerLogo" Aspect="AspectFit" Grid.Row="1" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill">
                             <ff:CachedImage.Transformations>
                                 <fft:CircleTransformation BorderHexColor="#777777" BorderSize="5"/>
@@ -52,6 +54,12 @@
                     <Frame x:Name="Frame_IngredientsHead" Margin="0" CornerRadius="0">
                         <Label x:Name="Label_IngridientsHead" VerticalTextAlignment="Center" FontFamily=""/>
                     </Frame>
+                    
+                    <!--Portions Stepper-->
+                    <Grid x:Name="Grid_Portions" Padding="0">
+                        <Stepper x:Name="Stepper_Portions" VerticalOptions="Center" HorizontalOptions="End" Maximum="10" Minimum="1" Increment="1" Value="2" ValueChanged="Stepper_Portions_ValueChanged"/>
+                        <Label x:Name="Label_Portions" VerticalOptions="Center" HorizontalOptions="Start"/>
+                    </Grid>
 
                     <!--Ingredients-->
                     <Grid x:Name="Grid_Ingredients"/>
