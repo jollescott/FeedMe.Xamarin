@@ -43,8 +43,11 @@ namespace FeedMe
 
                 if (respone.IsSuccessStatusCode)
                 {
-                    var result = await respone.Content.ReadAsStringAsync(); //ReadAsSwedishStringAsync();
-                    recipeMetas = JsonConvert.DeserializeObject<List<RecipeMetaDtoV2>>(result);
+                    var result = await respone.Content.ReadAsStringAsync();
+
+                    Label_Loading.Text = "Sorterar...";
+
+                    recipeMetas = JsonConvert.DeserializeObject<List<RecipeMetaDtoV2>>(result).OrderByDescending(o => o.Coverage).ToList();
 
                     XamlSetup();
                 }
@@ -61,6 +64,7 @@ namespace FeedMe
 
         void XamlSetup()
         {
+            Label_Loading.IsEnabled = false;
             recipeMetaModels = recipeMetas.Select(x =>
             {
                 return new RecipeMetaModel

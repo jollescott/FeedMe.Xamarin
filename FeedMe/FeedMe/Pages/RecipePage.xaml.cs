@@ -115,7 +115,7 @@ namespace FeedMe
                 // has ingredient icons
                 foreach (var myIngredient in myIngredients)
                 {
-                    if (recipeMeta.RecipeParts.ToList()[i].IngredientID.Contains(myIngredient.IngredientId))
+                    if (recipeMeta.RecipeParts.ToList()[i].IngredientID == myIngredient.IngredientId)
                     {
                         Grid_Ingredients.Children.Add(new Image()
                         {
