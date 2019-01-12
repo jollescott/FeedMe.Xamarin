@@ -19,10 +19,10 @@ namespace FeedMe.Pages.MasterDetail
         public FDMasterDetailPage()
         {
             InitializeComponent();
-            MasterPage.ListView.ItemSelected += ListView_ItemSelected;
+            MasterPage.ListView.ItemSelected += ListView_ItemSelectedAsync;
         }
 
-        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private async void ListView_ItemSelectedAsync(object sender, SelectedItemChangedEventArgs e)
         {
             var item = e.SelectedItem as FDMasterDetailPageMenuItem;
             if (item == null)
@@ -39,24 +39,41 @@ namespace FeedMe.Pages.MasterDetail
                     break;
                 case 1:
 
-                    if (DependencyService.Get<IFacebook>().UserId == null)
-                    {
-                        //PopupNavigation.Instance.PushAsync(new LoginPage());  // BORTTAGET FÖR BETA RELEASE
-                    }
+                    bool isAuth = await VerifyFacebookAsync();
+                    if(isAuth)
+                        Detail = new NavigationPage(new FavoritesPage());
+
                     break;
 
                 case 2:
                     //Detail = new NavigationPage(new shoppingListPage());  // BORTTAGET FÖR BETA RELEASE
                     break;
             }
-
-            /*var page = (Page)Activator.CreateInstance(item.TargetType);
+            /*
+            var page = (Page)Activator.CreateInstance(item.TargetType);
             page.Title = item.Title;
 
             Detail = new NavigationPage(page);
+            */
             IsPresented = false;
+            MasterPage.ListView.SelectedItem = null;
+        }
 
-            MasterPage.ListView.SelectedItem = null;*/
+        private async Task<bool> VerifyFacebookAsync()
+        {
+            var id = DependencyService.Get<IFacebook>().UserId;
+
+            if(id == null)
+            {
+                var tcs = new TaskCompletionSource<bool>();
+                await PopupNavigation.Instance.PushAsync(new LoginPage(tcs));
+
+                return await tcs.Task;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }
