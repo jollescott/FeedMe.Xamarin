@@ -56,33 +56,26 @@ namespace FeedMe
             //Recipe Image
             Grid_Images.HeightRequest = Application.Current.MainPage.Width;
             Image_Recipe.Source = recipeMeta.Image;
-            Image_OwnerLogo.Source = recipeMeta.OwnerLogo;
+            //Image_OwnerLogo.Source = recipeMeta.OwnerLogo;
 
 
             //Owner Info
-            StackLayout_OwnerInfo.BackgroundColor = Color.LightGray;
-            StackLayout_OwnerInfo.Padding = new Thickness(Constants.padding1,Constants.padding3,Constants.padding1,Constants.padding3);
-            Label_OwnerInfoHead.FontSize = Constants.fontSize4;
-            Label_OwnerLink.FontSize = Constants.fontSize4;
+            Image_OwnerLogo.Source = recipeMeta.OwnerLogo;
+            Label_OwnerName.Text = recipeMeta.Owner.ToString();
             Label_OwnerLink.Text = recipeMeta.Source;
             Label_OwnerLink.TextColor = Constants.AppColor.text_link;
 
 
             //Ingredients head
             Frame_IngredientsHead.BackgroundColor = Constants.AppColor.green;
-            Frame_IngredientsHead.Margin = new Thickness(0, Constants.padding1, 0, 0);
-
             Label_IngridientsHead.Text = "Ingredienser";
             Label_IngridientsHead.TextColor = Constants.AppColor.text_white;
             Label_IngridientsHead.FontSize = Constants.fontSize1;
 
             //Portions
-            Grid_Portions.Margin = Constants.padding2;
             Label_Portions.FontSize = Constants.fontSize3;
 
             //Ingredients
-            Grid_Ingredients.Margin = Constants.padding2;
-
             for (int i = 0; i < recipeMeta.RecipeParts.Count() + 1; i++)
             {
                 Grid_Ingredients.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
@@ -144,8 +137,6 @@ namespace FeedMe
 
             //Instructions head
             Frame_InstructionsHead.BackgroundColor = Constants.AppColor.green;
-            Frame_InstructionsHead.Padding = Constants.padding1;
-
             Label_InstructionsHead.Text = "Tillagning";
             Label_InstructionsHead.TextColor = Constants.AppColor.text_white;
             Label_InstructionsHead.FontSize = Constants.fontSize1;
@@ -165,8 +156,6 @@ namespace FeedMe
                 showNumbers = false;
             }
 
-
-            Stack_Instructions.Margin = new Thickness( Constants.padding2, Constants.padding2, Constants.padding2, 3 * Constants.padding2 );
 
             int n = 1;
             for (int i = 0; i < recipe.Directions.Count(); i++)

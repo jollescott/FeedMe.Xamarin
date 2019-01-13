@@ -65,6 +65,7 @@ namespace FeedMe
         void XamlSetup()
         {
             Label_Loading.IsEnabled = false;
+
             recipeMetaModels = recipeMetas.Select(x =>
             {
                 return new RecipeMetaModel
@@ -75,6 +76,7 @@ namespace FeedMe
                     Owner = x.Owner,
                     OwnerLogo = x.OwnerLogo,
                     CoverageMessage = "Du har " + ((int)(x.Coverage * 100)).ToString() + "%  av alla ingredienser",
+                    LogoRadius = 40,
                     RecipeID = x.RecipeID
                 };
             }).ToList();
