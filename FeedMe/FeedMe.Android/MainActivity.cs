@@ -12,6 +12,7 @@ using FeedMe.Droid.Callbacks;
 using Xamarin.Facebook.Login;
 using Android.Content;
 using Xamarin.Forms;
+using Android.Gms.Ads;
 
 namespace FeedMe.Droid
 {
@@ -28,9 +29,8 @@ namespace FeedMe.Droid
 
             base.OnCreate(savedInstanceState);
 #if DEBUG
-            Android.Gms.Ads.MobileAds.Initialize(ApplicationContext, "ca-app-pub-3940256099942544~3347511713");  // fake ad
-            //Android.Gms.Ads.MobileAds.Initialize(ApplicationContext, "ca-app-pub-4571482486671250~7532275431");  // real ad
-
+            //Android.Gms.Ads.MobileAds.Initialize(ApplicationContext, "ca-app-pub-3940256099942544~3347511713");  // fake ad
+            Android.Gms.Ads.MobileAds.Initialize(this, "ca-app-pub-4571482486671250~7532275431");  // real ad
 #else
             Android.Gms.Ads.MobileAds.Initialize(ApplicationContext, "ca-app-pub-4571482486671250~7532275431");
 #endif
@@ -43,7 +43,7 @@ namespace FeedMe.Droid
             {
                 HandleError = error =>
                 {
-                    MessagingCenter.Instance.Send(Xamarin.Forms.Application.Current, "FacebookLogin_Error", error.InnerException);
+                    MessagingCenter.Instance.Send(Xamarin.Forms.Application.Current, "FacebookLogin_Cancelled");
                 },
                 HandleCancel = () =>
                 {
@@ -51,7 +51,7 @@ namespace FeedMe.Droid
                 },
                 HandleSuccess = loginResult =>
                 {
-                    MessagingCenter.Instance.Send(Xamarin.Forms.Application.Current, "FacebookLogin_Success", loginResult.AccessToken);
+                    MessagingCenter.Instance.Send(Xamarin.Forms.Application.Current, "FacebookLogin_Success", loginResult.AccessToken.UserId);
                 }
             });
 

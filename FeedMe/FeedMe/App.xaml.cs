@@ -1,4 +1,5 @@
-﻿using FeedMe.Pages.MasterDetail;
+﻿using FeedMe.Interfaces;
+using FeedMe.Pages.MasterDetail;
 using System;
 using System.Text;
 using Xamarin.Forms;
