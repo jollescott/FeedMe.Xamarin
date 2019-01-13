@@ -37,6 +37,7 @@ namespace FeedMe.Droid
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
 
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(false);
+            Plugin.Iconize.Iconize.Init(Resource.Id.toolbar, Resource.Id.sliding_tabs);
 
             callbackManager = CallbackManagerFactory.Create();
             LoginManager.Instance.RegisterCallback(callbackManager, new FacebookLoginCallback<LoginResult>

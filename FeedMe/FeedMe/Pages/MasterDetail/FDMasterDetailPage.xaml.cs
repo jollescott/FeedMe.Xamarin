@@ -1,5 +1,6 @@
 ﻿using FeedMe.Interfaces;
 using FeedMe.Pages.Popups;
+using Plugin.Iconize;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
@@ -30,18 +31,18 @@ namespace FeedMe.Pages.MasterDetail
 
             if (item.Id == 0)
             {
-                Detail = new NavigationPage(new LoadingPage());
+                Detail = new IconNavigationPage(new LoadingPage());
             }
             switch (item.Id)
             {
                 case 0:
-                    Detail = new NavigationPage(new MainPage());
+                    Detail = new IconNavigationPage(new MainPage());
                     break;
                 case 1:
 
                     bool isAuth = await VerifyFacebookAsync();
                     if(isAuth)
-                        Detail = new NavigationPage(new FavoritesPage());
+                        Detail = new IconNavigationPage(new FavoritesPage());
 
                     break;
 

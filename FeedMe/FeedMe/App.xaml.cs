@@ -24,6 +24,8 @@ namespace FeedMe
 
             //MainPage = new MainPage();
 
+            Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.MaterialModule());
+
             MainPage = new LoadingPage();
         }
 
