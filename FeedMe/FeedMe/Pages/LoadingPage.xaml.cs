@@ -17,37 +17,27 @@ namespace FeedMe
 		{
 			InitializeComponent ();
             XamlSetup();
-
-            BackgroundColor = Color.White;
 		}
 
         void XamlSetup()
         {
-            BackgroundImage = "background_loading.png";
-
-            //Image_AppLogo.HeightRequest = Image_AppLogo.Width;
-            //Image_AppLogo.Source = "logo_app.png";
-
-            //Image_CompanyLogo.HeightRequest = Image_CompanyLogo.Width;
-            //Image_CompanyLogo.Source = "logo_company.png";
-            //Image_CompanyLogo.Margin = Constants.padding1;
+            //BackgroundImage = "background_loading.png";
+            ff_Background.Source = "background_loading.png";
         }
 
 
         protected override void OnAppearing()
         {
-            test_connection(Constants.ingredient_search);
-
-            //Application.Current.MainPage = new NavigationPage(new MainPage());
-            //Application.Current.MainPage = new NavigationPage(new MainPage() { Title = "" }) {BarBackgroundColor = Constants.navigationBarColor, BarTextColor = Constants.textColor1 };
+            TestConnection();
         }
 
 
-        async void test_connection(string _adress)
+        async void TestConnection()
         {
             bool repet = true;
             do
             {
+                ActivityIndicatior_WaitingForServer.IsRunning = true;
                 try
                 {
                     string str = RamseyApi.V2.Ingredient.Suggest;
@@ -57,18 +47,18 @@ namespace FeedMe
                     {
                         repet = false;
 
-                        //await DisplayAlert("success", "succeess", "ok");
-                        //Application.Current.MainPage = new NavigationPage(new MainPage() { Title = "" }) { BarBackgroundColor = Constants.navigationBarColor, BarTextColor = Constants.textColor1 };
                         Application.Current.MainPage = new FDMasterDetailPage();
                     }
                     else
                     {
-                        //await DisplayAlert("Can't connect to server", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "try again");
-                        await DisplayAlert("Error", "", "reload");
+                        ActivityIndicatior_WaitingForServer.IsRunning = false;
+                        await DisplayAlert("Can't connect to server", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "try again");
+                        //await DisplayAlert("Error", "", "reload");
                     }
                 }
                 catch(Exception)
                 {
+                    ActivityIndicatior_WaitingForServer.IsRunning = false;
                     await DisplayAlert("Can't connect to server", "Server conection failed", "try again");
                 }
 

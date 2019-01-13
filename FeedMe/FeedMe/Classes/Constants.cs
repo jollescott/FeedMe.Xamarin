@@ -14,6 +14,7 @@ namespace FeedMe
 
             public static Color green = Color.FromHex("#00CC66");
             public static Color white = Color.FromHex("#FFFFFF");
+            public static Color gray = Color.FromHex("#777777");
             public static Color lightGray = Color.FromHex("#E6E6E6");
 
             public static Color text_green = Color.FromHex("#00CC66");
@@ -41,13 +42,13 @@ namespace FeedMe
 
         public static int textListMargin = 3;
 
-        public static int navigationBarPadding = 5;
-        public static int navigationBarHeight = 30;
+        //public static int navigationBarPadding = 5;
+        //public static int navigationBarHeight = 30;
 
-        public static string ingredient_search = "https://ramsey.azurewebsites.net/ingredient/suggest?search=";
-        public static string recipe_suggest = "https://ramsey.azurewebsites.net/recipe/suggest";
-        public static string recipe_retrive = "https://ramsey.azurewebsites.net/recipe/retrieve?id=";
+        //public static string ingredient_search = "https://ramsey.azurewebsites.net/ingredient/suggest?search=";
+        //public static string recipe_suggest = "https://ramsey.azurewebsites.net/recipe/suggest";
+        //public static string recipe_retrive = "https://ramsey.azurewebsites.net/recipe/retrieve?id=";
 
-        public static string myIngredientsSave = "myIngredients";
+        //public static string myIngredientsSave = "myIngredients";
     }
 }
