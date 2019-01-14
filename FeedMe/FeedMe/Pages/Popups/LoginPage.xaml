@@ -23,8 +23,12 @@
 
     <Grid>
         <Grid VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="White">
+            <iconize:IconLabel HorizontalOptions="EndAndExpand" Margin="5" Text="md-close" FontSize="Medium">
+                <iconize:IconLabel.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CloseCommand}"/>
+                </iconize:IconLabel.GestureRecognizers>
+            </iconize:IconLabel>
             <StackLayout Margin="40">
-                <iconize:IconLabel HorizontalOptions="EndAndExpand" Margin="5" Text="md-close" FontSize="Medium" />
                 <Label Text="Vem är det här?" LineBreakMode="WordWrap" FontSize="Large"/>
                 <controls:FacebookLoginButton/>
             </StackLayout>

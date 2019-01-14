@@ -20,18 +20,21 @@ namespace FeedMe.Pages.Popups
     public partial class LoginPage : PopupPage
     {
         private readonly HttpClient _httpClient = new HttpClient();
+        private readonly TaskCompletionSource<bool> _tcs;
 
         private ICommand _closeCommand;
-        public ICommand CloseCommand => _closeCommand = _closeCommand ?? new Command(RunCloseCommand);
+        public ICommand CloseCommand => _closeCommand = _closeCommand ?? new Command(RunCloseCommandAsync);
 
-        private void RunCloseCommand(object obj)
+        private async void RunCloseCommandAsync(object obj)
         {
-            PopupNavigation.Instance.PopAsync();
+            await PopupNavigation.Instance.PopAsync();
+            _tcs.SetResult(false);
         }
 
         public LoginPage(TaskCompletionSource<bool> tcs)
         {
             InitializeComponent();
+            _tcs = tcs;
 
             MessagingCenter.Instance.Subscribe<Application, string>(Application.Current, "FacebookLogin_Success", async (Application app, string userid) =>
             {
@@ -44,13 +47,13 @@ namespace FeedMe.Pages.Popups
                 var content = new StringContent(user_json, Encoding.UTF8, "application/json");
                 await _httpClient.PostAsync(RamseyApi.V2.User.Sync, content);
 
-                tcs.SetResult(true);
                 await PopupNavigation.Instance.PopAsync();
+                _tcs.SetResult(true);
             });
 
             MessagingCenter.Instance.Subscribe(Application.Current, "FacebookLogin_Cancelled", async (Application app) =>
             {
-                tcs.SetResult(false);
+                _tcs.SetResult(false);
                 await PopupNavigation.Instance.PopAsync();
             });
 
