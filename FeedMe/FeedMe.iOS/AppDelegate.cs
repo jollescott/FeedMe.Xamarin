@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
-using UIKit;
+using UIKit;	
+using Facebook.CoreKit;
+using Facebook.LoginKit;
 
 namespace FeedMe.iOS
 {
@@ -31,6 +33,12 @@ namespace FeedMe.iOS
 #else
             Google.MobileAds.MobileAds.Configure("ca-app-pub-4571482486671250~7532275431");
 #endif
+
+            Profile.EnableUpdatesOnAccessTokenChange(true);
+            Settings.AppId = "605355546285789";
+            Settings.DisplayName = "FeedMe";
+
+
 
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());

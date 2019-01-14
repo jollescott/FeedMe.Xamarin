@@ -13,6 +13,9 @@ using Xamarin.Facebook.Login;
 using Android.Content;
 using Xamarin.Forms;
 using Android.Gms.Ads;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 namespace FeedMe.Droid
 {
@@ -39,11 +42,14 @@ namespace FeedMe.Droid
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(false);
             Plugin.Iconize.Iconize.Init(Resource.Id.toolbar, Resource.Id.sliding_tabs);
 
+            AppCenter.Start("eedec111-2462-45bc-9c49-3320f6a175a3", typeof(Analytics), typeof(Crashes));
+
             callbackManager = CallbackManagerFactory.Create();
             LoginManager.Instance.RegisterCallback(callbackManager, new FacebookLoginCallback<LoginResult>
             {
                 HandleError = error =>
                 {
+                    Crashes.TrackError(error);
                     MessagingCenter.Instance.Send(Xamarin.Forms.Application.Current, "FacebookLogin_Cancelled");
                 },
                 HandleCancel = () =>

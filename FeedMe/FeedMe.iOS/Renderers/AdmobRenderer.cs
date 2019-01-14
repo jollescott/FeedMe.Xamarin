@@ -20,7 +20,7 @@ namespace FeedMe.iOS.Renderers
         {
             base.OnElementChanged(e);
 
-            if (e.NewElement != null && Control == null)
+            if (Control == null)
                 SetNativeControl(CreateAdView());
         }
 

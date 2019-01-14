@@ -20,8 +20,6 @@ namespace FeedMe.Droid.Renderers
 {
     public class FacebookLoginRenderer : ViewRenderer<FacebookLoginButton, LoginButton>
     {
-        private LoginButton facebookLoginButton;
-
         public FacebookLoginRenderer(Context context) : base(context)
         {
             
@@ -30,10 +28,9 @@ namespace FeedMe.Droid.Renderers
         protected override void OnElementChanged(ElementChangedEventArgs<FacebookLoginButton> e)
         {
             base.OnElementChanged(e);
-            if(Control == null || facebookLoginButton == null)
+            if(Control == null)
             {
-                facebookLoginButton = new LoginButton(Context);
-                SetNativeControl(facebookLoginButton);
+                SetNativeControl(new LoginButton(Context));
             }
         }
     }
