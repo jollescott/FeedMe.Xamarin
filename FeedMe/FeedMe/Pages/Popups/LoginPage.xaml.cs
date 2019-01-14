@@ -27,8 +27,7 @@ namespace FeedMe.Pages.Popups
 
         private async void RunCloseCommandAsync(object obj)
         {
-            _tcs.SetResult(false);
-            await PopupNavigation.Instance.PopAsync();
+            await PopupNavigation.Instance.PopAsync().ContinueWith((task) => { _tcs.TrySetResult(false); });
         }
 
         public LoginPage(TaskCompletionSource<bool> tcs)
@@ -47,14 +46,12 @@ namespace FeedMe.Pages.Popups
                 var content = new StringContent(user_json, Encoding.UTF8, "application/json");
                 await _httpClient.PostAsync(RamseyApi.V2.User.Sync, content);
 
-                _tcs.SetResult(true);
-                await PopupNavigation.Instance.PopAsync();
+                await PopupNavigation.Instance.PopAsync().ContinueWith((task) => { _tcs.TrySetResult(true); });
             });
 
             MessagingCenter.Instance.Subscribe(Application.Current, "FacebookLogin_Cancelled", async (Application app) =>
             {
-                _tcs.SetResult(false);
-                await PopupNavigation.Instance.PopAsync();
+                await PopupNavigation.Instance.PopAsync().ContinueWith((task) => { _tcs.TrySetResult(false); }); ;
             });
 
             BindingContext = this;

@@ -38,7 +38,7 @@ namespace FeedMe.iOS
 #endif
 
             Profile.EnableUpdatesOnAccessTokenChange(true);
-            Settings.AppId = "605355546285789";
+            Settings.AppId = "2068149499897372";
             Settings.DisplayName = "FeedMe";
 
             AppCenter.Start("3b7d6ef2-eee4-46d3-a897-b7876624251b", typeof(Analytics), typeof(Crashes));
