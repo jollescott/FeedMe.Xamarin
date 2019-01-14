@@ -22,10 +22,15 @@ namespace FeedMe.Pages
 
         void XamlSetup()
         {
-            ListView_ShoppingList.BackgroundColor = Constants.AppColor.lightGray;
+            //ListView_ShoppingList.BackgroundColor = Constants.AppColor.lightGray;
             //ListView_ShoppingList.ItemsSource = 
         }
-	}
+
+        private void SearchBar_Ingredients_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+    }
 
 
 }
