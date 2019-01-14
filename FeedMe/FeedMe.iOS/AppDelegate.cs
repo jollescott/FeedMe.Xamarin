@@ -6,6 +6,9 @@ using Foundation;
 using UIKit;	
 using Facebook.CoreKit;
 using Facebook.LoginKit;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 namespace FeedMe.iOS
 {
@@ -38,10 +41,11 @@ namespace FeedMe.iOS
             Settings.AppId = "605355546285789";
             Settings.DisplayName = "FeedMe";
 
-
+            AppCenter.Start("3b7d6ef2-eee4-46d3-a897-b7876624251b", typeof(Analytics), typeof(Crashes));
 
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
+
 
             return base.FinishedLaunching(app, options);
         }

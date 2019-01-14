@@ -10,7 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,6 +20,14 @@ namespace FeedMe.Pages.Popups
     public partial class LoginPage : PopupPage
     {
         private readonly HttpClient _httpClient = new HttpClient();
+
+        private ICommand _closeCommand;
+        public ICommand CloseCommand => _closeCommand = _closeCommand ?? new Command(RunCloseCommand);
+
+        private void RunCloseCommand(object obj)
+        {
+            PopupNavigation.Instance.PopAsync();
+        }
 
         public LoginPage(TaskCompletionSource<bool> tcs)
         {
@@ -45,6 +53,8 @@ namespace FeedMe.Pages.Popups
                 tcs.SetResult(false);
                 await PopupNavigation.Instance.PopAsync();
             });
+
+            BindingContext = this;
         }
     }
 }

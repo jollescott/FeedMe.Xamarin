@@ -6,6 +6,7 @@ using Facebook.LoginKit;
 using FeedMe.Controls;
 using FeedMe.iOS.Renderers;
 using Foundation;
+using Microsoft.AppCenter.Crashes;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
