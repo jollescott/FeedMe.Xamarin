@@ -8,6 +8,9 @@ using Xamarin.Forms.Xaml;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Ramsey.Shared.Misc;
+using System.Windows.Input;
+using FeedMe.Interfaces;
+using FeedMe.Classes;
 
 namespace FeedMe
 {
@@ -19,6 +22,21 @@ namespace FeedMe
         RecipeDtoV2 recipe;
         List<IngredientDtoV2> myIngredients;
         List<Label> ingredentPortionLabels = new List<Label>();
+
+        public bool IsFavorite { get; set; }
+
+        private ICommand _favoriteCommand;
+        public ICommand FavoriteCommand => _favoriteCommand = _favoriteCommand ?? new Command(RunFavoriteCommandAsync);
+
+        private async void RunFavoriteCommandAsync(object obj)
+        {
+            var userid = DependencyService.Get<IFacebook>().UserId;
+            await RamseyConnection.SaveFavoriteAsync(recipeMeta.RecipeID, userid);
+
+            IsFavorite = true;
+            OnPropertyChanged(nameof(IsFavorite));
+        }
+
         public RecipePage (RecipeMetaDtoV2 recipeMeta, List<IngredientDtoV2> myIngredients)
 		{
             InitializeComponent();
@@ -27,6 +45,8 @@ namespace FeedMe
             this.myIngredients = myIngredients;
             XamlSetup1();
             GET_recipeDto(recipeMeta.RecipeID);
+
+            BindingContext = this;
 		}
 
         async void GET_recipeDto(string id)

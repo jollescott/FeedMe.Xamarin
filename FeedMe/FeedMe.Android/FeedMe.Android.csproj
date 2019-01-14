@@ -67,6 +67,12 @@
     <PackageReference Include="Ramsey.Shared">
       <Version>1.0.6</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugin.Iconize">
+      <Version>3.4.0.103</Version>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugin.Iconize.Material">
+      <Version>3.4.0.103</Version>
+    </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.1.1</Version>
     </PackageReference>

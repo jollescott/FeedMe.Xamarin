@@ -4,7 +4,16 @@
              xmlns:controls="clr-namespace:FeedMe.Controls;assembly=FeedMe"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:fft="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
+             xmlns:conv="clr-namespace:FeedMe.Converters"
              x:Class="FeedMe.RecipePage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:IsFavoriteConverter x:Key="favoriteConv"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
 
         <Grid RowSpacing="0" ColumnSpacing="0">
@@ -52,7 +61,16 @@
 
                             <ff:CachedImage x:Name="Image_OwnerLogo" Aspect="AspectFit" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"/>
 
-                            <Label x:Name="Label_OwnerName" FontSize="Medium" Margin="15, 0, 0, 0" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Start" Grid.Row="0" Grid.Column="1"/>
+                            <StackLayout Grid.Row="0" Grid.Column="1" Margin="15, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
+                                         Orientation="Horizontal">
+                                <Label x:Name="Label_OwnerName" FontSize="Medium"/>
+                                <iconize:IconLabel Text="{Binding IsFavorite, Converter={x:StaticResource favoriteConv}}" FontSize="28"
+                                                   VerticalTextAlignment="Center" TextColor="#00CC66">
+                                    <iconize:IconLabel.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding FavoriteCommand}"/>
+                                    </iconize:IconLabel.GestureRecognizers>
+                                </iconize:IconLabel>
+                            </StackLayout>
                             <Label x:Name="Label_OwnerLink" FontSize="Micro" Margin="15, 0, 0, 0" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Start" Grid.Row="1" Grid.Column="1">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1"/>
