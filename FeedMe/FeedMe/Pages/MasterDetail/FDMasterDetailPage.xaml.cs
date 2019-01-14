@@ -40,7 +40,7 @@ namespace FeedMe.Pages.MasterDetail
                     break;
                 case 1:
 
-                    bool isAuth = await VerifyFacebookAsync();
+                    bool isAuth = await LoginPage.AssureFacebookAsync();
                     if(isAuth)
                         Detail = new IconNavigationPage(new FavoritesPage());
 
@@ -58,23 +58,6 @@ namespace FeedMe.Pages.MasterDetail
             */
             IsPresented = false;
             MasterPage.ListView.SelectedItem = null;
-        }
-
-        private async Task<bool> VerifyFacebookAsync()
-        {
-            var id = DependencyService.Get<IFacebook>().UserId;
-
-            if(id == null)
-            {
-                var tcs = new TaskCompletionSource<bool>();
-                await PopupNavigation.Instance.PushAsync(new LoginPage(tcs));
-
-                return await tcs.Task;
-            }
-            else
-            {
-                return true;
-            }
         }
     }
 }
