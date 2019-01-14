@@ -35,7 +35,7 @@ namespace FeedMe.Droid.Renderers
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (e.PropertyName == nameof(AdView.AdUnitId))
+            if (e.PropertyName == nameof(AdmobView.AdUnit))
                 Control.AdUnitId = Element.AdUnit;
         }
 

@@ -22,6 +22,16 @@ namespace FeedMe.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            Rg.Plugins.Popup.Popup.Init();
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+            Plugin.Iconize.Iconize.Init();
+
+#if DEBUG
+            Google.MobileAds.MobileAds.Configure("ca-app-pub-3940256099942544~3347511713");
+#else
+            Google.MobileAds.MobileAds.Configure("ca-app-pub-4571482486671250~7532275431");
+#endif
+
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
