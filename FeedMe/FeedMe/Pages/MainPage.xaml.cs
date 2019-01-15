@@ -210,7 +210,7 @@ namespace FeedMe
                 }
                 else
                 {
-                    await DisplayAlert("Response error", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "ok");
+                    await DisplayAlert("Connection error", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "ok");
                 }
             }
             catch (Exception)
