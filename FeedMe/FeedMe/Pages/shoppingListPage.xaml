@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
              x:Class="FeedMe.Pages.shoppingListPage">
     <ContentPage.Content>
 
@@ -24,7 +25,9 @@
                     
                     
                     <SearchBar x:Name="SearchBar_Ingredients" Placeholder="Lägg till ingredienser" HorizontalOptions="Fill" Grid.Row="0" Grid.Column="0" TextChanged="SearchBar_Ingredients_TextChanged"/>
-                    <ImageButton Source="icon_close.png" Grid.Row="0" Grid.Column="1" Clicked="ImageButton_Clicked"/>
+                    <Button Text="Klar" Grid.Row="0" Grid.Column="1" Clicked="ImageButton_Clicked"/>
+                    <iconize:IconLabel x:Name="test" Text="md-done" FontSize="28" VerticalTextAlignment="Center" TextColor="#00CC66" Grid.Row="0" Grid.Column="1"/>
+
 
                     <ListView x:Name="ListView_SearchIngredients" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemSelected="ListView_SearchIngredients_ItemSelected">
                         <ListView.ItemTemplate>
@@ -45,7 +48,9 @@
 
                                         <Label Text="{Binding Name}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"/>
 
-                                        <Image Source="{Binding IconSource}" VerticalOptions="Center" HorizontalOptions="End" Aspect="AspectFit" Grid.Column="2" Grid.Row="1"/>
+                                        <!--Image Source="{Binding IconSource}" VerticalOptions="Center" HorizontalOptions="End" Aspect="AspectFit" Grid.Column="2" Grid.Row="1"/-->
+
+                                        <iconize:IconLabel Text="{Binding IconSource}" FontSize="28" VerticalTextAlignment="Center" TextColor="{Binding Color}" Grid.Column="2" Grid.Row="1"/>
 
                                     </Grid>
                                 </ViewCell>
@@ -60,6 +65,20 @@
             <ScrollView x:Name="ScrollView_main" Grid.Row="0">
                 <StackLayout x:Name="StackLayout_main">
 
+                    <ListView x:Name="list_test" HasUnevenRows="True" HeightRequest="100">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Orientation="Horizontal">
+                                        <iconize:IconLabel x:Name="icon_test" Text="{Binding Icon}" FontSize="28" TextColor="Red" />
+                                        <Label Text="{Binding Icon}" FontSize="28" VerticalTextAlignment="Center" HorizontalTextAlignment="End"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    
+                    <Button x:Name="button_test" Clicked="button_test_Clicked"/>
 
                     <Frame BackgroundColor="Wheat" x:Name="Frame_MyIngredients" Padding="0" CornerRadius="0">
                         <Grid Margin="0" Padding="0" RowSpacing="0" ColumnSpacing="0">
@@ -94,8 +113,8 @@
 
                                                 <Label Text="{Binding IngredientId}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"/>
 
-                                                <Image Source="icon_x.png" VerticalOptions="Center" HorizontalOptions="End" Aspect="AspectFit" Grid.Column="2" Grid.Row="1"/>
-
+                                                <!--Image Source="icon_x.png" VerticalOptions="Center" HorizontalOptions="End" Aspect="AspectFit" Grid.Column="2" Grid.Row="1"/-->
+                                                <iconize:IconLabel Text="md-remove-shopping-cart" FontSize="28" VerticalTextAlignment="Center" HorizontalTextAlignment="End"  HorizontalOptions="End" TextColor="#1E1E1E"  Grid.Column="2" Grid.Row="0" Grid.RowSpan="3"/>
                                             </Grid>
                                         </ViewCell>
                                     </DataTemplate>

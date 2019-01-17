@@ -20,13 +20,12 @@ namespace FeedMe
                 BarTextColor = Constants.textColor3
             };*/
 
-            //MainPage = new FDMasterDetailPage();
-
             //MainPage = new MainPage();
 
             Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.MaterialModule());
 
-            MainPage = new LoadingPage();
+            //MainPage = new LoadingPage();
+            MainPage = new FDMasterDetailPage();
         }
 
         protected override void OnStart()

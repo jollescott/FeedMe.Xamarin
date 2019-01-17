@@ -22,7 +22,12 @@ namespace FeedMe.Pages
         List<IngredientDtoV2> searchIngredients = new List<IngredientDtoV2>();
         List<IngredientDtoV2> shoppingListIngredients = new List<IngredientDtoV2>();
 
-		public shoppingListPage ()
+        bool state = false;
+        List<IconTestModel> icons_testList = new List<IconTestModel>();
+        List<IconTestModel> icons_testList2 = new List<IconTestModel>();
+
+
+        public shoppingListPage ()
 		{
 			InitializeComponent ();
             string savedIngredients = User.User.ShoppingListIngredients;
@@ -30,6 +35,14 @@ namespace FeedMe.Pages
             {
                 shoppingListIngredients = JsonConvert.DeserializeObject<List<IngredientDtoV2>>(savedIngredients);
             }
+
+
+            icons_testList.Add(new IconTestModel { Icon = "md-add" });
+            icons_testList.Add(new IconTestModel { Icon = "md-add" });
+            icons_testList.Add(new IconTestModel { Icon = "md-add" });
+            icons_testList.Add(new IconTestModel { Icon = "md-remove" });
+            list_test.ItemsSource = icons_testList;
+
 
             XamlSetup();
 		}
@@ -48,16 +61,24 @@ namespace FeedMe.Pages
 
         private void UpdateSearchIngreadientsListView(List<IngredientDtoV2> ingredients)
         {
-            List<ListItem> items = new List<ListItem>();
-            foreach (var ingredient in ingredients)
+            try
             {
-                items.Add(new ListItem
+                List<ListItem> items = new List<ListItem>();
+                foreach (var ingredient in ingredients)
                 {
-                    Name = ingredient.IngredientId,
-                    IconSource = (Sorting.IngredientExistsInList(ingredient, shoppingListIngredients)) ? "icon_x.png" : "icon_add.png"
-                });
+                    items.Add(new ListItem
+                    {
+                        Name = ingredient.IngredientId,
+                        //IconSource = "md-remove-shopping-cart",   // FUNKAR INTE aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa :(
+                        Color = (Sorting.IngredientExistsInList(ingredient, shoppingListIngredients)) ? Color.Black : Color.FromHex("#00CC66")
+                    });
+
+                }
+                ListView_SearchIngredients.ItemsSource = items;
+            } catch ( Exception _e )
+            {
+                Console.WriteLine(_e);
             }
-            ListView_SearchIngredients.ItemsSource = items;
         }
 
         private void UpdateShoppingListListView(List<IngredientDtoV2> ingredients)
@@ -164,19 +185,52 @@ namespace FeedMe.Pages
                 shoppingListIngredients.Add(selectedIngredient);
             }
             UpdateSearchIngreadientsListView(searchIngredients);
-            UpdateShoppingListListView(shoppingListIngredients);
 
             User.User.ShoppingListIngredients = JsonConvert.SerializeObject(shoppingListIngredients);
         }
 
         private void ImageButton_Clicked(object sender, EventArgs e)
         {
+            UpdateShoppingListListView(shoppingListIngredients);
             ScrollView_main.IsEnabled = true;
             ScrollView_main.IsVisible = true;
             Frame_Search.IsEnabled = false;
             Frame_Search.IsVisible = false;
             SearchBar_Ingredients.Text = "";
         }
+
+        private void button_test_Clicked(object sender, EventArgs e)
+        {
+            //if (state)
+            //{
+            //    state = !state;
+            //    UpdateIcons(1, "md-add");
+            //}
+            //else
+            //{
+            //    state = !state;
+            //    UpdateIcons(1, "md-remove");
+            //}
+
+            icons_testList2.Add(new IconTestModel { Icon = "md-remove" });
+            icons_testList2.Add(new IconTestModel { Icon = "md-remove" });
+            icons_testList2.Add(new IconTestModel { Icon = "md-remove" });
+            icons_testList2.Add(new IconTestModel { Icon = "md-add" });
+            list_test.ItemsSource = icons_testList2;
+        }
+
+        void UpdateIcons(int index, string name)
+        {
+            List<IconTestModel> sorce = new List<IconTestModel>();
+            sorce.Add(new IconTestModel { Icon = name });
+            sorce.Add(new IconTestModel { Icon = name });
+            //list_test.ItemsSource = sorce;
+            list_test.ItemsSource = icons_testList;
+        }
+    }
+
+    class IconTestModel {
+        public string Icon { get; set; }
     }
 
 
