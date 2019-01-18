@@ -11,6 +11,7 @@ using Ramsey.Shared.Misc;
 using System.Windows.Input;
 using FeedMe.Interfaces;
 using FeedMe.Classes;
+using Ramsey.Shared.Enums;
 
 namespace FeedMe
 {
@@ -119,7 +120,7 @@ namespace FeedMe
                 // ingredient names
                 Grid_Ingredients.Children.Add(new Label()
                 {
-                    Text = recipeMeta.RecipeParts.ToList()[i].IngredientID.Trim(),
+                    Text = recipeMeta.RecipeParts.ToList()[i].IngredientName.Trim(),
                     TextColor = Constants.AppColor.text_black,
                     FontSize = Constants.fontSize3,
                     Margin = Constants.textListMargin

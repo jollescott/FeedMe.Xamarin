@@ -8,12 +8,12 @@ namespace FeedMe.Classes
 {
     class Sorting
     {
-        public static List<IngredientDtoV2> SortIngredientsByLenght(List<IngredientDtoV2> ingredients)
+        public static List<IngredientDtoV2> SortIngredientsByNameLenght(List<IngredientDtoV2> ingredients)
         {
             for (int i = 1; i < ingredients.Count; i++)
             {
                 int j = 0;
-                while (ingredients[i].IngredientId.Length > ingredients[j].IngredientId.Length)
+                while (ingredients[i].IngredientName.Length > ingredients[j].IngredientName.Length)
                 {
                     j++;
                 }

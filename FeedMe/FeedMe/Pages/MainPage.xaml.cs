@@ -28,7 +28,11 @@ namespace FeedMe
             string savedIngredients = User.User.SavedIngredinets;
             if (savedIngredients != null && savedIngredients != "")
             {
-                myIngredients = JsonConvert.DeserializeObject<List<IngredientDtoV2>>(savedIngredients);
+                try
+                {
+                    myIngredients = JsonConvert.DeserializeObject<List<IngredientDtoV2>>(savedIngredients);
+                }
+                catch { }
             }
 
             XamlSetup();
@@ -98,22 +102,22 @@ namespace FeedMe
             foreach (var ingredient in ingredients)
             {
                 items.Add(new ListItem {
-                    Name = ingredient.IngredientId,
+                    Name = ingredient.IngredientName,
                     IconSource = (ExistsIn(ingredient, myIngredients)) ? "icon_remove.png" : "icon_add.png"
             });
             }
             ListView_SearchIngredients.ItemsSource = items;
         }
 
-        private List<string> IngredientsToStrings(List<IngredientDtoV2> ingredientDtos)
-        {
-            List<string> strIngredients = new List<string>();
-            foreach (IngredientDtoV2 ingredient in ingredientDtos)
-            {
-                strIngredients.Add(ingredient.IngredientId);
-            }
-            return strIngredients;
-        }
+        //private List<string> IngredientsToStrings(List<IngredientDtoV2> ingredientDtos)
+        //{
+        //    List<string> strIngredients = new List<string>();
+        //    foreach (IngredientDtoV2 ingredient in ingredientDtos)
+        //    {
+        //        strIngredients.Add(ingredient.IngredientName);
+        //    }
+        //    return strIngredients;
+        //}
 
         void ResizeListView(ListView listView, int length)
         {
@@ -145,7 +149,7 @@ namespace FeedMe
             for (int i = 1; i < ingredients.Count; i++)
             {
                 int j = 0;
-                while (ingredients[i].IngredientId.Length > ingredients[j].IngredientId.Length)
+                while (ingredients[i].IngredientName.Length > ingredients[j].IngredientName.Length)
                 {
                     j++;
                 }
@@ -213,7 +217,7 @@ namespace FeedMe
                     await DisplayAlert("Connection error", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "ok");
                 }
             }
-            catch (Exception)
+            catch (Exception _e)
             {
                 await DisplayAlert("An error occurred", "Server conection failed", "ok");
             }

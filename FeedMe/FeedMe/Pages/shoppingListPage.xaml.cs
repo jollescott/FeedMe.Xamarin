@@ -68,7 +68,7 @@ namespace FeedMe.Pages
                 {
                     items.Add(new ListItem
                     {
-                        Name = ingredient.IngredientId,
+                        Name = ingredient.IngredientName,
                         //IconSource = "md-remove-shopping-cart",   // FUNKAR INTE aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa :(
                         Color = (Sorting.IngredientExistsInList(ingredient, shoppingListIngredients)) ? Color.Black : Color.FromHex("#00CC66")
                     });
@@ -111,7 +111,7 @@ namespace FeedMe.Pages
                 {
                     //await DisplayAlert("success", "succeess", "ok");
                     var result = await response.Content.ReadAsStringAsync();
-                    searchIngredients = Sorting.SortIngredientsByLenght(JsonConvert.DeserializeObject<List<IngredientDtoV2>>(result));
+                    searchIngredients = Sorting.SortIngredientsByNameLenght(JsonConvert.DeserializeObject<List<IngredientDtoV2>>(result));
                     UpdateSearchIngreadientsListView(searchIngredients);
                 }
                 else
