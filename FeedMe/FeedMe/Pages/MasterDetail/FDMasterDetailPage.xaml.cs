@@ -40,14 +40,14 @@ namespace FeedMe.Pages.MasterDetail
                     break;
                 case 1:
 
-                    //bool isAuth = await VerifyFacebookAsync();
-                    //if(isAuth)
-                    //    Detail = new IconNavigationPage(new FavoritesPage());
+                    bool isAuth = await VerifyFacebookAsync();
+                    if (isAuth)
+                        Detail = new IconNavigationPage(new FavoritesPage());
 
                     break;
 
                 case 2:
-                    //Detail = new NavigationPage(new shoppingListPage());
+                    Detail = new NavigationPage(new shoppingListPage());
                     break;
             }
             /*
