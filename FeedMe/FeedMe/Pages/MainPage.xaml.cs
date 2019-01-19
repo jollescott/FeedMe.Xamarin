@@ -10,12 +10,14 @@ using Ramsey.Shared.Extensions;
 using FeedMe.Classes;
 using Ramsey.Shared.Misc;
 using Ramsey.Shared.Dto.V2;
+using System.Threading.Tasks;
 
 namespace FeedMe
 {
     public partial class MainPage : ContentPage
     {
         private readonly HttpClient httpClient = new HttpClient();
+        IngredientsSearching ingredientsSearching = new IngredientsSearching();
 
         List<IngredientDtoV2> searchIngredients = new List<IngredientDtoV2>();
         List<IngredientDtoV2> myIngredients = new List<IngredientDtoV2>();
@@ -198,29 +200,8 @@ namespace FeedMe
 
         async void GET_ingredientDtos(string search)
         {
-            try
-            {
-                //HttpResponseMessage response = _httpClient.GetAsync(_adress).ConfigureAwait(false).GetAwaiter().GetResult();
-                //HttpResponseMessage response = _httpClient.GetAsync(_adress).GetAwaiter().GetResult();
-                HttpResponseMessage response = await httpClient.GetAsync(RamseyApi.V2.Ingredient.Suggest + "?search=" + search);
-
-
-                if (response.IsSuccessStatusCode)
-                {
-                    //await DisplayAlert("success", "succeess", "ok");
-                    var result = await response.Content.ReadAsStringAsync();
-                    searchIngredients = SortIngredientsByLenght(JsonConvert.DeserializeObject<List<IngredientDtoV2>>(result));
-                    UpdateSearchIngreadientsListView(searchIngredients);
-                }
-                else
-                {
-                    await DisplayAlert("Connection error", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "ok");
-                }
-            }
-            catch
-            {
-                await DisplayAlert("An error occurred", "Server conection failed", "ok");
-            }
+            await Task.Factory.StartNew(() => searchIngredients = ingredientsSearching.Search(search));
+            UpdateSearchIngreadientsListView(searchIngredients);
         }
 
         //async void POST_recipeMetas(List<IngredientDtoV2> ingredientDtos)
