@@ -206,7 +206,7 @@ namespace FeedMe
                 foreach (var myIngredient in myIngredients)
                 {
 
-                    if (recipe.RecipeParts.ToList()[i].IngredientName == myIngredient.IngredientName)
+                    if (recipe.RecipeParts.ToList()[i].IngredientName.Trim() == myIngredient.IngredientName.Trim())
                     {
                         Grid_Ingredients.Children.Add(new Image()
                         {
