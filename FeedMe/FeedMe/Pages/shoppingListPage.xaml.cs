@@ -24,7 +24,7 @@ namespace FeedMe.Pages
 
         bool state = false;
         List<IconTestModel> icons_testList = new List<IconTestModel>();
-        List<IconTestModel> icons_testList2 = new List<IconTestModel>();
+        //List<IconTestModel> icons_testList2 = new List<IconTestModel>();
 
 
         public shoppingListPage ()
@@ -211,12 +211,14 @@ namespace FeedMe.Pages
             //    state = !state;
             //    UpdateIcons(1, "md-remove");
             //}
-
+            var icons_testList2 = new List<IconTestModel>();
             icons_testList2.Add(new IconTestModel { Icon = "md-remove" });
             icons_testList2.Add(new IconTestModel { Icon = "md-remove" });
             icons_testList2.Add(new IconTestModel { Icon = "md-remove" });
             icons_testList2.Add(new IconTestModel { Icon = "md-add" });
             list_test.ItemsSource = icons_testList2;
+            int a = 0;
+            int b = 0;
         }
 
         void UpdateIcons(int index, string name)
