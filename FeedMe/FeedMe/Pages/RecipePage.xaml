@@ -48,38 +48,49 @@
                     </Grid>
 
                     <!--Owner Info-->
-                    <Frame Margin="0, 0, 0, 7.5" Padding="15" CornerRadius="0" BackgroundColor="White">
-                        <Grid Margin="0" Padding="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="4*"/>
-                            </Grid.ColumnDefinitions>
+                    <Frame x:Name="Frame_OwnerInfo" Margin="0, 0, 0, 7.5" Padding="15" CornerRadius="0" BackgroundColor="White">
+                        <StackLayout Margin="0" Padding="0" Spacing="7.5">
 
-                            <ff:CachedImage x:Name="Image_OwnerLogo" Aspect="AspectFit" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Label x:Name="Label_RecipeName" FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Center" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Column="0"/>
 
-                            <StackLayout Grid.Row="0" Grid.Column="1" Margin="15, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
-                                         Orientation="Horizontal">
-                                <Label x:Name="Label_OwnerName" FontSize="Medium"/>
-                                <iconize:IconLabel Text="{Binding IsFavorite, Converter={x:StaticResource favoriteConv}}" FontSize="28"
-                                                   VerticalTextAlignment="Center" TextColor="#00CC66">
+                                <iconize:IconLabel Text="{Binding IsFavorite, Converter={x:StaticResource favoriteConv}}" FontSize="Large"
+                                                VerticalTextAlignment="Start" HorizontalTextAlignment="End" VerticalOptions="Start" HorizontalOptions="End" TextColor="#00CC66" Grid.Column="1">
                                     <iconize:IconLabel.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding FavoriteCommand}"/>
                                     </iconize:IconLabel.GestureRecognizers>
                                 </iconize:IconLabel>
-                            </StackLayout>
-                            <Label x:Name="Label_OwnerLink" FontSize="Micro" Margin="15, 0, 0, 0" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Start" Grid.Row="1" Grid.Column="1">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                        </Grid>
+                            </Grid>
+
+                            <BoxView HeightRequest="1" HorizontalOptions="Fill" Color="LightGray"/>
+
+                            <Grid ColumnSpacing="15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <ff:CachedImage Margin="0" x:Name="Image_OwnerLogo" Grid.Column="0" VerticalOptions="End" WidthRequest="70"/>
+
+                                <StackLayout Margin="0" Padding="0" Grid.Column="1" VerticalOptions="Start">
+                                    <Label x:Name="Label_OwnerLinkInfo" Margin="0" FontSize="Small" Text="Receptet kan hittas på:" VerticalOptions="Start" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                    <Label x:Name="Label_OwnerLink" Margin="0" FontSize="Micro" HorizontalOptions="Start" VerticalOptions="Start" HorizontalTextAlignment="Start">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </StackLayout>
+                            </Grid>
+
+                        </StackLayout>
                     </Frame>
 
-                    <Frame Margin="15, 7.5, 15, 7.5" Padding="0" CornerRadius="0" BackgroundColor="White">
+                    <Frame Margin="0, 7.5, 0, 7.5" Padding="0" CornerRadius="0" BackgroundColor="White">
                         <Grid RowSpacing="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -93,8 +104,26 @@
 
                             <!--Portions Stepper-->
                             <Grid Margin="15, 15, 15, 7.5" x:Name="Grid_Portions" Padding="0" Grid.Row="1">
-                                <Stepper x:Name="Stepper_Portions" VerticalOptions="Center" HorizontalOptions="End" Maximum="10" Minimum="1" Increment="1" Value="2" ValueChanged="Stepper_Portions_ValueChanged"/>
-                                <Label x:Name="Label_Portions" VerticalOptions="Center" HorizontalOptions="Start"/>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <!--Stepper x:Name="Stepper_Portions" VerticalOptions="Center" HorizontalOptions="End" Maximum="10" Minimum="1" Increment="1" Value="2" ValueChanged="Stepper_Portions_ValueChanged"/-->
+                                <iconize:IconLabel x:Name="IconButton_AddPortionCount" Text="md-add-circle" FontSize="Large" TextColor="#00CC66" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2">
+                                    <iconize:IconLabel.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="IconButton_AddPortionCount_Clicked"/>
+                                    </iconize:IconLabel.GestureRecognizers>
+                                </iconize:IconLabel>
+                                <iconize:IconLabel x:Name="IconButton_RemovePortionCount" BackgroundColor="Transparent" Text="md-remove-circle" FontSize="Large" TextColor="#00CC66" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1">
+                                    <iconize:IconLabel.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="IconButton_RemovePortionCount_Clicked"/>
+                                    </iconize:IconLabel.GestureRecognizers>
+                                </iconize:IconLabel>
+                                <Label x:Name="Label_Portions" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="0"/>
                             </Grid>
 
                             <!--Ingredients-->
@@ -102,7 +131,7 @@
                         </Grid>
                     </Frame>
 
-                    <Frame Margin="15, 7.5, 15, 15" Padding="0" CornerRadius="0" BackgroundColor="White">
+                    <Frame Margin="0, 7.5, 0, 15" Padding="0" CornerRadius="0" BackgroundColor="White">
                         <Grid RowSpacing="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>

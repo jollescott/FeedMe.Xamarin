@@ -11,7 +11,7 @@ namespace FeedMe.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool favorite = (bool)value;
-            return favorite ? "md-star" : "md-star-border";
+            return favorite ? "md-favorite" : "md-favorite-border";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

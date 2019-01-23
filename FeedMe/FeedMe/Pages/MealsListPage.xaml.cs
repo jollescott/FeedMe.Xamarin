@@ -21,13 +21,27 @@ namespace FeedMe
 	{
         List<RecipeMetaModel> recipeMetaModels;
         List<RecipeMetaDtoV2> recipeMetas;
-        List<IngredientDtoV2> myIngredients;
+        //List<IngredientDtoV2> myIngredients;
         HttpClient httpClient = new HttpClient();
-		public MealsListPage (List<IngredientDtoV2> myIngredients)
+
+        bool viewFavorites;
+
+		public MealsListPage (bool viewFavorites = false)
 		{
             InitializeComponent();
-            this.myIngredients = myIngredients;
-            POST_recipeMetas(myIngredients);
+            this.viewFavorites = viewFavorites;
+
+            if (viewFavorites)
+            {
+                Label_Loading.Text = "Sorterar...";
+                recipeMetas = User.User.SavedRecipeMetas.OrderByDescending(o => o.Coverage).ToList();
+                XamlSetup();
+            }
+            else
+            {
+                InitializeComponent();
+                POST_recipeMetas(JsonConvert.DeserializeObject<List<IngredientDtoV2>>(User.User.SavedIngredinets));
+            }
         }
 
         // Get the recipeMetas with POST request
@@ -77,6 +91,7 @@ namespace FeedMe
                     Owner = x.Owner,
                     OwnerLogo = x.OwnerLogo,
                     CoverageMessage = "Du har " + ((int)(x.Coverage * 100)).ToString() + "%  av alla ingredienser",
+                    ShowCoverageMessage = (viewFavorites) ? false : true,
                     LogoRadius = 40,
                     RecipeID = x.RecipeID
                 };
@@ -115,7 +130,7 @@ namespace FeedMe
         //Next page
         async void GotoRecipePage(RecipeMetaDtoV2 recipeMeta)
         {
-            await Navigation.PushAsync(new RecipePage(recipeMeta, myIngredients) { Title = recipeMeta.Name });
+            await Navigation.PushAsync(new RecipePage(recipeMeta) { Title = recipeMeta.Name });
 
             ListView_Recipes.SelectedItem = null;
         }

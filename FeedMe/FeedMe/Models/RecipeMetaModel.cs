@@ -16,6 +16,7 @@ namespace FeedMe.Models
         public string Image { get; set; }
 
         public string CoverageMessage { get; set; }
+        public bool ShowCoverageMessage { get; set; }
         public double LogoRadius { get; set; }
         public double LogoDiameter { get { return 2 * LogoRadius; } set { LogoRadius = value / 2; } }
 

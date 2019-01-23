@@ -26,17 +26,27 @@ namespace FeedMe.Classes
         }
 
 
-        public static bool IngredientExistsInList(IngredientDtoV2 ingredient, List<IngredientDtoV2> list)
+        public static bool IngredientExistsInList(IngredientDtoV2 ingredient, List<IngredientDtoV2> ingredientList)
         {
-            foreach (IngredientDtoV2 item in list)
+            foreach (IngredientDtoV2 item in ingredientList)
             {
                 if (item.IngredientId == ingredient.IngredientId)
-                {
                     return true;
-                }
             }
             return false;
         }
+
+
+        public static bool RecipeMetaExistsInList(RecipeMetaDtoV2 recipe, List<RecipeMetaDtoV2> recipeList)
+        {
+            foreach (var r in recipeList)
+            {
+                if (recipe.RecipeID == r.RecipeID)
+                    return true;
+            }
+            return false;
+        }
+
 
         public static void ResizeListView(ListView listView, int numberOfItems)
         {

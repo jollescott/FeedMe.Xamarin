@@ -186,7 +186,7 @@ namespace FeedMe
 
         async void GotoMealsListPage()
         {
-            await Navigation.PushAsync(new MealsListPage(myIngredients) { Title = "Bon Appétit" });
+            await Navigation.PushAsync(new MealsListPage() { Title = "Bon Appétit" });
         }
 
         void UpdateSavedIngredients(List<IngredientDtoV2> ingredients)

@@ -40,10 +40,11 @@ namespace FeedMe.Pages.MasterDetail
                     break;
                 case 1:
 
-                    bool isAuth = await VerifyFacebookAsync();
-                    if (isAuth)
-                        Detail = new IconNavigationPage(new FavoritesPage());
+                    //bool isAuth = await VerifyFacebookAsync();
+                    //if (isAuth)
+                    //    Detail = new IconNavigationPage(new FavoritesPage());
 
+                    Detail = new NavigationPage(new MealsListPage(true)); // saved recipes
                     break;
 
                 case 2:
