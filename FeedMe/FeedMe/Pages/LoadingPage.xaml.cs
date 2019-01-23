@@ -22,7 +22,7 @@ namespace FeedMe
         void XamlSetup()
         {
             //BackgroundImage = "background_loading.png";
-            ff_Background.Source = "background_loading.png";
+            //ff_Background.Source = "background_loading.png"; // image does not exist
         }
 
 

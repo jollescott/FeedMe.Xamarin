@@ -53,7 +53,7 @@ namespace FeedMe
                 }
                 else
                 {
-                    await DisplayAlert("Response error", "Status code " + (int)respone.StatusCode + ": " + respone.StatusCode.ToString(), "ok");
+                    await DisplayAlert("Connection error", "Status code " + (int)respone.StatusCode + ": " + respone.StatusCode.ToString(), "ok");
                 }
             }
             catch (Exception)
@@ -65,6 +65,7 @@ namespace FeedMe
         void XamlSetup()
         {
             Label_Loading.IsEnabled = false;
+            Label_Loading.IsVisible = false;
 
             recipeMetaModels = recipeMetas.Select(x =>
             {

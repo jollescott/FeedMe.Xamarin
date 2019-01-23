@@ -47,7 +47,7 @@ namespace FeedMe.Pages.MasterDetail
                     break;
 
                 case 2:
-                    //Detail = new NavigationPage(new shoppingListPage());  // BORTTAGET FÖR BETA RELEASE
+                    Detail = new NavigationPage(new shoppingListPage());
                     break;
             }
             /*

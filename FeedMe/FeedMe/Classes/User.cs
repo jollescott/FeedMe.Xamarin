@@ -16,5 +16,11 @@ namespace FeedMe.User
             get => AppSettings.GetValueOrDefault(nameof(SavedIngredinets), string.Empty);
             set => AppSettings.AddOrUpdateValue(nameof(SavedIngredinets), value);
         }
+
+        public static string ShoppingListIngredients
+        {
+            get => AppSettings.GetValueOrDefault(nameof(ShoppingListIngredients), string.Empty);
+            set => AppSettings.AddOrUpdateValue(nameof(ShoppingListIngredients), value);
+        }
     }
 }

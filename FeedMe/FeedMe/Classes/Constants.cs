@@ -17,6 +17,8 @@ namespace FeedMe
             public static Color gray = Color.FromHex("#777777");
             public static Color lightGray = Color.FromHex("#E6E6E6");
 
+            public static Color icon_gray = Color.FromHex("#1E1E1E");
+
             public static Color text_green = Color.FromHex("#00CC66");
             public static Color text_black = Color.FromHex("#202020");
             public static Color text_gray = Color.FromHex("#777777");

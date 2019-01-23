@@ -10,12 +10,14 @@ using Ramsey.Shared.Extensions;
 using FeedMe.Classes;
 using Ramsey.Shared.Misc;
 using Ramsey.Shared.Dto.V2;
+using System.Threading.Tasks;
 
 namespace FeedMe
 {
     public partial class MainPage : ContentPage
     {
         private readonly HttpClient httpClient = new HttpClient();
+        IngredientsSearching ingredientsSearching = new IngredientsSearching();
 
         List<IngredientDtoV2> searchIngredients = new List<IngredientDtoV2>();
         List<IngredientDtoV2> myIngredients = new List<IngredientDtoV2>();
@@ -28,7 +30,11 @@ namespace FeedMe
             string savedIngredients = User.User.SavedIngredinets;
             if (savedIngredients != null && savedIngredients != "")
             {
-                myIngredients = JsonConvert.DeserializeObject<List<IngredientDtoV2>>(savedIngredients);
+                try
+                {
+                    myIngredients = JsonConvert.DeserializeObject<List<IngredientDtoV2>>(savedIngredients);
+                }
+                catch { }
             }
 
             XamlSetup();
@@ -98,22 +104,22 @@ namespace FeedMe
             foreach (var ingredient in ingredients)
             {
                 items.Add(new ListItem {
-                    Name = ingredient.IngredientId,
+                    Name = ingredient.IngredientName,
                     IconSource = (ExistsIn(ingredient, myIngredients)) ? "icon_remove.png" : "icon_add.png"
             });
             }
             ListView_SearchIngredients.ItemsSource = items;
         }
 
-        private List<string> IngredientsToStrings(List<IngredientDtoV2> ingredientDtos)
-        {
-            List<string> strIngredients = new List<string>();
-            foreach (IngredientDtoV2 ingredient in ingredientDtos)
-            {
-                strIngredients.Add(ingredient.IngredientId);
-            }
-            return strIngredients;
-        }
+        //private List<string> IngredientsToStrings(List<IngredientDtoV2> ingredientDtos)
+        //{
+        //    List<string> strIngredients = new List<string>();
+        //    foreach (IngredientDtoV2 ingredient in ingredientDtos)
+        //    {
+        //        strIngredients.Add(ingredient.IngredientName);
+        //    }
+        //    return strIngredients;
+        //}
 
         void ResizeListView(ListView listView, int length)
         {
@@ -145,7 +151,7 @@ namespace FeedMe
             for (int i = 1; i < ingredients.Count; i++)
             {
                 int j = 0;
-                while (ingredients[i].IngredientId.Length > ingredients[j].IngredientId.Length)
+                while (ingredients[i].IngredientName.Length > ingredients[j].IngredientName.Length)
                 {
                     j++;
                 }
@@ -194,29 +200,8 @@ namespace FeedMe
 
         async void GET_ingredientDtos(string search)
         {
-            try
-            {
-                //HttpResponseMessage response = _httpClient.GetAsync(_adress).ConfigureAwait(false).GetAwaiter().GetResult();
-                //HttpResponseMessage response = _httpClient.GetAsync(_adress).GetAwaiter().GetResult();
-                HttpResponseMessage response = await httpClient.GetAsync(RamseyApi.V2.Ingredient.Suggest + "?search=" + search);
-
-
-                if (response.IsSuccessStatusCode)
-                {
-                    //await DisplayAlert("success", "succeess", "ok");
-                    var result = await response.Content.ReadAsStringAsync();
-                    searchIngredients = SortIngredientsByLenght(JsonConvert.DeserializeObject<List<IngredientDtoV2>>(result));
-                    UpdateSearchIngreadientsListView(searchIngredients);
-                }
-                else
-                {
-                    await DisplayAlert("Response error", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "ok");
-                }
-            }
-            catch (Exception)
-            {
-                await DisplayAlert("An error occurred", "Server conection failed", "ok");
-            }
+            await Task.Factory.StartNew(() => searchIngredients = ingredientsSearching.Search(search));
+            UpdateSearchIngreadientsListView(searchIngredients);
         }
 
         //async void POST_recipeMetas(List<IngredientDtoV2> ingredientDtos)
