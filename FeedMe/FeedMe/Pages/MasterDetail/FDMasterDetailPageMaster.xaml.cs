@@ -21,7 +21,7 @@ namespace FeedMe.Pages.MasterDetail
         {
             InitializeComponent();
 
-            Grid_MenuBackground.BackgroundColor = Constants.AppColor.navigationBarColor;
+            //Grid_MenuBackground.BackgroundColor = Constants.AppColor.navigationBarColor;
 
             BindingContext = new FDMasterDetailPageMasterViewModel();
             ListView = MenuItemsListView;
@@ -35,9 +35,9 @@ namespace FeedMe.Pages.MasterDetail
             {
                 MenuItems = new ObservableCollection<FDMasterDetailPageMenuItem>(new[]
                 {
-                    new FDMasterDetailPageMenuItem { Id = 0, Title = "Sök recept" },
-                    new FDMasterDetailPageMenuItem { Id = 1, Title = "Gillade recept" },
-                    new FDMasterDetailPageMenuItem { Id = 2, Title = "Inköpslista\n(Kommer snart)" }
+                    new FDMasterDetailPageMenuItem { Id = 0, Title = "Sök recept", Icon = "md-search"},
+                    new FDMasterDetailPageMenuItem { Id = 1, Title = "Gillade recept", Icon = "md-favorite-border" },
+                    new FDMasterDetailPageMenuItem { Id = 2, Title = "Inköpslista\n(Kommer snart)", Icon = "md-shopping-basket" }
                 });
             }
             

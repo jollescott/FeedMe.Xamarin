@@ -262,7 +262,7 @@ namespace FeedMe
                 // separation lines
                 Grid_Ingredients.Children.Add(new BoxView()
                 {
-                    BackgroundColor = Constants.AppColor.gray,
+                    BackgroundColor = Color.LightGray,
                     HeightRequest = 1,
                     VerticalOptions = LayoutOptions.End,
                     HorizontalOptions = LayoutOptions.FillAndExpand,
