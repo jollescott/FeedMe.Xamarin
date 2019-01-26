@@ -11,6 +11,7 @@ using Ramsey.Shared.Misc;
 using Ramsey.Shared.Dto.V2;
 using Newtonsoft.Json;
 using FeedMe.Classes;
+using System.Collections.ObjectModel;
 
 namespace FeedMe.Pages
 {
@@ -26,10 +27,16 @@ namespace FeedMe.Pages
         List<IconTestModel> icons_testList = new List<IconTestModel>();
         //List<IconTestModel> icons_testList2 = new List<IconTestModel>();
 
+        public Color TestColor { get; } = Color.Red;
+        public ObservableCollection<string> TestIcons { get; set; } = new ObservableCollection<string> { "md-add", "md-remove" };
+
 
         public shoppingListPage ()
 		{
 			InitializeComponent ();
+
+            BindingContext = this;
+
             string savedIngredients = User.User.ShoppingListIngredients;
             if (savedIngredients != null && savedIngredients != "")
             {
@@ -37,11 +44,10 @@ namespace FeedMe.Pages
             }
 
 
-            icons_testList.Add(new IconTestModel { Icon = "md-add" });
-            icons_testList.Add(new IconTestModel { Icon = "md-add" });
-            icons_testList.Add(new IconTestModel { Icon = "md-add" });
-            icons_testList.Add(new IconTestModel { Icon = "md-remove" });
-            list_test.ItemsSource = icons_testList;
+            //TestIcons.Add("md-add");
+            //TestIcons.Add("md-add");
+            //TestIcons.Add("md-add");
+            //TestIcons.Add("md-remove");
 
 
             XamlSetup();
@@ -211,14 +217,16 @@ namespace FeedMe.Pages
             //    state = !state;
             //    UpdateIcons(1, "md-remove");
             //}
-            var icons_testList2 = new List<IconTestModel>();
-            icons_testList2.Add(new IconTestModel { Icon = "md-remove" });
-            icons_testList2.Add(new IconTestModel { Icon = "md-remove" });
-            icons_testList2.Add(new IconTestModel { Icon = "md-remove" });
-            icons_testList2.Add(new IconTestModel { Icon = "md-add" });
-            list_test.ItemsSource = icons_testList2;
-            int a = 0;
-            int b = 0;
+            //var icons_testList2 = new List<IconTestModel>();
+            //icons_testList2.Add(new IconTestModel { Icon = "md-remove" });
+            //icons_testList2.Add(new IconTestModel { Icon = "md-remove" });
+            //icons_testList2.Add(new IconTestModel { Icon = "md-remove" });
+            //icons_testList2.Add(new IconTestModel { Icon = "md-add" });
+            //list_test.ItemsSource = icons_testList2;
+            //int a = 0;
+            //int b = 0;
+
+            TestIcons[0] = "md-remove";
         }
 
         void UpdateIcons(int index, string name)

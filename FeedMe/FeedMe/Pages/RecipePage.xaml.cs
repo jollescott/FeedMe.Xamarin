@@ -49,12 +49,16 @@ namespace FeedMe
             OnPropertyChanged(nameof(IsFavorite));
 
 
+            // Save or unsave recipe
+
             var savedRecipeMetas = User.User.SavedRecipeMetas;
+            // save
             if (IsFavorite && !Sorting.RecipeMetaExistsInList(recipe, savedRecipeMetas))
             {
                 savedRecipeMetas.Add(recipeMeta);
                 User.User.SavedRecipeMetas = savedRecipeMetas;
             }
+            // unsave
             else if (!IsFavorite && Sorting.RecipeMetaExistsInList(recipe, savedRecipeMetas))
             {
                 int toRemoveIndex = -1;

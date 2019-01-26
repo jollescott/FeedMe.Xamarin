@@ -65,13 +65,16 @@
             <ScrollView x:Name="ScrollView_main" Grid.Row="0">
                 <StackLayout x:Name="StackLayout_main">
 
-                    <ListView x:Name="list_test" HasUnevenRows="True" HeightRequest="100">
+                    <Label Text="Test" TextColor="{Binding TestColor}"/>
+
+                    <ListView ItemsSource="{Binding TestIcons}" x:Name="list_test" HasUnevenRows="True" HeightRequest="100">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
                                     <StackLayout Orientation="Horizontal">
-                                        <iconize:IconLabel x:Name="icon_test" Text="{Binding Icon}" FontSize="28" TextColor="Red" />
-                                        <Label Text="{Binding Icon}" FontSize="28" VerticalTextAlignment="Center" HorizontalTextAlignment="End"/>
+                                        <iconize:IconLabel x:Name="icon_test" Text="{Binding .}" FontSize="28" TextColor="Red"/>
+                                        <!--iconize:IconImage Icon="md-add"/-->
+                                        <Label Text="{Binding .}" FontSize="28" VerticalTextAlignment="Center" HorizontalTextAlignment="End"/>
                                     </StackLayout>
                                 </ViewCell>
                             </DataTemplate>
