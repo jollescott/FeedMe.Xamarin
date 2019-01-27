@@ -44,7 +44,7 @@ namespace FeedMe.Pages.MasterDetail
                     //if (isAuth)
                     //    Detail = new IconNavigationPage(new FavoritesPage());
 
-                    Detail = new NavigationPage(new MealsListPage(true)); // saved recipes
+                    Detail = new NavigationPage(new MealsListPage()); // saved recipes
                     break;
 
                 case 2:

@@ -23,12 +23,16 @@ namespace FeedMe
         IngredientsSearching ingredientsSearching = new IngredientsSearching();
 
         public bool InSearchWindow { get; set; } = false;
+        public bool SearchModeIncluded { get; set; }
 
         public List<IngredientDtoV2> SearchIngredients { get; set; }
         public ObservableCollection<IngredientListModel> SearchIngredientModels { get; set; } = new ObservableCollection<IngredientListModel>();
 
         public List<IngredientDtoV2> MyIngredients { get; set; }
         public ObservableCollection<IngredientListModel> MyIngredientModels { get; set; } = new ObservableCollection<IngredientListModel>();
+
+        public List<IngredientDtoV2> ExcludedIngredients { get; set; }
+        public ObservableCollection<IngredientListModel> ExcludedIngredientModels { get; set; } = new ObservableCollection<IngredientListModel>();
 
         void MyIngredientsAdd(IngredientDtoV2 ingredient)
         {
@@ -38,7 +42,7 @@ namespace FeedMe
                 Sorting.ResizeListView(ListView_myIngredients, MyIngredients.Count);
                 MyIngredientModels.Insert(0, new IngredientListModel() { Ingredient = ingredient });
             }
-            SaveIngredients(MyIngredients);
+            SaveMyIngredients(MyIngredients);
         }
         void MyIngredientsRemoveAt(int index)
         {
@@ -48,7 +52,29 @@ namespace FeedMe
                 MyIngredientModels.RemoveAt(index);
                 Sorting.ResizeListView(ListView_myIngredients, MyIngredients.Count);
             }
-            SaveIngredients(MyIngredients);
+            SaveMyIngredients(MyIngredients);
+        }
+
+        void ExcludedIngredientsAdd(IngredientDtoV2 ingredient)
+        {
+            ingredient.Role = IngredientRole.Exclude;
+            ExcludedIngredients.Insert(0, ingredient);
+            if (!InSearchWindow)
+            {
+                Sorting.ResizeListView(ListView_excludedIngredients, ExcludedIngredients.Count);
+                ExcludedIngredientModels.Insert(0, new IngredientListModel() { Ingredient = ingredient });
+            }
+            SaveExcludedIngredients(ExcludedIngredients);
+        }
+        void ExcludedIngredientsRemoveAt(int index)
+        {
+            ExcludedIngredients.RemoveAt(index);
+            if (!InSearchWindow)
+            {
+                ExcludedIngredientModels.RemoveAt(index);
+                Sorting.ResizeListView(ListView_excludedIngredients, ExcludedIngredients.Count);
+            }
+            SaveExcludedIngredients(ExcludedIngredients);
         }
 
         public MainPage()
@@ -61,6 +87,11 @@ namespace FeedMe
             {
                 MyIngredientModels.Add(new IngredientListModel() { Ingredient = ingredient, IsAdded = true});
             }
+            ExcludedIngredients = User.User.SavedExcludedIngredinets;
+            foreach (var ingredient in ExcludedIngredients)
+            {
+                ExcludedIngredientModels.Add(new IngredientListModel() { Ingredient = ingredient, IsAdded = true });
+            }
 
             XamlSetup();
 
@@ -70,14 +101,6 @@ namespace FeedMe
 
         void XamlSetup()
         {
-            //BackgroundImage = "background.jpg";
-
-            //Search
-
-            //Frame_Search.BackgroundColor = Constants.AppColor.green;
-
-            //StackLayout_Search.Padding = new Thickness(Constants.padding2, 0, Constants.padding2, Constants.padding2);
-
             SearchBar_Ingredients.BackgroundColor = Color.White;
             SearchBar_Ingredients.HeightRequest = Constants.textHeight;
 
@@ -96,14 +119,16 @@ namespace FeedMe
 
             //Frame_MyIngredients.CornerRadius = Constants.cornerRadius1;
 
-            Label_MyIgredients.FontSize = Constants.fontSize2;
             Label_MyIgredients.HeightRequest = Constants.textHeight;
 
             ListView_myIngredients.BackgroundColor = Constants.AppColor.lightGray;
             ListView_myIngredients.RowHeight = Constants.textHeight;
+            ListView_excludedIngredients.BackgroundColor = Constants.AppColor.lightGray;
+            ListView_excludedIngredients.RowHeight = Constants.textHeight;
             //ListView_myIngredients.HeightRequest = Constants.textHeight;
 
             Sorting.ResizeListView(ListView_myIngredients, MyIngredients.Count);
+            Sorting.ResizeListView(ListView_excludedIngredients, ExcludedIngredients.Count);
         }
 
         // --------------------------------------------- SPAGHETTI ---------------------------------------------------
@@ -123,6 +148,20 @@ namespace FeedMe
             Sorting.ResizeListView(ListView_myIngredients, MyIngredients.Count);
         }
 
+        void GenerateExcludedIngredientModels()
+        {
+            ExcludedIngredientModels.Clear();
+            foreach (var ingredient in ExcludedIngredients)
+            {
+                ExcludedIngredientModels.Add(new IngredientListModel
+                {
+                    Ingredient = ingredient,
+                    IsAdded = true
+                });
+            }
+            Sorting.ResizeListView(ListView_excludedIngredients, ExcludedIngredients.Count);
+        }
+
 
         // --------------------------------------------- ASYNC SPAGHETTI ---------------------------------------------------
 
@@ -134,12 +173,20 @@ namespace FeedMe
 
         async void GotoMealsListPage()
         {
-            await Navigation.PushAsync(new MealsListPage() { Title = "Recept" });
+            var ingredents = new List<IngredientDtoV2>();
+            ingredents.AddRange(MyIngredients);
+            ingredents.AddRange(ExcludedIngredients);
+            await Navigation.PushAsync(new MealsListPage(ingredents) { Title = "Recept" });
         }
 
-        async void SaveIngredients(List<IngredientDtoV2> ingredients)
+        async void SaveMyIngredients(List<IngredientDtoV2> ingredients)
         {
             await Task.Factory.StartNew(() => User.User.SavedIngredinets = ingredients);
+        }
+
+        async void SaveExcludedIngredients(List<IngredientDtoV2> ingredients)
+        {
+            await Task.Factory.StartNew(() => User.User.SavedExcludedIngredinets = ingredients);
         }
 
 
@@ -152,13 +199,30 @@ namespace FeedMe
             await Task.Factory.StartNew(() => SearchIngredients = ingredientsSearching.Search(search));
 
             SearchIngredientModels.Clear();
-            foreach (var ingredient in SearchIngredients)
+
+            if (SearchModeIncluded)
             {
-                SearchIngredientModels.Add(new IngredientListModel()
+                foreach (var ingredient in SearchIngredients)
                 {
-                    Ingredient = ingredient,
-                    IsAdded = (MyIngredients.Any(p => p.IngredientId == ingredient.IngredientId)) ? true : false
-                });
+                    SearchIngredientModels.Add(new IngredientListModel()
+                    {
+                        Ingredient = ingredient,
+                        IsAdded = (MyIngredients.Any(p => p.IngredientId == ingredient.IngredientId)) ? true : false
+                    });
+                }
+            }
+            else
+            {
+                foreach (var ingredient in SearchIngredients)
+                {
+                    SearchIngredientModels.Add(new IngredientListModel()
+                    {
+                        Ingredient = ingredient,
+                        IsAdded = (ExcludedIngredients.Any(p => p.IngredientId == ingredient.IngredientId)) ? true : false,
+                        AddedIcon = Constants.ExcludeIngredientCheckIcon,
+                        AddedColor = Color.Red
+                    });
+                }
             }
         }
 
@@ -176,13 +240,30 @@ namespace FeedMe
             ((ListView)sender).SelectedItem = null;
             IngredientDtoV2 selectedIngredient = SearchIngredients[index];
 
-            SearchIngredientModels[index] = new IngredientListModel() { Ingredient = SearchIngredientModels[index].Ingredient, IsAdded = !SearchIngredientModels[index].IsAdded };
+            SearchIngredientModels[index] = new IngredientListModel()
+            {
+                Ingredient = SearchIngredientModels[index].Ingredient,
+                IsAdded = !SearchIngredientModels[index].IsAdded,
+                AddedColor = SearchIngredientModels[index].AddedColor,
+                AddedIcon = SearchIngredientModels[index].AddedIcon
+            };
 
-            if (MyIngredients.Any(p => p.IngredientId == selectedIngredient.IngredientId))
-                MyIngredientsRemoveAt(MyIngredients.FindIndex(p => p.IngredientId == selectedIngredient.IngredientId));
+            if (SearchModeIncluded)
+            {
+                if (MyIngredients.Any(p => p.IngredientId == selectedIngredient.IngredientId))
+                    MyIngredientsRemoveAt(MyIngredients.FindIndex(p => p.IngredientId == selectedIngredient.IngredientId));
 
+                else
+                    MyIngredientsAdd(selectedIngredient);
+            }
             else
-                MyIngredientsAdd(selectedIngredient);
+            {
+                if (ExcludedIngredients.Any(p => p.IngredientId == selectedIngredient.IngredientId))
+                    ExcludedIngredientsRemoveAt(ExcludedIngredients.FindIndex(p => p.IngredientId == selectedIngredient.IngredientId));
+
+                else
+                    ExcludedIngredientsAdd(selectedIngredient);
+            }
         }
 
         // Searching
@@ -194,13 +275,19 @@ namespace FeedMe
                 GET_ingredientDtos(searchWord);
         }
 
-        // Klicked in myIngredients list
+        // Clicked in myIngredients list
         private void ListView_myIngredients_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             MyIngredientsRemoveAt(MyIngredientModels.IndexOf(ListView_myIngredients.SelectedItem as IngredientListModel));
         }
 
-        // Klicked go to recipes button
+        // Clicked in excludedIngredients list
+        private void ListView_excludedIngredients_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            ExcludedIngredientsRemoveAt(ExcludedIngredientModels.IndexOf(ListView_excludedIngredients.SelectedItem as IngredientListModel));
+        }
+
+        // Clicked go to recipes button
         private void Button_Clicked(object sender, EventArgs e)
         {
             if (MyIngredients.Count > 0)
@@ -209,7 +296,7 @@ namespace FeedMe
                 Alert("Ingredienser saknas", "Du måste lägga till ingredienser för att kunna söka efter recept", "ok");
         }
 
-        // Open search window
+        // Open search window included
         private void Button_OpenIngredientsSearch_Clicked(object sender, EventArgs e)
         {
             Grid_IngredientSearchView.IsVisible = true;
@@ -217,10 +304,21 @@ namespace FeedMe
             ScrollView_MainView.IsVisible = false;
             ScrollView_MainView.IsEnabled = false;
             InSearchWindow = true;
+            SearchModeIncluded = true;
         }
 
+        // Open search window excluded
+        private void Button_OpenExcludedIngredientsSearch_Clicked(object sender, EventArgs e)
+        {
+            Grid_IngredientSearchView.IsVisible = true;
+            Grid_IngredientSearchView.IsEnabled = true;
+            ScrollView_MainView.IsVisible = false;
+            ScrollView_MainView.IsEnabled = false;
+            InSearchWindow = true;
+            SearchModeIncluded = false;
+        }
 
-        // Close search window
+        // Close search window included
         private void Button_CloseIngredientsSearch_Clicked(object sender, EventArgs e)
         {
             ScrollView_MainView.IsVisible = true;
@@ -229,7 +327,13 @@ namespace FeedMe
             Grid_IngredientSearchView.IsEnabled = false;
             SearchBar_Ingredients.Text = string.Empty;
             InSearchWindow = false;
-            Task.Factory.StartNew(() => GenerateMyIngredientModels());
+            if (SearchModeIncluded)
+                Task.Factory.StartNew(() => GenerateMyIngredientModels());
+            else
+                Task.Factory.StartNew(() => GenerateExcludedIngredientModels());
+
+            SearchIngredients.Clear();
+            SearchIngredientModels.Clear();
         }
     }
 }

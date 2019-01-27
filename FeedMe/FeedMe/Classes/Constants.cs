@@ -46,6 +46,7 @@ namespace FeedMe
 
         public static string AddIngredientCheckIcon = "md-check-box-outline-blank";
         public static string DeleteIngredientCheckIcon = "md-check-box";
+        public static string ExcludeIngredientCheckIcon = "md-block";
         public static string AddIngredientIcon = "md-add";
         public static string DeleteIngredientIcon = "md-clear";
 

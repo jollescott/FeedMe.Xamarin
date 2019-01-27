@@ -27,25 +27,25 @@ namespace FeedMe
 
         bool viewFavorites;
 
-		public MealsListPage (bool viewFavorites = false)
+		public MealsListPage()
 		{
             InitializeComponent();
-            this.viewFavorites = viewFavorites;
+            viewFavorites = true;
 
-            if (viewFavorites)
-            {
-                Label_Loading.Text = "Sorterar...";
-                recipeMetas = User.User.SavedRecipeMetas.OrderByDescending(o => o.Coverage).ToList();
-                XamlSetup();
-            }
-            else
-            {
-                InitializeComponent();
-                recipeMetas = new List<RecipeMetaDtoV2>();
-                //POST_recipeMetas(JsonConvert.DeserializeObject<List<IngredientDtoV2>>(User.User.SavedIngredinets));
-                myIngredients = User.User.SavedIngredinets;
-                ReciveRecipeMetas(0);
-            }
+            Label_Loading.Text = "Sorterar...";
+            recipeMetas = User.User.SavedRecipeMetas.OrderByDescending(o => o.Coverage).ToList();
+            XamlSetup();
+        }
+
+        public MealsListPage(List<IngredientDtoV2> ingredients)
+        {
+            InitializeComponent();
+            viewFavorites = false;
+            myIngredients = ingredients;
+
+            recipeMetas = new List<RecipeMetaDtoV2>();
+            myIngredients = ingredients;
+            ReciveRecipeMetas(0);
         }
 
         async void Alert(string title, string message, string cancel)

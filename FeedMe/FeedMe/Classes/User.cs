@@ -36,6 +36,28 @@ namespace FeedMe.User
             set => AppSettings.AddOrUpdateValue(nameof(SavedIngredinets), JsonConvert.SerializeObject(value));
         }
 
+        public static List<IngredientDtoV2> SavedExcludedIngredinets
+        {
+            get
+            {
+                string json = AppSettings.GetValueOrDefault(nameof(SavedExcludedIngredinets), string.Empty);
+                if (json == null || json == "")
+                    return new List<IngredientDtoV2>();
+                else
+                {
+                    try
+                    {
+                        return JsonConvert.DeserializeObject<List<IngredientDtoV2>>(json);
+                    }
+                    catch
+                    {
+                        return new List<IngredientDtoV2>();
+                    }
+                }
+            }
+            set => AppSettings.AddOrUpdateValue(nameof(SavedExcludedIngredinets), JsonConvert.SerializeObject(value));
+        }
+
         public static List<RecipeMetaDtoV2> SavedRecipeMetas
         {
             get
