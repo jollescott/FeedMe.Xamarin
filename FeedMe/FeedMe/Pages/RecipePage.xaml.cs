@@ -12,6 +12,7 @@ using System.Windows.Input;
 using FeedMe.Interfaces;
 using FeedMe.Classes;
 using Ramsey.Shared.Enums;
+using System.Threading.Tasks;
 
 namespace FeedMe
 {
@@ -81,14 +82,20 @@ namespace FeedMe
         public RecipePage (RecipeMetaDtoV2 recipeMeta)
 		{
             InitializeComponent();
+            BindingContext = this;
 
             this.recipeMeta = recipeMeta;
             myIngredients = User.User.SavedIngredinets;
             XamlSetup1();
             GET_recipeDto(recipeMeta.RecipeID);
-
-            BindingContext = this;
+            UpdateFavorite();
 		}
+
+        void UpdateFavorite()
+        {
+            IsFavorite = Sorting.RecipeMetaExistsInList(recipeMeta, User.User.SavedRecipeMetas);
+            OnPropertyChanged(nameof(IsFavorite));
+        }
 
         async void GET_recipeDto(string id)
         {
@@ -100,9 +107,6 @@ namespace FeedMe
                     var result = await response.Content.ReadAsStringAsync();
                     recipe = JsonConvert.DeserializeObject<RecipeDtoV2>(result);
                     XamlSetup2();
-
-                    IsFavorite = Sorting.RecipeMetaExistsInList(recipe, User.User.SavedRecipeMetas);
-                    OnPropertyChanged(nameof(IsFavorite));
                 }
                 else
                 {
@@ -220,8 +224,8 @@ namespace FeedMe
             {
                 Grid_Ingredients.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             }
-            Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
+            Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
+            Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(5, GridUnitType.Star) });
 
             for (int i = 0; i < recipeMeta.RecipeParts.Count(); i++)
             {

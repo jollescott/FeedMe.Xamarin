@@ -60,8 +60,10 @@
         <ScrollView x:Name="ScrollView_MainView" Grid.Row="0">
             <StackLayout x:Name="StackLayout_main">
 
-                <Button x:Name="Button_FeedMe" Text="Hitta Recept" CornerRadius="5" Clicked="Button_Clicked"/>
-
+                <Frame Padding="0" CornerRadius="5">
+                    <Button x:Name="Button_FeedMe" Text="Hitta Recept" Clicked="Button_Clicked"/>
+                </Frame>
+                
                 <!--My ingredients-->
 
                 <Frame x:Name="Frame_MyIngredients" Padding="0" CornerRadius="5">
