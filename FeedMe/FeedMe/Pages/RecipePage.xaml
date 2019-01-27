@@ -75,7 +75,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 
-                                <ff:CachedImage Margin="0" x:Name="Image_OwnerLogo" Grid.Column="0" VerticalOptions="End" WidthRequest="70"/>
+                                <ff:CachedImage Margin="0" x:Name="Image_OwnerLogo" Grid.Column="0" VerticalOptions="Center" WidthRequest="70"/>
 
                                 <StackLayout Margin="0" Padding="0" Grid.Column="1" VerticalOptions="Start">
                                     <Label x:Name="Label_OwnerLinkInfo" Margin="0" FontSize="Small" Text="Receptet kan hittas på:" VerticalOptions="Start" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>

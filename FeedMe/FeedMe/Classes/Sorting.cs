@@ -54,7 +54,7 @@ namespace FeedMe.Classes
                 numberOfItems = 1;
 
             double height = numberOfItems * Constants.textHeight;
-            double adjust = (numberOfItems * 0.76);
+            double adjust = (numberOfItems * 0.55) + 0.2;
             listView.HeightRequest = height + adjust;
         }
     }

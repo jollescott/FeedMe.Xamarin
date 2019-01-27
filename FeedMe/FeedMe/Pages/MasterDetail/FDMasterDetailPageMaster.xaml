@@ -5,7 +5,7 @@
                 x:Class="FeedMe.Pages.MasterDetail.FDMasterDetailPageMaster"
                 Title="Master">
     <StackLayout>
-        <ListView x:Name="MenuItemsListView" Margin="15" HasUnevenRows="true" ItemsSource="{Binding MenuItems}">
+        <ListView x:Name="MenuItemsListView" HasUnevenRows="true" ItemsSource="{Binding MenuItems}">
             <!--ListView.Header>
                 <Grid x:Name="Grid_MenuBackground" BackgroundColor="#03A9F4">
                     <Grid.ColumnDefinitions>
@@ -30,13 +30,13 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Grid Margin="0, 0, 0, 15" ColumnSpacing="15">
+                        <Grid Padding="15" ColumnSpacing="15">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <iconize:IconLabel Text="{Binding Icon}" TextColor="#00CC66" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="0"/>
-                            <Label VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="Large" Grid.Column="1"/>
+                            <Label VerticalOptions="Center" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="Large" Grid.Column="1"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
