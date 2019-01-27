@@ -13,6 +13,7 @@ using FeedMe.Models;
 using Ramsey.Shared.Dto.V2;
 using Ramsey.Shared.Misc;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FeedMe
 {
@@ -23,42 +24,69 @@ namespace FeedMe
         List<RecipeMetaDtoV2> recipeMetas;
         List<IngredientDtoV2> myIngredients;
         HttpClient httpClient = new HttpClient();
-		public MealsListPage (List<IngredientDtoV2> myIngredients)
+
+        bool viewFavorites;
+
+		public MealsListPage (bool viewFavorites = false)
 		{
             InitializeComponent();
-            this.myIngredients = myIngredients;
-            POST_recipeMetas(myIngredients);
+            this.viewFavorites = viewFavorites;
+
+            if (viewFavorites)
+            {
+                Label_Loading.Text = "Sorterar...";
+                recipeMetas = User.User.SavedRecipeMetas.OrderByDescending(o => o.Coverage).ToList();
+                XamlSetup();
+            }
+            else
+            {
+                InitializeComponent();
+                recipeMetas = new List<RecipeMetaDtoV2>();
+                //POST_recipeMetas(JsonConvert.DeserializeObject<List<IngredientDtoV2>>(User.User.SavedIngredinets));
+                myIngredients = JsonConvert.DeserializeObject<List<IngredientDtoV2>>(User.User.SavedIngredinets);
+                ReciveRecipeMetas(0);
+            }
         }
 
-        // Get the recipeMetas with POST request
-        async void POST_recipeMetas(List<IngredientDtoV2> ingredientDtos)
+        async void Alert(string title, string message, string cancel)
         {
-            var json = JsonConvert.SerializeObject(ingredientDtos); //skicka ingredientDto
+            await DisplayAlert(title, message, cancel);
+        }
 
+        async void ReciveRecipeMetas(int start)
+        {
+            var json = JsonConvert.SerializeObject(myIngredients);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
             try
             {
-                HttpResponseMessage respone = await httpClient.PostAsync(RamseyApi.V2.Recipe.Suggest, content);
+                HttpResponseMessage respone = await httpClient.PostAsync(RamseyApi.V2.Recipe.Suggest + "?start=" + start.ToString(), content);
 
                 if (respone.IsSuccessStatusCode)
                 {
-                    var result = await respone.Content.ReadAsStringAsync();
-
                     Label_Loading.Text = "Sorterar...";
 
-                    recipeMetas = JsonConvert.DeserializeObject<List<RecipeMetaDtoV2>>(result).OrderByDescending(o => o.Coverage).ToList();
-
+                    var result = respone.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    var recivedRecipeMetas = JsonConvert.DeserializeObject<List<RecipeMetaDtoV2>>(result);
+                    if (recivedRecipeMetas.Count < 25)
+                    {
+                        Button_ViewMoreRecipes.IsEnabled = false;
+                        Button_ViewMoreRecipes.IsVisible = false;
+                    }
+                    else
+                    {
+                        Button_ViewMoreRecipes.IsEnabled = true;
+                        Button_ViewMoreRecipes.IsVisible = true;
+                    }
+                    recipeMetas.AddRange(recivedRecipeMetas);
                     XamlSetup();
                 }
                 else
-                {
-                    await DisplayAlert("Connection error", "Status code " + (int)respone.StatusCode + ": " + respone.StatusCode.ToString(), "ok");
-                }
+                    Alert("Connection error", "Status code " + (int)respone.StatusCode + ": " + respone.StatusCode.ToString(), "ok");
             }
-            catch (Exception)
+            catch (Exception _e)
             {
-                await DisplayAlert("An error occurred", "Server conection failed", "ok");
+                Alert("An error occurred", "Server conection failed", "ok");
             }
         }
 
@@ -77,6 +105,7 @@ namespace FeedMe
                     Owner = x.Owner,
                     OwnerLogo = x.OwnerLogo,
                     CoverageMessage = "Du har " + ((int)(x.Coverage * 100)).ToString() + "%  av alla ingredienser",
+                    ShowCoverageMessage = (viewFavorites) ? false : true,
                     LogoRadius = 40,
                     RecipeID = x.RecipeID
                 };
@@ -115,7 +144,7 @@ namespace FeedMe
         //Next page
         async void GotoRecipePage(RecipeMetaDtoV2 recipeMeta)
         {
-            await Navigation.PushAsync(new RecipePage(recipeMeta, myIngredients) { Title = recipeMeta.Name });
+            await Navigation.PushAsync(new RecipePage(recipeMeta) { Title = recipeMeta.Name });
 
             ListView_Recipes.SelectedItem = null;
         }
@@ -126,6 +155,11 @@ namespace FeedMe
             await Navigation.PopAsync();
         }
 
+        //Load more recipes button
+        void Button_ViewMoreRecipes_Clicked(object sender, EventArgs e)
+        {
+            ReciveRecipeMetas(recipeMetas.Count);
+        }
     }
 
 }

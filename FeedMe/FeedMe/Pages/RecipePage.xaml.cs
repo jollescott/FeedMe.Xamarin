@@ -26,6 +26,16 @@ namespace FeedMe
 
         public bool IsFavorite { get; set; }
 
+        private int portions = 2;
+        public int Poritons {
+            get { return portions; }
+            set
+            {
+                if (value <= 10 && value >= 1)
+                    portions = value;                    
+            }
+        }
+
         private ICommand _favoriteCommand;
         public ICommand FavoriteCommand => _favoriteCommand = _favoriteCommand ?? new Command(RunFavoriteCommandAsync);
 
@@ -34,16 +44,46 @@ namespace FeedMe
             var userid = DependencyService.Get<IFacebook>().UserId;
             await RamseyConnection.SaveFavoriteAsync(recipeMeta.RecipeID, userid);
 
-            IsFavorite = true;
+            IsFavorite = !IsFavorite;
+
             OnPropertyChanged(nameof(IsFavorite));
+
+
+            // Save or unsave recipe
+
+            var savedRecipeMetas = User.User.SavedRecipeMetas;
+            // save
+            if (IsFavorite && !Sorting.RecipeMetaExistsInList(recipe, savedRecipeMetas))
+            {
+                savedRecipeMetas.Add(recipeMeta);
+                User.User.SavedRecipeMetas = savedRecipeMetas;
+            }
+            // unsave
+            else if (!IsFavorite && Sorting.RecipeMetaExistsInList(recipe, savedRecipeMetas))
+            {
+                int toRemoveIndex = -1;
+                for (int i = 0; i < savedRecipeMetas.Count; i++)
+                {
+                    if (recipeMeta.RecipeID == savedRecipeMetas[i].RecipeID)
+                    {
+                        toRemoveIndex = i;
+                        break;
+                    }
+                }
+                if (toRemoveIndex != -1)
+                {
+                    savedRecipeMetas.RemoveAt(toRemoveIndex);
+                    User.User.SavedRecipeMetas = savedRecipeMetas;
+                }
+            }
         }
 
-        public RecipePage (RecipeMetaDtoV2 recipeMeta, List<IngredientDtoV2> myIngredients)
+        public RecipePage (RecipeMetaDtoV2 recipeMeta)
 		{
             InitializeComponent();
 
             this.recipeMeta = recipeMeta;
-            this.myIngredients = myIngredients;
+            myIngredients = JsonConvert.DeserializeObject<List<IngredientDtoV2>>(User.User.SavedIngredinets);
             XamlSetup1();
             GET_recipeDto(recipeMeta.RecipeID);
 
@@ -60,6 +100,9 @@ namespace FeedMe
                     var result = await response.Content.ReadAsStringAsync();
                     recipe = JsonConvert.DeserializeObject<RecipeDtoV2>(result);
                     XamlSetup2();
+
+                    IsFavorite = Sorting.RecipeMetaExistsInList(recipe, User.User.SavedRecipeMetas);
+                    OnPropertyChanged(nameof(IsFavorite));
                 }
                 else
                 {
@@ -83,7 +126,7 @@ namespace FeedMe
 
             //Owner Info
             Image_OwnerLogo.Source = recipeMeta.OwnerLogo;
-            Label_OwnerName.Text = recipeMeta.Owner.ToString();
+            Label_RecipeName.Text = recipeMeta.Name;
             Label_OwnerLink.Text = recipeMeta.Source;
             Label_OwnerLink.TextColor = Constants.AppColor.text_link;
 
@@ -223,14 +266,14 @@ namespace FeedMe
                 // separation lines
                 Grid_Ingredients.Children.Add(new BoxView()
                 {
-                    BackgroundColor = Constants.AppColor.gray,
+                    BackgroundColor = Color.LightGray,
                     HeightRequest = 1,
                     VerticalOptions = LayoutOptions.End,
                     HorizontalOptions = LayoutOptions.FillAndExpand,
                 }, 0, 2, i, i + 1);
             }
 
-            UpdateIngredientPortions((int)Stepper_Portions.Value);
+            UpdateIngredientPortions(portions);
 
 
 
@@ -327,7 +370,19 @@ namespace FeedMe
 
         private void Stepper_Portions_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            UpdateIngredientPortions((int)Stepper_Portions.Value);
+            //UpdateIngredientPortions((int)Stepper_Portions.Value);
+        }
+
+        private void IconButton_AddPortionCount_Clicked(object sender, EventArgs e)
+        {
+            Poritons += 1;
+            UpdateIngredientPortions(portions);
+        }
+
+        private void IconButton_RemovePortionCount_Clicked(object sender, EventArgs e)
+        {
+            Poritons -= 1;
+            UpdateIngredientPortions(portions);
         }
     }
 }

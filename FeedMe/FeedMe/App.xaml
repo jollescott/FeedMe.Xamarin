@@ -8,6 +8,12 @@
             <Setter x:Name="Setter_BackgroundColor" Property="BackgroundColor" Value="#F2F2F2"/>
         </Style>
 
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="#282828" />
+            </Style>
+        </ResourceDictionary>
+
 
     </Application.Resources>
 </Application>

@@ -31,7 +31,7 @@
                             </Grid.ColumnDefinitions>
 
 
-                            <Label Text="{Binding CoverageMessage}" FontSize="Micro" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
+                            <Label Text="{Binding CoverageMessage}" IsVisible="{Binding ShowCoverageMessage}" IsEnabled="{Binding ShowCoverageMessage}" FontSize="Micro" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
                             <ff:CachedImage Source="{Binding Image}" Margin="0" Aspect="AspectFill" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
                             <Label Text="{Binding Name}" FontSize="Medium" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="3" Grid.Column="2"/>
                             
@@ -58,6 +58,9 @@
 
     <Grid Padding="0" Margin="0">
         <ListView x:Name="ListView_Recipes" HasUnevenRows="True" ItemTemplate="{x:StaticResource recipeDataTemplateSelector}" SeparatorVisibility="None" ItemSelected="ListView_Recipes_ItemSelected">
+            <ListView.Footer>
+                <Button IsEnabled="False" IsVisible="False" Padding="0, 30, 0, 30" x:Name="Button_ViewMoreRecipes" BackgroundColor="Transparent" BorderColor="Transparent" Text="Hämta fler recept" FontSize="Medium" Clicked="Button_ViewMoreRecipes_Clicked"/>
+            </ListView.Footer>
         </ListView>
 
         <ActivityIndicator x:Name="ActivityIndicatior_WaitingForServer" IsRunning="True" VerticalOptions="Center"/>
