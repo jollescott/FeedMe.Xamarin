@@ -35,6 +35,12 @@ namespace FeedMe
             Label_Loading.Text = "Sorterar...";
             recipeMetas = User.User.SavedRecipeMetas.OrderByDescending(o => o.Coverage).ToList();
             XamlSetup();
+
+            if (recipeMetas.Count < 1)
+            {
+                Label_Message.Text = "Här sparas de recept om de har gillat";
+                Label_Message.IsVisible = true;
+            }
         }
 
         public MealsListPage(List<IngredientDtoV2> ingredients)

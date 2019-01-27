@@ -88,7 +88,7 @@ namespace FeedMe
             myIngredients = User.User.SavedIngredinets;
             XamlSetup1();
             GET_recipeDto(recipeMeta.RecipeID);
-            UpdateFavorite();
+            Task.Factory.StartNew(() => UpdateFavorite());
 		}
 
         void UpdateFavorite()
@@ -115,7 +115,6 @@ namespace FeedMe
             }
             catch (Exception _e)
             {
-                Console.WriteLine(_e.Message);
                 await DisplayAlert("An error occurred", "Server conection failed", "ok");
             }
         }
@@ -133,6 +132,9 @@ namespace FeedMe
             Label_RecipeName.Text = recipeMeta.Name;
             Label_OwnerLink.Text = recipeMeta.Source;
             Label_OwnerLink.TextColor = Constants.AppColor.text_link;
+            Icon_Favorite.FontSize = Constants.fontSize1double;
+            IconButton_AddPortionCount.FontSize = Constants.fontSize1double;
+            IconButton_RemovePortionCount.FontSize = Constants.fontSize1double;
 
 
             //Ingredients head

@@ -59,7 +59,7 @@
                                 
                                 <Label x:Name="Label_RecipeName" FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Center" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Column="0"/>
 
-                                <iconize:IconLabel Text="{Binding IsFavorite, Converter={x:StaticResource favoriteConv}}" FontSize="Large"
+                                <iconize:IconLabel x:Name="Icon_Favorite" Text="{Binding IsFavorite, Converter={x:StaticResource favoriteConv}}" FontSize="Large"
                                                 VerticalTextAlignment="Start" HorizontalTextAlignment="End" VerticalOptions="Start" HorizontalOptions="End" TextColor="#00CC66" Grid.Column="1">
                                     <iconize:IconLabel.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding FavoriteCommand}"/>

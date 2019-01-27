@@ -36,7 +36,7 @@ namespace FeedMe.Pages.MasterDetail
             switch (item.Id)
             {
                 case 0:
-                    Detail = new IconNavigationPage(new MainPage());
+                    Detail = new IconNavigationPage(new MainPage()); // search page
                     break;
                 case 1:
 
@@ -44,12 +44,12 @@ namespace FeedMe.Pages.MasterDetail
                     //if (isAuth)
                     //    Detail = new IconNavigationPage(new FavoritesPage());
 
-                    Detail = new NavigationPage(new MealsListPage()); // saved recipes
+                    Detail = new NavigationPage(new MealsListPage() { Title = "Gillade Recept"}); // saved recipes page
                     break;
 
-                case 2:
-                    Detail = new NavigationPage(new shoppingListPage());
-                    break;
+                //case 2:
+                //    Detail = new NavigationPage(new shoppingListPage()); // shopping list page
+                //    break;
             }
             /*
             var page = (Page)Activator.CreateInstance(item.TargetType);

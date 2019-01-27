@@ -29,6 +29,7 @@ namespace FeedMe
         public static int textHeight = 50;
 
 
+        public static double fontSize1double = Device.GetNamedSize(NamedSize.Large, typeof(Label)) * 2;
         public static double fontSize1 = Device.GetNamedSize(NamedSize.Large, typeof(Label));
         public static double fontSize2 = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
         public static double fontSize3 = Device.GetNamedSize(NamedSize.Small, typeof(Label));
