@@ -22,64 +22,76 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackLayout Grid.Row="0" x:Name="StackLayout_all" Spacing="0" Padding="0">
+        
+        <!--Search-->
+        
+        <Grid IsVisible="False" IsEnabled="False" x:Name="Grid_IngredientSearchView" Padding="0" Margin="0" RowSpacing="0" ColumnSpacing="0" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <SearchBar x:Name="SearchBar_Ingredients" Placeholder="Lägg till ingredienser" HorizontalOptions="Fill" TextChanged="SearchBar_Ingredients_TextChanged" Grid.Column="0" Grid.Row="0"/>
+            <Button x:Name="Button_CloseIngredientsSearch" Text="Klar" FontSize="Small" BackgroundColor="White" Clicked="Button_CloseIngredientsSearch_Clicked" Grid.Column="1" Grid.Row="0"/>
 
-            <Frame Margin="0" Padding="0" x:Name="Frame_Search" CornerRadius="0">
-                <StackLayout x:Name="StackLayout_Search" Spacing="0">
-                    <SearchBar x:Name="SearchBar_Ingredients" Placeholder="Lägg till ingredienser" HorizontalOptions="Fill" TextChanged="SearchBar_Ingredients_TextChanged"/>
+            <ListView ItemsSource="{Binding SearchIngredientModels}" x:Name="ListView_SearchIngredients" ItemSelected="ListView_SearchIngredients_ItemSelected" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="30, 0, 30, 0">
+                                <Label Text="{Binding IngredientName}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"/>
+                                <iconize:IconLabel Text="{Binding Icon}" TextColor="{Binding Color}" FontSize="Large" VerticalOptions="Center" HorizontalOptions="End" VerticalTextAlignment="Center" HorizontalTextAlignment="End"/>
 
-                    <ListView ItemsSource="{Binding SearchIngredientModels}" IsEnabled="False" IsVisible="False" x:Name="ListView_SearchIngredients" ItemSelected="ListView_SearchIngredients_ItemSelected">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <Grid Padding="30, 0, 30, 0">
-                                        <!--Label Text="{Binding Name}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"/>
-                                        <Image Source="{Binding IconSource}" VerticalOptions="Center" HorizontalOptions="End" Aspect="AspectFit" Grid.Column="2" Grid.Row="1"/-->
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
-                                        <Label Text="{Binding IngredientName}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"/>
-                                        <iconize:IconLabel Text="{Binding Icon}" TextColor="{Binding Color}" FontSize="Large" VerticalOptions="Center" HorizontalOptions="End" VerticalTextAlignment="Center" HorizontalTextAlignment="End"/>
+        </Grid>
+        
+        
+        <!--Main-->
+        
+        <ScrollView x:Name="ScrollView_MainView" Grid.Row="0">
+            <StackLayout x:Name="StackLayout_main">
 
-                                    </Grid>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                <Button x:Name="Button_FeedMe" Text="Hitta Recept" CornerRadius="5" Clicked="Button_Clicked"/>
 
-                </StackLayout>
-            </Frame>
+                <Frame x:Name="Frame_MyIngredients" Padding="0" CornerRadius="5">
+                    <StackLayout Margin="0" Padding="0" Spacing="0">
 
-            <ScrollView x:Name="ScrollView_main">
-                <StackLayout x:Name="StackLayout_main">
-
-                    <Button x:Name="Button_FeedMe" Text="FeedMe" Clicked="Button_Clicked"/>
-
-                    <Frame x:Name="Frame_MyIngredients" Padding="0">
-                        <StackLayout Margin="0" Padding="0" Spacing="0">
-
+                        <Grid>
                             <Label Margin="0" x:Name="Label_MyIgredients" Text="Mina Ingredienser" HorizontalOptions="Center" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                            <Button Text="Lägg till" BackgroundColor="Transparent" FontSize="Small" HorizontalOptions="End" VerticalOptions="Center" Clicked="Button_OpenIngredientsSearch_Clicked"/>
+                        </Grid>
 
-                            <ListView ItemsSource="{Binding MyIngredientModels}" x:Name="ListView_myIngredients" ItemSelected="ListView_myIngredients_ItemSelected">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <ViewCell>
-                                            <Grid Padding="30, 0, 30, 0">
-                                                
-                                                <Label Text="{Binding IngredientName}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"/>
-                                                <iconize:IconLabel Text="{Binding DefultIcon}" TextColor="{Binding Color}" FontSize="Large" VerticalOptions="Center" HorizontalOptions="End" VerticalTextAlignment="Center" HorizontalTextAlignment="End"/>
+                        <ListView ItemsSource="{Binding MyIngredientModels}" x:Name="ListView_myIngredients" ItemSelected="ListView_myIngredients_ItemSelected">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid Padding="30, 0, 30, 0">
+                                            <Label Text="{Binding IngredientName}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"/>
+                                            <iconize:IconLabel Text="{Binding DefultIcon}" TextColor="{Binding DefultColor}" FontSize="Large" VerticalOptions="Center" HorizontalOptions="End" VerticalTextAlignment="Center" HorizontalTextAlignment="End"/>
 
-                                            </Grid>
-                                        </ViewCell>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
 
-                        </StackLayout>
-                    </Frame>
+                    </StackLayout>
+                </Frame>
 
-                </StackLayout>
-            </ScrollView>
-
-        </StackLayout>
+            </StackLayout>
+        </ScrollView>
+        
+        
+        <!--Ad-->
 
         <controls:AdmobView Grid.Row="1" />
 

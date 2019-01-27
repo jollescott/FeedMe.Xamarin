@@ -6,13 +6,18 @@ namespace FeedMe.Models
     public class IngredientListModel
     {
         public IngredientDtoV2 Ingredient { get; set; }
-        public Color Color { get; set; }
         public bool IsAdded { get; set; }
+
+        public Color AddedColor { get; set; } = Constants.AppColor.green;
+        public Color NotAddedColor { get; set; } = Constants.AppColor.text_defult;
+        public Color DefultColor { get; set; } = Constants.AppColor.text_defult;
+
         public string AddedIcon { get; set; } = Constants.DeleteIngredientCheckIcon;
         public string NotAddedIcon { get; set; } = Constants.AddIngredientCheckIcon;
         public string DefultIcon { get; set; } = Constants.DeleteIngredientIcon;
 
         public string IngredientName { get { return Ingredient.IngredientName; } }
         public string Icon { get { return (IsAdded) ? AddedIcon : NotAddedIcon; } }
+        public Color Color { get { return (IsAdded) ? AddedColor : NotAddedColor; } }
     }
 }

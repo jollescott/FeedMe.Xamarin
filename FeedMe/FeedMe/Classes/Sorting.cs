@@ -51,11 +51,10 @@ namespace FeedMe.Classes
         public static void ResizeListView(ListView listView, int numberOfItems)
         {
             if (numberOfItems < 1)
-            {
                 numberOfItems = 1;
-            }
+
             double height = numberOfItems * Constants.textHeight;
-            double adjust = 1 + (numberOfItems - 1) * 0.36;
+            double adjust = (numberOfItems * 0.76);
             listView.HeightRequest = height + adjust;
         }
     }
