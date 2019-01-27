@@ -335,5 +335,15 @@ namespace FeedMe
             SearchIngredients.Clear();
             SearchIngredientModels.Clear();
         }
+
+        private void TapGestureRecognizer_Tapped_ExcludedIngredientsHelp(object sender, EventArgs e)
+        {
+            Alert("Uteslutna Ingredienser", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat", "ok");
+        }
+
+        private void TapGestureRecognizer_Tapped_MyIngredientsHelp(object sender, EventArgs e)
+        {
+            Alert("Minna Ingredienser", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat", "ok");
+        }
     }
 }

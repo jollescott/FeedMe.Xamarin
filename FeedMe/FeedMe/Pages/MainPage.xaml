@@ -68,8 +68,19 @@
                     <StackLayout Margin="0" Padding="0" Spacing="0">
 
                         <Grid>
-                            <Label Margin="0" x:Name="Label_MyIgredients" Text="Mina Ingredienser" FontSize="Medium" HorizontalOptions="Center" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                            <Button Text="Lägg till" BackgroundColor="Transparent" FontSize="Small" HorizontalOptions="End" VerticalOptions="Center" Clicked="Button_OpenIngredientsSearch_Clicked"/>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <iconize:IconLabel Margin="15" Text="md-help-outline" FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Center" Grid.Column="0">
+                                <iconize:IconLabel.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_MyIngredientsHelp"/>
+                                </iconize:IconLabel.GestureRecognizers>
+                            </iconize:IconLabel>
+                            <Label Margin="0" x:Name="Label_MyIgredients" Text="Mina Ingredienser" FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Start" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="1"/>
+                            <Button Text="Lägg till" BackgroundColor="Transparent" FontSize="Small" HorizontalOptions="End" VerticalOptions="Center" Clicked="Button_OpenIngredientsSearch_Clicked" Grid.Column="2"/>
                         </Grid>
 
                         <ListView ItemsSource="{Binding MyIngredientModels}" x:Name="ListView_myIngredients" ItemSelected="ListView_myIngredients_ItemSelected">
@@ -94,8 +105,19 @@
                     <StackLayout Margin="0" Padding="0" Spacing="0">
 
                         <Grid>
-                            <Label Margin="0" x:Name="Label_excludedIgredients" Text="Uteslutna Ingredienser" FontSize="Medium" HorizontalOptions="Center" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                            <Button Text="Lägg till" BackgroundColor="Transparent" FontSize="Small" HorizontalOptions="End" VerticalOptions="Center" Clicked="Button_OpenExcludedIngredientsSearch_Clicked" />
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <iconize:IconLabel Margin="15" Text="md-help-outline" FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Center" Grid.Column="0">
+                                <iconize:IconLabel.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_ExcludedIngredientsHelp"/>
+                                </iconize:IconLabel.GestureRecognizers>
+                            </iconize:IconLabel>
+                            <Label Margin="0" x:Name="Label_excludedIgredients" Text="Uteslutna Ingredienser" FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" Grid.Column="1"/>
+                            <Button Text="Lägg till" BackgroundColor="Transparent" FontSize="Small" HorizontalOptions="End" VerticalOptions="Center" Clicked="Button_OpenExcludedIngredientsSearch_Clicked" Grid.Column="2"/>
                         </Grid>
 
                         <ListView ItemsSource="{Binding ExcludedIngredientModels}" x:Name="ListView_excludedIngredients" ItemSelected="ListView_excludedIngredients_ItemSelected">
