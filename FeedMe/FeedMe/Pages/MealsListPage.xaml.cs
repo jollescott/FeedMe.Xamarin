@@ -43,7 +43,7 @@ namespace FeedMe
                 InitializeComponent();
                 recipeMetas = new List<RecipeMetaDtoV2>();
                 //POST_recipeMetas(JsonConvert.DeserializeObject<List<IngredientDtoV2>>(User.User.SavedIngredinets));
-                myIngredients = JsonConvert.DeserializeObject<List<IngredientDtoV2>>(User.User.SavedIngredinets);
+                myIngredients = User.User.SavedIngredinets;
                 ReciveRecipeMetas(0);
             }
         }

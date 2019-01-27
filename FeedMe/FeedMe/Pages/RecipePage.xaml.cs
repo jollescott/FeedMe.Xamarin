@@ -83,7 +83,7 @@ namespace FeedMe
             InitializeComponent();
 
             this.recipeMeta = recipeMeta;
-            myIngredients = JsonConvert.DeserializeObject<List<IngredientDtoV2>>(User.User.SavedIngredinets);
+            myIngredients = User.User.SavedIngredinets;
             XamlSetup1();
             GET_recipeDto(recipeMeta.RecipeID);
 

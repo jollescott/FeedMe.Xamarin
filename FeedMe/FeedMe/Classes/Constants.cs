@@ -44,6 +44,11 @@ namespace FeedMe
 
         public static int textListMargin = 3;
 
+        public static string AddIngredientCheckIcon = "md-check-box-outline-blank";
+        public static string DeleteIngredientCheckIcon = "md-check-box";
+        public static string AddIngredientIcon = "md-add";
+        public static string DeleteIngredientIcon = "md-clear";
+
         //public static int navigationBarPadding = 5;
         //public static int navigationBarHeight = 30;
 
