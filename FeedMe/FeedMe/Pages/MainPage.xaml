@@ -63,7 +63,7 @@
                 <Button x:Name="Button_FeedMe" Text="Hitta Recept" CornerRadius="5" Clicked="Button_Clicked"/>
 
                 <!--My ingredients-->
-                
+
                 <Frame x:Name="Frame_MyIngredients" Padding="0" CornerRadius="5">
                     <StackLayout Margin="0" Padding="0" Spacing="0">
 
@@ -74,13 +74,14 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             
-                            <iconize:IconLabel Margin="15" Text="md-help-outline" FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Center" Grid.Column="0">
+                            <iconize:IconLabel Margin="15" Text="md-help-outline" TextColor="Default" FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Center" Grid.Column="0">
                                 <iconize:IconLabel.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_MyIngredientsHelp"/>
                                 </iconize:IconLabel.GestureRecognizers>
                             </iconize:IconLabel>
                             <Label Margin="0" x:Name="Label_MyIgredients" Text="Mina Ingredienser" FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Start" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="1"/>
-                            <Button Text="Lägg till" BackgroundColor="Transparent" FontSize="Small" HorizontalOptions="End" VerticalOptions="Center" Clicked="Button_OpenIngredientsSearch_Clicked" Grid.Column="2"/>
+                            <Label x:Name="Label_AddIngredients" Margin="15" Text="Lägg till" TextColor="{Binding MyIngredientsErrorBorderCollor}" FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="2"/>
+                            <Button BackgroundColor="Transparent" HorizontalOptions="Fill" VerticalOptions="Fill" Clicked="Button_OpenIngredientsSearch_Clicked" Grid.Column="1" Grid.ColumnSpan="2"/>
                         </Grid>
 
                         <ListView ItemsSource="{Binding MyIngredientModels}" x:Name="ListView_myIngredients" ItemSelected="ListView_myIngredients_ItemSelected">
@@ -111,13 +112,14 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             
-                            <iconize:IconLabel Margin="15" Text="md-help-outline" FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Center" Grid.Column="0">
+                            <iconize:IconLabel Margin="15" Text="md-help-outline" TextColor="Default" FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Center" Grid.Column="0">
                                 <iconize:IconLabel.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_ExcludedIngredientsHelp"/>
                                 </iconize:IconLabel.GestureRecognizers>
                             </iconize:IconLabel>
                             <Label Margin="0" x:Name="Label_excludedIgredients" Text="Uteslutna Ingredienser" FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" Grid.Column="1"/>
-                            <Button Text="Lägg till" BackgroundColor="Transparent" FontSize="Small" HorizontalOptions="End" VerticalOptions="Center" Clicked="Button_OpenExcludedIngredientsSearch_Clicked" Grid.Column="2"/>
+                            <Label Margin="15" Text="Lägg till" TextColor="#00CC66" FontSize="Small" HorizontalOptions="End" VerticalOptions="Center" Grid.Column="2"/>
+                            <Button BackgroundColor="Transparent" HorizontalOptions="Fill" VerticalOptions="Fill" Clicked="Button_OpenExcludedIngredientsSearch_Clicked" Grid.Column="1" Grid.ColumnSpan="2"/>
                         </Grid>
 
                         <ListView ItemsSource="{Binding ExcludedIngredientModels}" x:Name="ListView_excludedIngredients" ItemSelected="ListView_excludedIngredients_ItemSelected">

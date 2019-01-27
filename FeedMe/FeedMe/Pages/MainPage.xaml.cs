@@ -25,6 +25,19 @@ namespace FeedMe
         public bool InSearchWindow { get; set; } = false;
         public bool SearchModeIncluded { get; set; }
 
+        bool noIngredientsError;
+        public bool NoIngredientsError
+        {
+            get { return noIngredientsError; }
+            set
+            {
+                noIngredientsError = value;
+                MyIngredientsErrorBorderCollor = (value) ? Color.Red : Constants.AppColor.green;
+                Label_AddIngredients.TextColor = MyIngredientsErrorBorderCollor;
+            }
+        }
+        public Color MyIngredientsErrorBorderCollor { get; set; } 
+
         public List<IngredientDtoV2> SearchIngredients { get; set; }
         public ObservableCollection<IngredientListModel> SearchIngredientModels { get; set; } = new ObservableCollection<IngredientListModel>();
 
@@ -92,6 +105,8 @@ namespace FeedMe
             {
                 ExcludedIngredientModels.Add(new IngredientListModel() { Ingredient = ingredient, IsAdded = true });
             }
+
+            NoIngredientsError = false;
 
             XamlSetup();
 
@@ -293,12 +308,17 @@ namespace FeedMe
             if (MyIngredients.Count > 0)
                 GotoMealsListPage();
             else
+            {
+                NoIngredientsError = true;
                 Alert("Ingredienser saknas", "Du måste lägga till ingredienser för att kunna söka efter recept", "ok");
+            }
         }
 
         // Open search window included
         private void Button_OpenIngredientsSearch_Clicked(object sender, EventArgs e)
         {
+            NoIngredientsError = false;
+            SearchBar_Ingredients.Placeholder = "Lägg till ingredienser";
             Grid_IngredientSearchView.IsVisible = true;
             Grid_IngredientSearchView.IsEnabled = true;
             ScrollView_MainView.IsVisible = false;
@@ -310,6 +330,7 @@ namespace FeedMe
         // Open search window excluded
         private void Button_OpenExcludedIngredientsSearch_Clicked(object sender, EventArgs e)
         {
+            SearchBar_Ingredients.Placeholder = "Exkludera ingredienser";
             Grid_IngredientSearchView.IsVisible = true;
             Grid_IngredientSearchView.IsEnabled = true;
             ScrollView_MainView.IsVisible = false;
