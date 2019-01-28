@@ -32,8 +32,8 @@ namespace FeedMe
             InitializeComponent();
             viewFavorites = true;
 
-            Label_Loading.Text = "Sorterar...";
-            recipeMetas = User.User.SavedRecipeMetas.OrderByDescending(o => o.Coverage).ToList();
+            Label_Loading.Text = "Laddar...";
+            recipeMetas = User.User.SavedRecipeMetas;
             XamlSetup();
 
             if (recipeMetas.Count < 1)
@@ -151,7 +151,10 @@ namespace FeedMe
 
             int index = selectedItemIndex - (int)(selectedItemIndex / 4f) - 1;
 
-            GotoRecipePage(recipeMetas[index]);
+            if(viewFavorites)
+                GotoRecipePage(recipeMetaModels[index].Recipe);
+            else
+                GotoRecipePage(recipeMetas[index]);
 
         }
 
@@ -159,6 +162,13 @@ namespace FeedMe
         async void GotoRecipePage(RecipeMetaDtoV2 recipeMeta)
         {
             await Navigation.PushAsync(new RecipePage(recipeMeta) { Title = recipeMeta.Name });
+
+            ListView_Recipes.SelectedItem = null;
+        }
+        //Next page
+        async void GotoRecipePage(RecipeDtoV2 recipe)
+        {
+            await Navigation.PushAsync(new RecipePage(recipe) { Title = recipe.Name });
 
             ListView_Recipes.SelectedItem = null;
         }

@@ -56,7 +56,7 @@ namespace FeedMe
             // save
             if (IsFavorite && !Sorting.RecipeMetaExistsInList(recipe, savedRecipeMetas))
             {
-                savedRecipeMetas.Add(recipeMeta);
+                savedRecipeMetas.Insert(0, recipeMeta);
                 User.User.SavedRecipeMetas = savedRecipeMetas;
             }
             // unsave
@@ -88,6 +88,19 @@ namespace FeedMe
             myIngredients = User.User.SavedIngredinets;
             XamlSetup1();
             GET_recipeDto(recipeMeta.RecipeID);
+            Task.Factory.StartNew(() => UpdateFavorite());
+		}
+        public RecipePage (RecipeMetaDtoV2 recipeMeta, RecipeDtoV2 recipe)
+		{
+            InitializeComponent();
+            BindingContext = this;
+            this.recipe = recipe;
+            this.recipeMeta = recipeMeta;
+
+            myIngredients = User.User.SavedIngredinets;
+
+            XamlSetup1();
+            XamlSetup2();
             Task.Factory.StartNew(() => UpdateFavorite());
 		}
 
