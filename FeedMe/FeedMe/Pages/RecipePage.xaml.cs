@@ -12,6 +12,7 @@ using System.Windows.Input;
 using FeedMe.Interfaces;
 using FeedMe.Classes;
 using Ramsey.Shared.Enums;
+using System.Threading.Tasks;
 
 namespace FeedMe
 {
@@ -55,7 +56,7 @@ namespace FeedMe
             // save
             if (IsFavorite && !Sorting.RecipeMetaExistsInList(recipe, savedRecipeMetas))
             {
-                savedRecipeMetas.Add(recipeMeta);
+                savedRecipeMetas.Insert(0, recipeMeta);
                 User.User.SavedRecipeMetas = savedRecipeMetas;
             }
             // unsave
@@ -81,14 +82,33 @@ namespace FeedMe
         public RecipePage (RecipeMetaDtoV2 recipeMeta)
 		{
             InitializeComponent();
+            BindingContext = this;
 
             this.recipeMeta = recipeMeta;
-            myIngredients = JsonConvert.DeserializeObject<List<IngredientDtoV2>>(User.User.SavedIngredinets);
+            myIngredients = User.User.SavedIngredinets;
             XamlSetup1();
             GET_recipeDto(recipeMeta.RecipeID);
-
-            BindingContext = this;
+            Task.Factory.StartNew(() => UpdateFavorite());
 		}
+        public RecipePage (RecipeMetaDtoV2 recipeMeta, RecipeDtoV2 recipe)
+		{
+            InitializeComponent();
+            BindingContext = this;
+            this.recipe = recipe;
+            this.recipeMeta = recipeMeta;
+
+            myIngredients = User.User.SavedIngredinets;
+
+            XamlSetup1();
+            XamlSetup2();
+            Task.Factory.StartNew(() => UpdateFavorite());
+		}
+
+        void UpdateFavorite()
+        {
+            IsFavorite = Sorting.RecipeMetaExistsInList(recipeMeta, User.User.SavedRecipeMetas);
+            OnPropertyChanged(nameof(IsFavorite));
+        }
 
         async void GET_recipeDto(string id)
         {
@@ -100,9 +120,6 @@ namespace FeedMe
                     var result = await response.Content.ReadAsStringAsync();
                     recipe = JsonConvert.DeserializeObject<RecipeDtoV2>(result);
                     XamlSetup2();
-
-                    IsFavorite = Sorting.RecipeMetaExistsInList(recipe, User.User.SavedRecipeMetas);
-                    OnPropertyChanged(nameof(IsFavorite));
                 }
                 else
                 {
@@ -111,7 +128,6 @@ namespace FeedMe
             }
             catch (Exception _e)
             {
-                Console.WriteLine(_e.Message);
                 await DisplayAlert("An error occurred", "Server conection failed", "ok");
             }
         }
@@ -129,6 +145,9 @@ namespace FeedMe
             Label_RecipeName.Text = recipeMeta.Name;
             Label_OwnerLink.Text = recipeMeta.Source;
             Label_OwnerLink.TextColor = Constants.AppColor.text_link;
+            Icon_Favorite.FontSize = Constants.fontSize1double;
+            IconButton_AddPortionCount.FontSize = Constants.fontSize1double;
+            IconButton_RemovePortionCount.FontSize = Constants.fontSize1double;
 
 
             //Ingredients head
@@ -212,16 +231,15 @@ namespace FeedMe
         
         void XamlSetup2()
         {
-            //Portions
-            Label_Portions.FontSize = Constants.fontSize3;
-
             //Ingredients
             for (int i = 0; i < recipe.RecipeParts.Count() + 1; i++)
             {
                 Grid_Ingredients.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             }
-            Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
+            //Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
+            //Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(5, GridUnitType.Star) });
+             Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
 
             for (int i = 0; i < recipeMeta.RecipeParts.Count(); i++)
             {
@@ -230,7 +248,7 @@ namespace FeedMe
                 {
                     //Text = (recipeMeta.RecipeParts.ToList()[i].Quantity != 0) ? recipeMeta.RecipeParts.ToList()[i].Quantity.ToString().Trim() + " " + recipeMeta.RecipeParts.ToList()[i].Unit.Trim() : "",
                     TextColor = Constants.AppColor.text_gray,
-                    FontSize = Constants.fontSize3,
+                    FontSize = Constants.fontSize2,
                     Margin = Constants.textListMargin,
                     HorizontalTextAlignment = TextAlignment.End
                 });
@@ -241,7 +259,7 @@ namespace FeedMe
                 {
                     Text = recipe.RecipeParts.ToList()[i].IngredientName.Trim(),
                     TextColor = Constants.AppColor.text_black,
-                    FontSize = Constants.fontSize3,
+                    FontSize = Constants.fontSize2,
                     Margin = Constants.textListMargin
                 }, 1, i);
 
@@ -323,7 +341,7 @@ namespace FeedMe
                     {
                         Text = text,
                         TextColor = Constants.AppColor.text_black,
-                        FontSize = Constants.fontSize3,
+                        FontSize = Constants.fontSize2,
                         Margin = Constants.textListMargin
                     });
                 }

@@ -27,25 +27,31 @@ namespace FeedMe
 
         bool viewFavorites;
 
-		public MealsListPage (bool viewFavorites = false)
+		public MealsListPage()
 		{
             InitializeComponent();
-            this.viewFavorites = viewFavorites;
+            viewFavorites = true;
 
-            if (viewFavorites)
+            Label_Loading.Text = "Laddar...";
+            recipeMetas = User.User.SavedRecipeMetas;
+            XamlSetup();
+
+            if (recipeMetas.Count < 1)
             {
-                Label_Loading.Text = "Sorterar...";
-                recipeMetas = User.User.SavedRecipeMetas.OrderByDescending(o => o.Coverage).ToList();
-                XamlSetup();
+                Label_Message.Text = "Här sparas de recept om du har gillat";
+                Label_Message.IsVisible = true;
             }
-            else
-            {
-                InitializeComponent();
-                recipeMetas = new List<RecipeMetaDtoV2>();
-                //POST_recipeMetas(JsonConvert.DeserializeObject<List<IngredientDtoV2>>(User.User.SavedIngredinets));
-                myIngredients = JsonConvert.DeserializeObject<List<IngredientDtoV2>>(User.User.SavedIngredinets);
-                ReciveRecipeMetas(0);
-            }
+        }
+
+        public MealsListPage(List<IngredientDtoV2> ingredients)
+        {
+            InitializeComponent();
+            viewFavorites = false;
+            myIngredients = ingredients;
+
+            recipeMetas = new List<RecipeMetaDtoV2>();
+            myIngredients = ingredients;
+            ReciveRecipeMetas(0);
         }
 
         async void Alert(string title, string message, string cancel)
@@ -126,25 +132,46 @@ namespace FeedMe
             ActivityIndicatior_WaitingForServer.IsRunning = false;
         }
 
+        bool canViewRecipe = true;
         //Recipe selected
         private void ListView_Recipes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var selected = ListView_Recipes.SelectedItem;
-            if (selected != null)
-            {
-                int selectedItemIndex = recipeMetaModels.IndexOf(selected);
-                int index = selectedItemIndex - (int)(selectedItemIndex / 4f) - 1;
 
-                GotoRecipePage(recipeMetas[index]);
+            if (selected == null)
+                return;
+
+            canViewRecipe = false;
+
+            int selectedItemIndex = recipeMetaModels.IndexOf(selected);
+            ListView_Recipes.SelectedItem = null;
+
+            for (int i = 0; i < recipeMetaModels.Count; i += 4)
+            {
+                if (selectedItemIndex == i)
+                    return;
             }
 
-            ((ListView)sender).SelectedItem = null;
+            int index = selectedItemIndex - (int)(selectedItemIndex / 4f) - 1;
+
+            if(viewFavorites)
+                GotoRecipePage(recipeMetaModels[index].Recipe);
+            else
+                GotoRecipePage(recipeMetas[index]);
+
         }
 
         //Next page
         async void GotoRecipePage(RecipeMetaDtoV2 recipeMeta)
         {
             await Navigation.PushAsync(new RecipePage(recipeMeta) { Title = recipeMeta.Name });
+
+            canViewRecipe = true;
+        }
+        //Next page
+        async void GotoRecipePage(RecipeDtoV2 recipe)
+        {
+            await Navigation.PushAsync(new RecipePage(recipe) { Title = recipe.Name });
 
             ListView_Recipes.SelectedItem = null;
         }

@@ -39,7 +39,7 @@
                             <ColumnDefinition Width="5"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image x:Name="Image_Recipe" Aspect="AspectFill" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
+                        <ff:CachedImage x:Name="Image_Recipe" Aspect="AspectFill" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
                         <!--ff:CachedImage x:Name="Image_OwnerLogo" Aspect="AspectFit" Grid.Row="1" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill">
                             <ff:CachedImage.Transformations>
                                 <fft:CircleTransformation BorderHexColor="#777777" BorderSize="5"/>
@@ -59,8 +59,8 @@
                                 
                                 <Label x:Name="Label_RecipeName" FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Center" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Column="0"/>
 
-                                <iconize:IconLabel Text="{Binding IsFavorite, Converter={x:StaticResource favoriteConv}}" FontSize="Large"
-                                                VerticalTextAlignment="Start" HorizontalTextAlignment="End" VerticalOptions="Start" HorizontalOptions="End" TextColor="#00CC66" Grid.Column="1">
+                                <iconize:IconLabel x:Name="Icon_Favorite" Text="{Binding IsFavorite, Converter={x:StaticResource favoriteConv}}"
+                                                VerticalTextAlignment="Start" HorizontalTextAlignment="End" VerticalOptions="Start" HorizontalOptions="End" TextColor="Red" Grid.Column="1">
                                     <iconize:IconLabel.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding FavoriteCommand}"/>
                                     </iconize:IconLabel.GestureRecognizers>
@@ -75,11 +75,11 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 
-                                <ff:CachedImage Margin="0" x:Name="Image_OwnerLogo" Grid.Column="0" VerticalOptions="End" WidthRequest="70"/>
+                                <ff:CachedImage Margin="0" x:Name="Image_OwnerLogo" Grid.Column="0" VerticalOptions="Center" WidthRequest="80"/>
 
                                 <StackLayout Margin="0" Padding="0" Grid.Column="1" VerticalOptions="Start">
-                                    <Label x:Name="Label_OwnerLinkInfo" Margin="0" FontSize="Small" Text="Receptet kan hittas på:" VerticalOptions="Start" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
-                                    <Label x:Name="Label_OwnerLink" Margin="0" FontSize="Micro" HorizontalOptions="Start" VerticalOptions="Start" HorizontalTextAlignment="Start">
+                                    <Label x:Name="Label_OwnerLinkInfo" Margin="0" FontSize="Medium" Text="Receptet kan hittas på:" VerticalOptions="Start" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                    <Label x:Name="Label_OwnerLink" Margin="0" FontSize="Small" HorizontalOptions="Start" VerticalOptions="Start" HorizontalTextAlignment="Start">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1"/>
                                         </Label.GestureRecognizers>
@@ -103,7 +103,7 @@
                             </Frame>
 
                             <!--Portions Stepper-->
-                            <Grid Margin="15, 15, 15, 7.5" x:Name="Grid_Portions" Padding="0" Grid.Row="1">
+                            <Grid Margin="15, 15, 15, 15" x:Name="Grid_Portions" Padding="0" Grid.Row="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
@@ -113,17 +113,9 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <!--Stepper x:Name="Stepper_Portions" VerticalOptions="Center" HorizontalOptions="End" Maximum="10" Minimum="1" Increment="1" Value="2" ValueChanged="Stepper_Portions_ValueChanged"/-->
-                                <iconize:IconLabel x:Name="IconButton_AddPortionCount" Text="md-add-circle" FontSize="Large" TextColor="#00CC66" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2">
-                                    <iconize:IconLabel.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="IconButton_AddPortionCount_Clicked"/>
-                                    </iconize:IconLabel.GestureRecognizers>
-                                </iconize:IconLabel>
-                                <iconize:IconLabel x:Name="IconButton_RemovePortionCount" BackgroundColor="Transparent" Text="md-remove-circle" FontSize="Large" TextColor="#00CC66" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1">
-                                    <iconize:IconLabel.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="IconButton_RemovePortionCount_Clicked"/>
-                                    </iconize:IconLabel.GestureRecognizers>
-                                </iconize:IconLabel>
-                                <Label x:Name="Label_Portions" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="0"/>
+                                <iconize:IconButton x:Name="IconButton_AddPortionCount" BackgroundColor="#00CC66" Text="md-add" FontSize="Micro" Padding="0" CornerRadius="5" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Pressed="IconButton_AddPortionCount_Clicked"/>
+                                <iconize:IconButton x:Name="IconButton_RemovePortionCount" BackgroundColor="#00CC66" Text="md-remove" FontSize="Micro" Padding="0" CornerRadius="5" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Pressed="IconButton_RemovePortionCount_Clicked"/>
+                                <Label x:Name="Label_Portions" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="0"/>
                             </Grid>
 
                             <!--Ingredients-->

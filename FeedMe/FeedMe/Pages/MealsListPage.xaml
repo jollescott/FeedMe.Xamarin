@@ -15,7 +15,7 @@
 
             <DataTemplate x:Key="recipeTemplate">
                 <ViewCell>
-                    <Frame x:Name="Frame_List" Margin="15, 7.5, 15, 7.5" Padding="0" CornerRadius="0" HeightRequest="220">
+                    <Frame x:Name="Frame_List" Margin="15, 7.5, 15, 7.5" Padding="0" CornerRadius="0" HeightRequest="300">
 
                         <Grid Padding="0" HorizontalOptions="Fill" VerticalOptions="Fill" RowSpacing="0" ColumnSpacing="0">
                             <Grid.RowDefinitions>
@@ -30,8 +30,8 @@
                                 <ColumnDefinition Width="15*"/>
                             </Grid.ColumnDefinitions>
 
-
-                            <Label Text="{Binding CoverageMessage}" IsVisible="{Binding ShowCoverageMessage}" IsEnabled="{Binding ShowCoverageMessage}" FontSize="Micro" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
+                            <BoxView BackgroundColor="#00CC66" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"/>
+                            <Label Text="{Binding CoverageMessage}" IsVisible="{Binding ShowCoverageMessage}" IsEnabled="{Binding ShowCoverageMessage}" TextColor="White" FontSize="Small" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
                             <ff:CachedImage Source="{Binding Image}" Margin="0" Aspect="AspectFill" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
                             <Label Text="{Binding Name}" FontSize="Medium" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="3" Grid.Column="2"/>
                             
@@ -62,6 +62,8 @@
                 <Button IsEnabled="False" IsVisible="False" Padding="0, 30, 0, 30" x:Name="Button_ViewMoreRecipes" BackgroundColor="Transparent" BorderColor="Transparent" Text="Hämta fler recept" FontSize="Medium" Clicked="Button_ViewMoreRecipes_Clicked"/>
             </ListView.Footer>
         </ListView>
+
+        <Label x:Name="Label_Message" FontSize="Medium" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False" IsEnabled="False"/>
 
         <ActivityIndicator x:Name="ActivityIndicatior_WaitingForServer" IsRunning="True" VerticalOptions="Center"/>
         <Label x:Name="Label_Loading" Text="Hämtar recept..." VerticalOptions="End" HorizontalOptions="Center" Margin="0, 0, 0, 30"/>

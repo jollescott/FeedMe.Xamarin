@@ -37,7 +37,7 @@ namespace FeedMe.Pages.MasterDetail
                 {
                     new FDMasterDetailPageMenuItem { Id = 0, Title = "Sök recept", Icon = "md-search"},
                     new FDMasterDetailPageMenuItem { Id = 1, Title = "Gillade recept", Icon = "md-favorite-border" },
-                    new FDMasterDetailPageMenuItem { Id = 2, Title = "Inköpslista\n(Kommer snart)", Icon = "md-shopping-basket" }
+                    //new FDMasterDetailPageMenuItem { Id = 2, Title = "Inköpslista\n(Kommer snart)", Icon = "md-shopping-basket" }
                 });
             }
             
