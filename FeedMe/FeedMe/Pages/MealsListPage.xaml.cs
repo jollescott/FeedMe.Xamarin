@@ -33,7 +33,7 @@ namespace FeedMe
             viewFavorites = true;
 
             Label_Loading.Text = "Sorterar...";
-            recipeMetas = User.User.SavedRecipeMetas.OrderByDescending(o => o.Coverage).ToList();
+            recipeMetas = User.User.SavedRecipeMetas;
             XamlSetup();
 
             if (recipeMetas.Count < 1)
