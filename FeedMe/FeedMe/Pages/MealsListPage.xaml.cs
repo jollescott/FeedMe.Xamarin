@@ -38,7 +38,7 @@ namespace FeedMe
 
             if (recipeMetas.Count < 1)
             {
-                Label_Message.Text = "Här sparas de recept om de har gillat";
+                Label_Message.Text = "Här sparas de recept om du har gillat";
                 Label_Message.IsVisible = true;
             }
         }
@@ -136,15 +136,23 @@ namespace FeedMe
         private void ListView_Recipes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var selected = ListView_Recipes.SelectedItem;
-            if (selected != null)
-            {
-                int selectedItemIndex = recipeMetaModels.IndexOf(selected);
-                int index = selectedItemIndex - (int)(selectedItemIndex / 4f) - 1;
 
-                GotoRecipePage(recipeMetas[index]);
+            if (selected == null)
+                return;
+
+            int selectedItemIndex = recipeMetaModels.IndexOf(selected);
+            ListView_Recipes.SelectedItem = null;
+
+            for (int i = 0; i < recipeMetaModels.Count; i += 4)
+            {
+                if (selectedItemIndex == i)
+                    return;
             }
 
-            ((ListView)sender).SelectedItem = null;
+            int index = selectedItemIndex - (int)(selectedItemIndex / 4f) - 1;
+
+            GotoRecipePage(recipeMetas[index]);
+
         }
 
         //Next page
