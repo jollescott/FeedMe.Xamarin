@@ -218,16 +218,15 @@ namespace FeedMe
         
         void XamlSetup2()
         {
-            //Portions
-            Label_Portions.FontSize = Constants.fontSize3;
-
             //Ingredients
             for (int i = 0; i < recipe.RecipeParts.Count() + 1; i++)
             {
                 Grid_Ingredients.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             }
-            Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
-            Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(5, GridUnitType.Star) });
+            //Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
+            //Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(5, GridUnitType.Star) });
+             Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
 
             for (int i = 0; i < recipeMeta.RecipeParts.Count(); i++)
             {
@@ -236,7 +235,7 @@ namespace FeedMe
                 {
                     //Text = (recipeMeta.RecipeParts.ToList()[i].Quantity != 0) ? recipeMeta.RecipeParts.ToList()[i].Quantity.ToString().Trim() + " " + recipeMeta.RecipeParts.ToList()[i].Unit.Trim() : "",
                     TextColor = Constants.AppColor.text_gray,
-                    FontSize = Constants.fontSize3,
+                    FontSize = Constants.fontSize2,
                     Margin = Constants.textListMargin,
                     HorizontalTextAlignment = TextAlignment.End
                 });
@@ -247,7 +246,7 @@ namespace FeedMe
                 {
                     Text = recipe.RecipeParts.ToList()[i].IngredientName.Trim(),
                     TextColor = Constants.AppColor.text_black,
-                    FontSize = Constants.fontSize3,
+                    FontSize = Constants.fontSize2,
                     Margin = Constants.textListMargin
                 }, 1, i);
 
@@ -329,7 +328,7 @@ namespace FeedMe
                     {
                         Text = text,
                         TextColor = Constants.AppColor.text_black,
-                        FontSize = Constants.fontSize3,
+                        FontSize = Constants.fontSize2,
                         Margin = Constants.textListMargin
                     });
                 }

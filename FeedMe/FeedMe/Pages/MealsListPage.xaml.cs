@@ -132,6 +132,7 @@ namespace FeedMe
             ActivityIndicatior_WaitingForServer.IsRunning = false;
         }
 
+        bool canViewRecipe = true;
         //Recipe selected
         private void ListView_Recipes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
@@ -139,6 +140,8 @@ namespace FeedMe
 
             if (selected == null)
                 return;
+
+            canViewRecipe = false;
 
             int selectedItemIndex = recipeMetaModels.IndexOf(selected);
             ListView_Recipes.SelectedItem = null;
@@ -160,7 +163,7 @@ namespace FeedMe
         {
             await Navigation.PushAsync(new RecipePage(recipeMeta) { Title = recipeMeta.Name });
 
-            ListView_Recipes.SelectedItem = null;
+            canViewRecipe = true;
         }
 
         //Navigation back button
