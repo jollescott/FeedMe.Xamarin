@@ -41,7 +41,7 @@ namespace FeedMe
         public ICommand FavoriteCommand => _favoriteCommand = _favoriteCommand ?? new Command(RunFavoriteCommandAsync);
 
         private async void RunFavoriteCommandAsync(object obj)
-        {
+        {           
             var userid = DependencyService.Get<IFacebook>().UserId;
             await RamseyConnection.SaveFavoriteAsync(recipeMeta.RecipeID, userid);
 
@@ -60,7 +60,7 @@ namespace FeedMe
                 User.User.SavedRecipeMetas = savedRecipeMetas;
             }
             // unsave
-            else if (!IsFavorite && Sorting.RecipeMetaExistsInList(recipe, savedRecipeMetas))
+            else if (!IsFavorite)
             {
                 int toRemoveIndex = -1;
                 for (int i = 0; i < savedRecipeMetas.Count; i++)
@@ -123,12 +123,12 @@ namespace FeedMe
                 }
                 else
                 {
-                    await DisplayAlert("Response error", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "ok");
+                    await DisplayAlert("Fel", "Receptet kunde inte hämtas.\nStatus code " + (int)response.StatusCode, "ok");
                 }
             }
             catch (Exception _e)
             {
-                await DisplayAlert("An error occurred", "Server conection failed", "ok");
+                await DisplayAlert("Fel", "Receptet kunde inte hämtas.", "ok");
             }
         }
 
@@ -267,7 +267,7 @@ namespace FeedMe
                 foreach (var myIngredient in myIngredients)
                 {
 
-                    if (recipe.RecipeParts.ToList()[i].IngredientName.Trim() == myIngredient.IngredientName.Trim())
+                    if (recipe.RecipeParts.ToList()[i].IngredientName.Trim().ToLower() == myIngredient.IngredientName.Trim().ToLower())
                     {
                         Grid_Ingredients.Children.Add(new Image()
                         {
@@ -368,7 +368,7 @@ namespace FeedMe
             Label_Portions.Text = (portions == 1) ? portions.ToString() + " portion" : portions.ToString() + " portioner";
             for (int i = 0; i < ingredentPortionLabels.Count; i++)
             {
-                ingredentPortionLabels[i].Text = (recipe.RecipeParts.ToList()[i].Quantity != 0) ? (recipe.RecipeParts.ToList()[i].Quantity * portions * portionMuliplier).ToString().Trim() + " " + recipe.RecipeParts.ToList()[i].Unit.Trim() : "";
+                ingredentPortionLabels[i].Text = (recipe.RecipeParts.ToList()[i].Quantity != 0 && recipe.RecipeParts.ToList()[i].Unit != "undefined") ? (recipe.RecipeParts.ToList()[i].Quantity * portions * portionMuliplier).ToString().Trim() + " " + recipe.RecipeParts.ToList()[i].Unit.Trim() : "";
             }
         }
 

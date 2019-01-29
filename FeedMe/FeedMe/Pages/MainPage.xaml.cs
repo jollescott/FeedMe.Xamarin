@@ -359,12 +359,12 @@ namespace FeedMe
 
         private void TapGestureRecognizer_Tapped_ExcludedIngredientsHelp(object sender, EventArgs e)
         {
-            Alert("Uteslutna Ingredienser", "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\nSed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "ok");
+            Alert("Uteslutna Ingredienser", "Här kan du klicka på “Lägg till” knappen för att utesluta ingredienser du inte vill ha i dina recept", "ok");
         }
 
         private void TapGestureRecognizer_Tapped_MyIngredientsHelp(object sender, EventArgs e)
         {
-            Alert("Minna Ingredienser", "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\nSed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "ok");
+            Alert("Minna Ingredienser", "Klicka på “Lägg till” knappen för att lägga till ingredienser du har i ditt kök.", "ok");
         }
     }
 }
