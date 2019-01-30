@@ -13,6 +13,7 @@ using FeedMe.Interfaces;
 using FeedMe.Classes;
 using Ramsey.Shared.Enums;
 using System.Threading.Tasks;
+using Plugin.Iconize;
 
 namespace FeedMe
 {
@@ -189,14 +190,23 @@ namespace FeedMe
 
                     if (recipe.RecipeParts.ToList()[i].IngredientName.Trim() == myIngredient.IngredientName.Trim())
                     {
-                        Grid_Ingredients.Children.Add(new Image()
+                        //Grid_Ingredients.Children.Add(new Image()
+                        //{
+                        //    Source = "icon_check.png",
+                        //    HorizontalOptions = LayoutOptions.End,
+                        //    VerticalOptions = LayoutOptions.Center,
+                        //    Aspect = Aspect.AspectFit,
+                        //    HeightRequest = 15,
+                        //    Margin = new Thickness(0, 0, 5, 0)
+                        //}, 1, i);
+
+                        Grid_Ingredients.Children.Add(new IconLabel
                         {
-                            Source = "icon_check.png",
+                            Text = "md-check",
+                            FontSize = Constants.fontSize1,
+                            TextColor = Constants.AppColor.green,
                             HorizontalOptions = LayoutOptions.End,
-                            VerticalOptions = LayoutOptions.Center,
-                            Aspect = Aspect.AspectFit,
-                            HeightRequest = 15,
-                            Margin = new Thickness(0, 0, 5, 0)
+                            VerticalOptions = LayoutOptions.Center
                         }, 1, i);
                     }
                 }
