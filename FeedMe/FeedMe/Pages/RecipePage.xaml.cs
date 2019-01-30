@@ -25,6 +25,8 @@ namespace FeedMe
         List<IngredientDtoV2> myIngredients;
         List<Label> ingredentPortionLabels = new List<Label>();
 
+        bool loadedRecipe = false;
+
         public bool IsFavorite { get; set; }
 
         private int portions = 2;
@@ -110,12 +112,12 @@ namespace FeedMe
                 }
                 else
                 {
-                    await DisplayAlert("Response error", "Status code " + (int)response.StatusCode + ": " + response.StatusCode.ToString(), "ok");
+                    await DisplayAlert("Fel", "Kunnde inte ansluta till servern\n\nstatus code: " + (int)response.StatusCode, "ok");
                 }
             }
             catch (Exception _e)
             {
-                await DisplayAlert("An error occurred", "Server conection failed", "ok");
+                await DisplayAlert("Fel", "Kunnde inte ansluta till servern", "ok");
             }
         }
 
@@ -126,7 +128,6 @@ namespace FeedMe
             Image_Recipe.Source = recipeMeta.Image;
             //Image_OwnerLogo.Source = recipeMeta.OwnerLogo;
 
-
             //Owner Info
             Image_OwnerLogo.Source = recipeMeta.OwnerLogo;
             Label_RecipeName.Text = recipeMeta.Name;
@@ -136,78 +137,11 @@ namespace FeedMe
             IconButton_AddPortionCount.FontSize = Constants.fontSize1double;
             IconButton_RemovePortionCount.FontSize = Constants.fontSize1double;
 
-
             //Ingredients head
             Frame_IngredientsHead.BackgroundColor = Constants.AppColor.green;
             Label_IngridientsHead.Text = "Ingredienser";
             Label_IngridientsHead.TextColor = Constants.AppColor.text_white;
             Label_IngridientsHead.FontSize = Constants.fontSize1;
-
-            ////Portions
-            //Label_Portions.FontSize = Constants.fontSize3;
-
-            ////Ingredients
-            //for (int i = 0; i < recipe.RecipeParts.Count() + 1; i++)
-            //{
-            //    Grid_Ingredients.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            //}
-            //Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            //Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
-
-            //for (int i = 0; i < recipeMeta.RecipeParts.Count(); i++)
-            //{
-            //    // quantity and unit
-            //    ingredentPortionLabels.Add(new Label()
-            //    {
-            //        //Text = (recipeMeta.RecipeParts.ToList()[i].Quantity != 0) ? recipeMeta.RecipeParts.ToList()[i].Quantity.ToString().Trim() + " " + recipeMeta.RecipeParts.ToList()[i].Unit.Trim() : "",
-            //        TextColor = Constants.AppColor.text_gray,
-            //        FontSize = Constants.fontSize3,
-            //        Margin = Constants.textListMargin,
-            //        HorizontalTextAlignment = TextAlignment.End
-            //    });
-            //    Grid_Ingredients.Children.Add(ingredentPortionLabels[i], 0, i);
-
-            //    // ingredient names
-            //    Grid_Ingredients.Children.Add(new Label()
-            //    {
-            //        Text = recipe.RecipeParts.ToList()[i].IngredientName.Trim(),
-            //        TextColor = Constants.AppColor.text_black,
-            //        FontSize = Constants.fontSize3,
-            //        Margin = Constants.textListMargin
-            //    }, 1, i);
-
-            //    // has ingredient icons
-            //    foreach (var myIngredient in myIngredients)
-            //    {
-            //        int a = recipe.RecipeParts.ToList()[i].IngredientID;
-            //        int b = myIngredient.IngredientId;
-            //        int c = 0;
-            //        if (recipe.RecipeParts.ToList()[i].IngredientID == myIngredient.IngredientId)
-            //        {
-            //            Grid_Ingredients.Children.Add(new Image()
-            //            {
-            //                Source = "icon_check.png",
-            //                HorizontalOptions = LayoutOptions.End,
-            //                VerticalOptions = LayoutOptions.Center,
-            //                Aspect = Aspect.AspectFit,
-            //                HeightRequest = 15,
-            //                Margin = new Thickness(0, 0, 5, 0)
-            //            }, 1, i);
-            //        }
-            //    }
-
-            //    // separation lines
-            //    Grid_Ingredients.Children.Add(new BoxView()
-            //    {
-            //        BackgroundColor = Constants.AppColor.gray,
-            //        HeightRequest = 1,
-            //        VerticalOptions = LayoutOptions.End,
-            //        HorizontalOptions = LayoutOptions.FillAndExpand,
-            //    }, 0, 2, i, i + 1);
-            //}
-
-            //UpdateIngredientPortions((int)Stepper_Portions.Value);
-
 
             //Instructions head
             Frame_InstructionsHead.BackgroundColor = Constants.AppColor.green;
@@ -233,7 +167,6 @@ namespace FeedMe
                 // quantity and unit
                 ingredentPortionLabels.Add(new Label()
                 {
-                    //Text = (recipeMeta.RecipeParts.ToList()[i].Quantity != 0) ? recipeMeta.RecipeParts.ToList()[i].Quantity.ToString().Trim() + " " + recipeMeta.RecipeParts.ToList()[i].Unit.Trim() : "",
                     TextColor = Constants.AppColor.text_gray,
                     FontSize = Constants.fontSize2,
                     Margin = Constants.textListMargin,
@@ -278,9 +211,7 @@ namespace FeedMe
                 }, 0, 2, i, i + 1);
             }
 
-            UpdateIngredientPortions(portions);
-
-
+            UpdateIngredientPortions(portions);  // set ingredient portions text
 
 
             //Instructions
@@ -347,6 +278,10 @@ namespace FeedMe
                     });
                 }
             }
+
+            loadedRecipe = true;
+            ActivityIndicatior_LoadingRecipeIngredients.IsRunning = false;
+            ActivityIndicatior_LoadingRecipeInstructions.IsRunning = false;
         }
 
         void UpdateIngredientPortions(int portions)
@@ -365,17 +300,11 @@ namespace FeedMe
             await Navigation.PopAsync();
         }
 
-
-        // Source link
+        // Source link tapped
         private void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
         {
             // open source in browser
             Device.OpenUri(new Uri(recipeMeta.Source));
-        }
-
-        private void Stepper_Portions_ValueChanged(object sender, ValueChangedEventArgs e)
-        {
-            //UpdateIngredientPortions((int)Stepper_Portions.Value);
         }
 
         private void IconButton_AddPortionCount_Clicked(object sender, EventArgs e)

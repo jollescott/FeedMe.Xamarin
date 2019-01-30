@@ -117,6 +117,9 @@
                                 <iconize:IconButton x:Name="IconButton_RemovePortionCount" BackgroundColor="#00CC66" Text="md-remove" FontSize="Micro" Padding="0" CornerRadius="5" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Pressed="IconButton_RemovePortionCount_Clicked"/>
                                 <Label x:Name="Label_Portions" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="0"/>
                             </Grid>
+                            
+                            <!--RecipeLoading-->
+                            <ActivityIndicator x:Name="ActivityIndicatior_LoadingRecipeIngredients" Margin="15" IsRunning="True" VerticalOptions="Center" Grid.Row="2"/>
 
                             <!--Ingredients-->
                             <Grid Margin="15, 7.5, 15, 15" Padding="0" x:Name="Grid_Ingredients" Grid.Row="2"/>
@@ -134,6 +137,9 @@
                             <Frame x:Name="Frame_InstructionsHead" Margin="0" CornerRadius="0" Grid.Row="0">
                                 <Label x:Name="Label_InstructionsHead" VerticalTextAlignment="Center"/>
                             </Frame>
+
+                            <!--RecipeLoading-->
+                            <ActivityIndicator x:Name="ActivityIndicatior_LoadingRecipeInstructions" Margin="15" IsRunning="True" VerticalOptions="Center" Grid.Row="1"/>
 
                             <!--Instructions-->
                             <StackLayout Margin="15" x:Name="Stack_Instructions" Grid.Row="1"/>
