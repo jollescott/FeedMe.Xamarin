@@ -21,6 +21,11 @@ namespace FeedMe.Pages.MasterDetail
         {
             InitializeComponent();
 
+            if(Device.RuntimePlatform == Device.iOS)
+            {
+                Icon = "menu.png";
+            }
+
             //Grid_MenuBackground.BackgroundColor = Constants.AppColor.navigationBarColor;
 
             BindingContext = new FDMasterDetailPageMasterViewModel();
