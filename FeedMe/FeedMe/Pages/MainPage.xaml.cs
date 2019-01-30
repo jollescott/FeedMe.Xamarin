@@ -211,7 +211,9 @@ namespace FeedMe
         // Recive ingredentDtos from the server and update lists
         async void GET_ingredientDtos(string search)
         {
-            await Task.Factory.StartNew(() => SearchIngredients = ingredientsSearching.Search(search));
+            bool isLoading = true;
+            ActivityIndicator_Ingredients.IsRunning = true;
+            await Task.Factory.StartNew(() => SearchIngredients = ingredientsSearching.Search(search, out isLoading));
 
             SearchIngredientModels.Clear();
 
@@ -239,6 +241,10 @@ namespace FeedMe
                     });
                 }
             }
+
+            if (!isLoading)
+                ActivityIndicator_Ingredients.IsRunning = false;
+
         }
 
 

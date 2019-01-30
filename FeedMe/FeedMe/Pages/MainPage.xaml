@@ -52,6 +52,8 @@
                 </ListView.ItemTemplate>
             </ListView>
 
+            <ActivityIndicator x:Name="ActivityIndicator_Ingredients" IsEnabled="False" VerticalOptions="Start" Margin="15" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+
         </Grid>
         
         
