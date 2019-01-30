@@ -13,6 +13,7 @@ using Android.Views;
 using Android.Widget;
 using FeedMe.Controls;
 using FeedMe.Droid.Renderers;
+using Microsoft.AppCenter.Crashes;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -27,15 +28,21 @@ namespace FeedMe.Droid.Renderers
         {
             base.OnElementChanged(e);
 
-            if (e.NewElement != null && Control == null)
+            if (Control == null)
                 SetNativeControl(CreateAdView());
+
+            if (e.NewElement != null)
+                Control.AdListener = new FeedMeAdListener();
+
+            if (e.OldElement != null)
+                Control.AdListener = null;
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (e.PropertyName == nameof(AdView.AdUnitId))
+            if (e.PropertyName == nameof(AdmobView.AdUnit))
                 Control.AdUnitId = Element.AdUnit;
         }
 
@@ -59,6 +66,15 @@ namespace FeedMe.Droid.Renderers
 #endif
 
             return adView;
+        }
+    }
+
+    internal class FeedMeAdListener : AdListener
+    {
+        public override void OnAdFailedToLoad(int errorCode)
+        {
+            base.OnAdFailedToLoad(errorCode);
+            Crashes.TrackError(new Exception("Failed to load ad: " + errorCode.ToString()));
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,10 +20,20 @@ namespace FeedMe.Pages.Popups
     public partial class LoginPage : PopupPage
     {
         private readonly HttpClient _httpClient = new HttpClient();
+        private readonly TaskCompletionSource<bool> _tcs;
+
+        private ICommand _closeCommand;
+        public ICommand CloseCommand => _closeCommand = _closeCommand ?? new Command(RunCloseCommandAsync);
+
+        private async void RunCloseCommandAsync(object obj)
+        {
+            await PopupNavigation.Instance.PopAsync().ContinueWith((task) => { _tcs.TrySetResult(false); });
+        }
 
         public LoginPage(TaskCompletionSource<bool> tcs)
         {
             InitializeComponent();
+            _tcs = tcs;
 
             MessagingCenter.Instance.Subscribe<Application, string>(Application.Current, "FacebookLogin_Success", async (Application app, string userid) =>
             {
@@ -36,15 +46,32 @@ namespace FeedMe.Pages.Popups
                 var content = new StringContent(user_json, Encoding.UTF8, "application/json");
                 await _httpClient.PostAsync(RamseyApi.V2.User.Sync, content);
 
-                tcs.SetResult(true);
-                await PopupNavigation.Instance.PopAsync();
+                await PopupNavigation.Instance.PopAsync().ContinueWith((task) => { _tcs.TrySetResult(true); });
             });
 
             MessagingCenter.Instance.Subscribe(Application.Current, "FacebookLogin_Cancelled", async (Application app) =>
             {
-                tcs.SetResult(false);
-                await PopupNavigation.Instance.PopAsync();
+                await PopupNavigation.Instance.PopAsync().ContinueWith((task) => { _tcs.TrySetResult(false); }); ;
             });
+
+            BindingContext = this;
+        }
+
+        public static async Task<bool> AssureFacebookAsync()
+        {
+            var id = DependencyService.Get<IFacebook>().UserId;
+
+            if (id == null)
+            {
+                var tcs = new TaskCompletionSource<bool>();
+                await PopupNavigation.Instance.PushAsync(new LoginPage(tcs));
+
+                return await tcs.Task;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }
