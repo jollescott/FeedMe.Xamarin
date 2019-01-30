@@ -154,11 +154,7 @@ namespace FeedMe
 
             int index = selectedItemIndex - (int)(selectedItemIndex / 4f) - 1;
 
-            if(viewFavorites)
-                GotoRecipePage(recipeMetaModels[index].Recipe);
-            else
-                GotoRecipePage(recipeMetas[index]);
-
+            GotoRecipePage(recipeMetas[index]);
         }
 
         //Next page
@@ -167,13 +163,6 @@ namespace FeedMe
             await Navigation.PushAsync(new RecipePage(recipeMeta) { Title = recipeMeta.Name });
 
             canViewRecipe = true;
-        }
-        //Next page
-        async void GotoRecipePage(RecipeDtoV2 recipe)
-        {
-            await Navigation.PushAsync(new RecipePage(recipe) { Title = recipe.Name });
-
-            ListView_Recipes.SelectedItem = null;
         }
 
         //Navigation back button

@@ -38,12 +38,12 @@ namespace FeedMe
         }
 
         private ICommand _favoriteCommand;
-        public ICommand FavoriteCommand => _favoriteCommand = _favoriteCommand ?? new Command(RunFavoriteCommandAsync);
+        public ICommand FavoriteCommand => _favoriteCommand = _favoriteCommand ?? new Command(RunFavoriteCommand);
 
-        private async void RunFavoriteCommandAsync(object obj)
+        private void RunFavoriteCommand(object obj)
         {
-            var userid = DependencyService.Get<IFacebook>().UserId;
-            await RamseyConnection.SaveFavoriteAsync(recipeMeta.RecipeID, userid);
+            //var userid = DependencyService.Get<IFacebook>().UserId;
+            //await RamseyConnection.SaveFavoriteAsync(recipeMeta.RecipeID, userid);
 
             IsFavorite = !IsFavorite;
 
