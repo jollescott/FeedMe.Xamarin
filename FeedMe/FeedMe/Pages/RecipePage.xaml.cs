@@ -54,13 +54,13 @@ namespace FeedMe
 
             var savedRecipeMetas = User.User.SavedRecipeMetas;
             // save
-            if (IsFavorite && !Sorting.RecipeMetaExistsInList(recipe, savedRecipeMetas))
+            if (IsFavorite && !Sorting.RecipeMetaExistsInList(recipeMeta, savedRecipeMetas))
             {
                 savedRecipeMetas.Insert(0, recipeMeta);
                 User.User.SavedRecipeMetas = savedRecipeMetas;
             }
             // unsave
-            else if (!IsFavorite && Sorting.RecipeMetaExistsInList(recipe, savedRecipeMetas))
+            else if (!IsFavorite && Sorting.RecipeMetaExistsInList(recipeMeta, savedRecipeMetas))
             {
                 int toRemoveIndex = -1;
                 for (int i = 0; i < savedRecipeMetas.Count; i++)
@@ -88,19 +88,6 @@ namespace FeedMe
             myIngredients = User.User.SavedIngredinets;
             XamlSetup1();
             GET_recipeDto(recipeMeta.RecipeID);
-            Task.Factory.StartNew(() => UpdateFavorite());
-		}
-        public RecipePage (RecipeMetaDtoV2 recipeMeta, RecipeDtoV2 recipe)
-		{
-            InitializeComponent();
-            BindingContext = this;
-            this.recipe = recipe;
-            this.recipeMeta = recipeMeta;
-
-            myIngredients = User.User.SavedIngredinets;
-
-            XamlSetup1();
-            XamlSetup2();
             Task.Factory.StartNew(() => UpdateFavorite());
 		}
 
