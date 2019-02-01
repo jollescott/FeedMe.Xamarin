@@ -38,7 +38,7 @@ namespace FeedMe
 
             if (recipeMetas.Count < 1)
             {
-                Label_Message.Text = "Här sparas de recept om du har gillat";
+                Label_Message.Text = "Här sparas de recept du har gillat";
                 Label_Message.IsVisible = true;
             }
         }
