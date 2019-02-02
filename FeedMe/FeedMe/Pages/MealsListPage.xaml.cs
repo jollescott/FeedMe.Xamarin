@@ -87,11 +87,17 @@ namespace FeedMe
                     XamlSetup();
                 }
                 else
-                    Alert("Connection error", "Status code " + (int)respone.StatusCode + ": " + respone.StatusCode.ToString(), "ok");
+                {
+                    Alert("Fel", "Kunnde inte ansluta till servern\n\nstatus code: " + (int)respone.StatusCode, "ok");
+                    Label_Loading.IsVisible = false;
+                    ActivityIndicatior_WaitingForServer.IsRunning = false;
+                }
             }
-            catch (Exception _e)
+            catch
             {
-                Alert("An error occurred", "Server conection failed", "ok");
+                Alert("Fel", "Kunnde inte ansluta till servern", "ok");
+                Label_Loading.IsVisible = false;
+                ActivityIndicatior_WaitingForServer.IsRunning = false;
             }
         }
 
