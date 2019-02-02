@@ -22,6 +22,7 @@ namespace FeedMe
 	{
         List<RecipeMetaModel> recipeMetaModels;
         List<RecipeMetaDtoV2> recipeMetas;
+        List<RecipeDtoV2> recipes;
         List<IngredientDtoV2> myIngredients;
         HttpClient httpClient = new HttpClient();
 
@@ -33,10 +34,10 @@ namespace FeedMe
             viewFavorites = true;
 
             Label_Loading.Text = "Laddar...";
-            recipeMetas = User.User.SavedRecipeMetas;
+            recipes= User.User.SavedRecipes;
             XamlSetup();
 
-            if (recipeMetas.Count < 1)
+            if (recipes.Count < 1)
             {
                 Label_Message.Text = "Här sparas de recept du har gillat";
                 Label_Message.IsVisible = true;
@@ -70,8 +71,6 @@ namespace FeedMe
 
                 if (respone.IsSuccessStatusCode)
                 {
-                    Label_Loading.Text = "Sorterar...";
-
                     var result = respone.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                     var recivedRecipeMetas = JsonConvert.DeserializeObject<List<RecipeMetaDtoV2>>(result);
                     if (recivedRecipeMetas.Count < 25)
@@ -101,22 +100,43 @@ namespace FeedMe
             Label_Loading.IsEnabled = false;
             Label_Loading.IsVisible = false;
 
-            recipeMetaModels = recipeMetas.Select(x =>
+            if (viewFavorites)
             {
-                return new RecipeMetaModel
+                recipeMetaModels = recipes.Select(x =>
                 {
-                    Image = x.Image,
-                    Source = x.Source,
-                    Name = x.Name,
-                    Owner = x.Owner,
-                    OwnerLogo = x.OwnerLogo,
-                    CoverageMessage = "Du har " + ((int)(x.Coverage * 100)).ToString() + "%  av alla ingredienser",
-                    ShowCoverageMessage = (viewFavorites) ? false : true,
-                    LogoRadius = 40,
-                    RecipeID = x.RecipeID
-                };
-            }).ToList();
+                    return new RecipeMetaModel
+                    {
+                        Image = x.Image,
+                        Source = x.Source,
+                        Name = x.Name,
+                        Owner = x.Owner,
+                        OwnerLogo = x.OwnerLogo,
+                        ShowCoverageMessage = false,
+                        LogoRadius = 40,
+                        RecipeID = x.RecipeID
+                    };
+                }).ToList();
+            }
+            else
+            {
+                recipeMetaModels = recipeMetas.Select(x =>
+                {
+                    return new RecipeMetaModel
+                    {
+                        Image = x.Image,
+                        Source = x.Source,
+                        Name = x.Name,
+                        Owner = x.Owner,
+                        OwnerLogo = x.OwnerLogo,
+                        CoverageMessage = "Du har " + ((int)(x.Coverage * 100)).ToString() + "%  av alla ingredienser",
+                        ShowCoverageMessage = true,
+                        LogoRadius = 40,
+                        RecipeID = x.RecipeID
+                    };
+                }).ToList();
+            }
 
+            // Add ads
             for (int i = 0; i < recipeMetaModels.Count; i++)
             {
                 if (i % 4 == 0)
@@ -133,16 +153,16 @@ namespace FeedMe
             ActivityIndicatior_WaitingForServer_LoadingMoreRecipes.IsRunning = false;
         }
 
-        bool canViewRecipe = true;
+        bool canOpenNewRecipes = true;
         //Recipe selected
         private void ListView_Recipes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var selected = ListView_Recipes.SelectedItem;
 
-            if (selected == null)
+            if (selected == null || !canOpenNewRecipes)
                 return;
 
-            canViewRecipe = false;
+            canOpenNewRecipes = false;
 
             int selectedItemIndex = recipeMetaModels.IndexOf(selected);
             ListView_Recipes.SelectedItem = null;
@@ -155,7 +175,10 @@ namespace FeedMe
 
             int index = selectedItemIndex - (int)(selectedItemIndex / 4f) - 1;
 
-            GotoRecipePage(recipeMetas[index]);
+            if (viewFavorites)
+                GotoRecipePage(recipes[index]);
+            else
+                GotoRecipePage(recipeMetas[index]);
         }
 
         //Next page
@@ -163,7 +186,15 @@ namespace FeedMe
         {
             await Navigation.PushAsync(new RecipePage(recipeMeta) { Title = recipeMeta.Name });
 
-            canViewRecipe = true;
+            canOpenNewRecipes = true;
+        }
+
+        //Next page (favorite)
+        async void GotoRecipePage(RecipeDtoV2 recipe)
+        {
+            await Navigation.PushAsync(new RecipePage(recipe) { Title = recipe.Name });
+
+            canOpenNewRecipes = true;
         }
 
         //Navigation back button

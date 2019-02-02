@@ -80,6 +80,28 @@ namespace FeedMe.User
             set => AppSettings.AddOrUpdateValue(nameof(SavedRecipeMetas), JsonConvert.SerializeObject(value));
         }
 
+        public static List<RecipeDtoV2> SavedRecipes
+        {
+            get
+            {
+                string json = AppSettings.GetValueOrDefault(nameof(SavedRecipes), string.Empty);
+                if (json == null || json == "")
+                    return new List<RecipeDtoV2>();
+                else
+                {
+                    try
+                    {
+                        return JsonConvert.DeserializeObject<List<RecipeDtoV2>>(json);
+                    }
+                    catch
+                    {
+                        return new List<RecipeDtoV2>();
+                    }
+                }
+            }
+            set => AppSettings.AddOrUpdateValue(nameof(SavedRecipes), JsonConvert.SerializeObject(value));
+        }
+
         public static string ShoppingListIngredients
         {
             get => AppSettings.GetValueOrDefault(nameof(ShoppingListIngredients), string.Empty);

@@ -26,6 +26,8 @@ namespace FeedMe
         List<IngredientDtoV2> myIngredients;
         List<Label> ingredentPortionLabels = new List<Label>();
 
+        bool fromSavedRecipes;
+
         bool loadedRecipe = false;
 
         public bool IsFavorite { get; set; }
@@ -52,23 +54,21 @@ namespace FeedMe
 
             OnPropertyChanged(nameof(IsFavorite));
 
-
-            // Save or unsave recipe
-
-            var savedRecipeMetas = User.User.SavedRecipeMetas;
+            //Save or unsave recipe
+            var savedRecipes = User.User.SavedRecipes;
             // save
-            if (IsFavorite && !Sorting.RecipeMetaExistsInList(recipeMeta, savedRecipeMetas))
+            if (IsFavorite && !savedRecipes.Any(p => p.Name == recipe.Name))
             {
-                savedRecipeMetas.Insert(0, recipeMeta);
-                User.User.SavedRecipeMetas = savedRecipeMetas;
+                savedRecipes.Insert(0, recipe);
+                User.User.SavedRecipes = savedRecipes;
             }
             // unsave
-            else if (!IsFavorite && Sorting.RecipeMetaExistsInList(recipeMeta, savedRecipeMetas))
+            else if (!IsFavorite && savedRecipes.Any(p => p.Name == recipe.Name))
             {
                 int toRemoveIndex = -1;
-                for (int i = 0; i < savedRecipeMetas.Count; i++)
+                for (int i = 0; i < savedRecipes.Count; i++)
                 {
-                    if (recipeMeta.RecipeID == savedRecipeMetas[i].RecipeID)
+                    if (recipe.RecipeID == savedRecipes[i].RecipeID)
                     {
                         toRemoveIndex = i;
                         break;
@@ -76,8 +76,8 @@ namespace FeedMe
                 }
                 if (toRemoveIndex != -1)
                 {
-                    savedRecipeMetas.RemoveAt(toRemoveIndex);
-                    User.User.SavedRecipeMetas = savedRecipeMetas;
+                    savedRecipes.RemoveAt(toRemoveIndex);
+                    User.User.SavedRecipes = savedRecipes;
                 }
             }
         }
@@ -87,16 +87,31 @@ namespace FeedMe
             InitializeComponent();
             BindingContext = this;
 
+            fromSavedRecipes = false;
             this.recipeMeta = recipeMeta;
             myIngredients = User.User.SavedIngredinets;
             XamlSetup1();
             GET_recipeDto(recipeMeta.RecipeID);
+
             Task.Factory.StartNew(() => UpdateFavorite());
 		}
+        public RecipePage (RecipeDtoV2 recipe)
+		{
+            InitializeComponent();
+            BindingContext = this;
+
+            fromSavedRecipes = true;
+            this.recipe = recipe;
+            myIngredients = User.User.SavedIngredinets;
+            XamlSetup1();
+            XamlSetup2();
+
+            Task.Factory.StartNew(() => UpdateFavorite());
+        }
 
         void UpdateFavorite()
         {
-            IsFavorite = Sorting.RecipeMetaExistsInList(recipeMeta, User.User.SavedRecipeMetas);
+            IsFavorite = User.User.SavedRecipes.Any(p => p.Name == (fromSavedRecipes ? recipe.Name : recipeMeta.Name));
             OnPropertyChanged(nameof(IsFavorite));
         }
 
@@ -126,13 +141,13 @@ namespace FeedMe
         {
             //Recipe Image
             Grid_Images.HeightRequest = Application.Current.MainPage.Width;
-            Image_Recipe.Source = recipeMeta.Image;
+            Image_Recipe.Source = fromSavedRecipes ? recipe.Image : recipeMeta.Image;
             //Image_OwnerLogo.Source = recipeMeta.OwnerLogo;
 
             //Owner Info
-            Image_OwnerLogo.Source = recipeMeta.OwnerLogo;
-            Label_RecipeName.Text = recipeMeta.Name;
-            Label_OwnerLink.Text = recipeMeta.Source;
+            Image_OwnerLogo.Source = fromSavedRecipes ? recipe.OwnerLogo : recipeMeta.OwnerLogo;
+            Label_RecipeName.Text = fromSavedRecipes ? recipe.Name : recipeMeta.Name;
+            Label_OwnerLink.Text = fromSavedRecipes ? recipe.Source : recipeMeta.Source;
             Label_OwnerLink.TextColor = Constants.AppColor.text_link;
             Icon_Favorite.FontSize = Constants.fontSize1double;
             IconButton_AddPortionCount.FontSize = Constants.fontSize1double;
@@ -160,10 +175,10 @@ namespace FeedMe
             }
             //Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
             //Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(5, GridUnitType.Star) });
-             Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             Grid_Ingredients.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
 
-            for (int i = 0; i < recipeMeta.RecipeParts.Count(); i++)
+            for (int i = 0; i < recipe.RecipeParts.Count(); i++)
             {
                 // quantity and unit
                 ingredentPortionLabels.Add(new Label()
@@ -190,16 +205,6 @@ namespace FeedMe
 
                     if (recipe.RecipeParts.ToList()[i].IngredientName.Trim() == myIngredient.IngredientName.Trim())
                     {
-                        //Grid_Ingredients.Children.Add(new Image()
-                        //{
-                        //    Source = "icon_check.png",
-                        //    HorizontalOptions = LayoutOptions.End,
-                        //    VerticalOptions = LayoutOptions.Center,
-                        //    Aspect = Aspect.AspectFit,
-                        //    HeightRequest = 15,
-                        //    Margin = new Thickness(0, 0, 5, 0)
-                        //}, 1, i);
-
                         Grid_Ingredients.Children.Add(new IconLabel
                         {
                             Text = "md-check",
@@ -314,7 +319,7 @@ namespace FeedMe
         private void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
         {
             // open source in browser
-            Device.OpenUri(new Uri(recipeMeta.Source));
+            Device.OpenUri(new Uri(fromSavedRecipes ? recipe.Source : recipeMeta.Source));
         }
 
         private void IconButton_AddPortionCount_Clicked(object sender, EventArgs e)
