@@ -148,7 +148,7 @@
                     
                 </StackLayout>
             </ScrollView>
-            
+
             <controls:AdmobView Grid.Row="1" />
         </Grid>
             

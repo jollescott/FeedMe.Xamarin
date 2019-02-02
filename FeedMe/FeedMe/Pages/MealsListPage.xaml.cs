@@ -130,6 +130,7 @@ namespace FeedMe
             ListView_Recipes.ItemsSource = recipeMetaModels;
 
             ActivityIndicatior_WaitingForServer.IsRunning = false;
+            ActivityIndicatior_WaitingForServer_LoadingMoreRecipes.IsRunning = false;
         }
 
         bool canViewRecipe = true;
@@ -174,6 +175,9 @@ namespace FeedMe
         //Load more recipes button
         void Button_ViewMoreRecipes_Clicked(object sender, EventArgs e)
         {
+            ActivityIndicatior_WaitingForServer_LoadingMoreRecipes.IsRunning = true;
+            Button_ViewMoreRecipes.IsEnabled = false;
+            Button_ViewMoreRecipes.IsVisible = false;
             ReciveRecipeMetas(recipeMetas.Count);
         }
     }
