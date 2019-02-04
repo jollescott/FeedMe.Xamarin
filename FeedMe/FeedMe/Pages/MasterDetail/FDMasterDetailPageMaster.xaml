@@ -12,32 +12,11 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <Image Source="ic_launcher.png" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Image Source="launcher.png" VerticalOptions="Center" HorizontalOptions="Center"/>
         </Grid>
-        
+
         <ListView x:Name="MenuItemsListView" HasUnevenRows="true" ItemsSource="{Binding MenuItems}"
                   Grid.Row="1">
-            <!--ListView.Header>
-                <Grid x:Name="Grid_MenuBackground" BackgroundColor="#03A9F4">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="10"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="10"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="80"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="10"/>
-                    </Grid.RowDefinitions>
-                    <Label
-                    Grid.Column="1"
-                    Grid.Row="2"
-                    Text="FeedMe"
-                    Style="{DynamicResource SubtitleStyle}"/>
-                </Grid>
-            </-->
-        
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
