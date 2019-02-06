@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 using Ramsey.Shared.Dto.V2;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Analytics;
 
 namespace FeedMe.Classes
 {
@@ -43,6 +45,8 @@ namespace FeedMe.Classes
         {
             try
             {
+                Analytics.TrackEvent("search", new Dictionary<string, string> { { "search", searchWord } });
+
                 HttpResponseMessage response = httpClient.GetAsync(RamseyApi.V2.Ingredient.Suggest + "?search=" + searchWord).GetAwaiter().GetResult();
 
                 if (response.IsSuccessStatusCode && searchNumber > heighestSearchNumber)
@@ -55,7 +59,7 @@ namespace FeedMe.Classes
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { Crashes.TrackError(ex, new Dictionary<string, string> { { "search", searchWord } }); }
 
             if (searchNumber == currentSearchNumber)
             {

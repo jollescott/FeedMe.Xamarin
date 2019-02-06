@@ -14,6 +14,7 @@ using Ramsey.Shared.Dto.V2;
 using Ramsey.Shared.Misc;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AppCenter.Analytics;
 
 namespace FeedMe
 {
@@ -67,11 +68,12 @@ namespace FeedMe
 
             try
             {
-                HttpResponseMessage respone = await httpClient.PostAsync(RamseyApi.V2.Recipe.Suggest + "?start=" + start.ToString(), content);
+                HttpResponseMessage response = await httpClient.PostAsync(RamseyApi.V2.Recipe.Suggest + "?start=" + start.ToString(), content);
+                Analytics.TrackEvent("reciveRecipeMetasResponse", new Dictionary<string, string> { { "reciveRecipeMetasResponseStatusCode", response.StatusCode.ToString() } });
 
-                if (respone.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
-                    var result = respone.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                     var recivedRecipeMetas = JsonConvert.DeserializeObject<List<RecipeMetaDtoV2>>(result);
                     if (recivedRecipeMetas.Count < 25)
                     {
@@ -88,7 +90,9 @@ namespace FeedMe
                 }
                 else
                 {
-                    Alert("Fel", "Kunnde inte ansluta till servern\n\nstatus code: " + (int)respone.StatusCode, "ok");
+                    Analytics.TrackEvent("reciveRecipeMetas", new Dictionary<string, string> { { "searchIngredients", json } });
+
+                    Alert("Fel", "Kunnde inte ansluta till servern\n\nstatus code: " + (int)response.StatusCode, "ok");
                     Label_Loading.IsVisible = false;
                     ActivityIndicatior_WaitingForServer.IsRunning = false;
                 }

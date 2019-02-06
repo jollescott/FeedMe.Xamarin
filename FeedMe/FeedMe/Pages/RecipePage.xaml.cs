@@ -14,6 +14,8 @@ using FeedMe.Classes;
 using Ramsey.Shared.Enums;
 using System.Threading.Tasks;
 using Plugin.Iconize;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 namespace FeedMe
 {
@@ -50,36 +52,48 @@ namespace FeedMe
             //var userid = DependencyService.Get<IFacebook>().UserId;
             //await RamseyConnection.SaveFavoriteAsync(recipeMeta.RecipeID, userid);
 
+            if (!loadedRecipe)
+            {
+                Analytics.TrackEvent("TriedChangingFavoriteBeforeRecipeLoaded", new Dictionary<string, string> { { "loadedRecipe", loadedRecipe.ToString() } });
+                return;
+            }
+
             IsFavorite = !IsFavorite;
+
+            Analytics.TrackEvent("changeFavorite", new Dictionary<string, string> { { "IsFavorite", IsFavorite.ToString() } });
 
             OnPropertyChanged(nameof(IsFavorite));
 
-            //Save or unsave recipe
-            var savedRecipes = User.User.SavedRecipes;
-            // save
-            if (IsFavorite && !savedRecipes.Any(p => p.Name == recipe.Name))
+            try
             {
-                savedRecipes.Insert(0, recipe);
-                User.User.SavedRecipes = savedRecipes;
-            }
-            // unsave
-            else if (!IsFavorite && savedRecipes.Any(p => p.Name == recipe.Name))
-            {
-                int toRemoveIndex = -1;
-                for (int i = 0; i < savedRecipes.Count; i++)
+                //Save or unsave recipe
+                var savedRecipes = User.User.SavedRecipes;
+                // save
+                if (IsFavorite && !savedRecipes.Any(p => p.Name == recipe.Name))
                 {
-                    if (recipe.RecipeID == savedRecipes[i].RecipeID)
-                    {
-                        toRemoveIndex = i;
-                        break;
-                    }
-                }
-                if (toRemoveIndex != -1)
-                {
-                    savedRecipes.RemoveAt(toRemoveIndex);
+                    savedRecipes.Insert(0, recipe);
                     User.User.SavedRecipes = savedRecipes;
                 }
+                // unsave
+                else if (!IsFavorite && savedRecipes.Any(p => p.Name == recipe.Name))
+                {
+                    int toRemoveIndex = -1;
+                    for (int i = 0; i < savedRecipes.Count; i++)
+                    {
+                        if (recipe.RecipeID == savedRecipes[i].RecipeID)
+                        {
+                            toRemoveIndex = i;
+                            break;
+                        }
+                    }
+                    if (toRemoveIndex != -1)
+                    {
+                        savedRecipes.RemoveAt(toRemoveIndex);
+                        User.User.SavedRecipes = savedRecipes;
+                    }
+                }
             }
+            catch (Exception ex) { Crashes.TrackError(ex); }
         }
 
         public RecipePage (RecipeMetaDtoV2 recipeMeta)
@@ -120,19 +134,25 @@ namespace FeedMe
             try
             {
                 HttpResponseMessage response = await httpClient.GetAsync(RamseyApi.V2.Recipe.Retreive + "?id=" + id);
+                Analytics.TrackEvent("reciveRecipeResponse", new Dictionary<string, string> { { "reciveRecipeResponseStatusCode", response.StatusCode.ToString() } });
+
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
                     recipe = JsonConvert.DeserializeObject<RecipeDtoV2>(result);
                     XamlSetup2();
+                    loadedRecipe = true;
                 }
                 else
                 {
                     await DisplayAlert("Fel", "Kunnde inte ansluta till servern\n\nstatus code: " + (int)response.StatusCode, "ok");
                 }
             }
-            catch (Exception _e)
+            catch (Exception ex)
             {
+                Analytics.TrackEvent("reciveRecipe", new Dictionary<string, string> { { "recipeID", id.ToString() } });
+
+                Crashes.TrackError(ex);
                 await DisplayAlert("Fel", "Kunnde inte ansluta till servern", "ok");
             }
         }
