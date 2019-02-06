@@ -206,4 +206,10 @@
   <ItemGroup>
     <BundleResource Include="Resources\menu.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\launcher.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </BundleResource>
+  </ItemGroup>
 </Project>
