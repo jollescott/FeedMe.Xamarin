@@ -34,7 +34,7 @@ namespace FeedMe.iOS
 #if DEBUG
             Google.MobileAds.MobileAds.Configure("ca-app-pub-3940256099942544~3347511713");
 #else
-            Google.MobileAds.MobileAds.Configure("ca-app-pub-4571482486671250~7532275431"");
+            Google.MobileAds.MobileAds.Configure("ca-app-pub-4571482486671250~7532275431");
 #endif
 
             Profile.EnableUpdatesOnAccessTokenChange(true);
