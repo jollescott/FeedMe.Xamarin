@@ -29,16 +29,15 @@ namespace FeedMe.Pages.MasterDetail
             if (item == null)
                 return;
 
-            if (item.Id == 0)
-            {
-                Detail = new IconNavigationPage(new LoadingPage());
-            }
             switch (item.Id)
             {
                 case 0:
                     Detail = new IconNavigationPage(new MainPage()); // search page
                     break;
                 case 1:
+                    Detail = new NavigationPage(new MealsListPage(true) { Title = "Sök Recept" }); // search with name page
+                    break;
+                case 2:
 
                     //bool isAuth = await VerifyFacebookAsync();
                     //if (isAuth)
@@ -47,7 +46,7 @@ namespace FeedMe.Pages.MasterDetail
                     Detail = new NavigationPage(new MealsListPage() { Title = "Gillade Recept"}); // saved recipes page
                     break;
 
-                //case 2:
+                //case 3:
                 //    Detail = new NavigationPage(new shoppingListPage()); // shopping list page
                 //    break;
             }

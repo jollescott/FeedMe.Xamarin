@@ -56,19 +56,30 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid Padding="0" Margin="0">
-        <ListView x:Name="ListView_Recipes" HasUnevenRows="True" ItemTemplate="{x:StaticResource recipeDataTemplateSelector}" SeparatorVisibility="None" ItemSelected="ListView_Recipes_ItemSelected">
-            <ListView.Footer>
-                <Grid HeightRequest="100">
-                    <Button IsEnabled="False" IsVisible="False" VerticalOptions="Center" x:Name="Button_ViewMoreRecipes" BackgroundColor="Transparent" BorderColor="Transparent" Text="Hämta fler recept" FontSize="Medium" Clicked="Button_ViewMoreRecipes_Clicked"/>
-                    <ActivityIndicator x:Name="ActivityIndicatior_WaitingForServer_LoadingMoreRecipes" IsRunning="false" VerticalOptions="Center"/>
-                </Grid>
-            </ListView.Footer>
-        </ListView>
+    <Grid Padding="0" Margin="0" RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <Label x:Name="Label_Message" FontSize="Medium" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False" IsEnabled="False"/>
+        <Frame Padding="0, 0, 0, 10" Margin="0" x:Name="Frame_RecipeSearching" IsEnabled="False" IsVisible="False" CornerRadius="0" BackgroundColor="White" Grid.Row="0">
+            <SearchBar x:Name="SearchBar_RecipeSearching" Placeholder="Sök här" SearchButtonPressed="SearchBar_RecipeSearching_SearchButtonPressed"/>
+        </Frame>
 
-        <ActivityIndicator x:Name="ActivityIndicatior_WaitingForServer" IsRunning="True" VerticalOptions="Center"/>
-        <Label x:Name="Label_Loading" Text="Hämtar recept..." VerticalOptions="End" HorizontalOptions="Center" Margin="0, 0, 0, 30"/>
+        <Grid Grid.Row="1">
+            <ListView x:Name="ListView_Recipes" HasUnevenRows="True" ItemTemplate="{x:StaticResource recipeDataTemplateSelector}" SeparatorVisibility="None" ItemSelected="ListView_Recipes_ItemSelected">
+                <ListView.Footer>
+                    <Grid HeightRequest="100">
+                        <Button IsEnabled="False" IsVisible="False" VerticalOptions="Center" x:Name="Button_ViewMoreRecipes" BackgroundColor="Transparent" BorderColor="Transparent" Text="Hämta fler recept" FontSize="Medium" Clicked="Button_ViewMoreRecipes_Clicked"/>
+                        <ActivityIndicator x:Name="ActivityIndicatior_WaitingForServer_LoadingMoreRecipes" IsRunning="false" VerticalOptions="Center"/>
+                    </Grid>
+                </ListView.Footer>
+            </ListView>
+
+            <Label x:Name="Label_Message" FontSize="Medium" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False" IsEnabled="False"/>
+
+            <ActivityIndicator x:Name="ActivityIndicatior_WaitingForServer" IsRunning="True" VerticalOptions="Center"/>
+            <Label x:Name="Label_Loading" Text="Hämtar recept..." VerticalOptions="End" HorizontalOptions="Center" Margin="0, 0, 0, 30"/>
+        </Grid>
     </Grid>
 </ContentPage>

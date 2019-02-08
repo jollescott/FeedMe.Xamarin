@@ -9,6 +9,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="7*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -32,5 +33,12 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <Label x:Name="Label_PrivacyPolicy" Text="privacy policy" Margin="30" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" Grid.Row="2">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
+            </Label.GestureRecognizers>
+        </Label>
+
     </Grid>
 </ContentPage>

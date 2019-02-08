@@ -27,7 +27,10 @@ namespace FeedMe
         List<IngredientDtoV2> myIngredients;
         HttpClient httpClient = new HttpClient();
 
-        bool viewFavorites;
+        string searchWord;
+
+        bool viewFavorites = false;
+        bool nameSearching = false;
 
 		public MealsListPage()
 		{
@@ -45,10 +48,20 @@ namespace FeedMe
             }
         }
 
+        public MealsListPage(bool NameSearching)
+        {
+            InitializeComponent();
+            nameSearching = true;
+            Label_Loading.IsEnabled = false;
+            Label_Loading.IsVisible = false;
+            ActivityIndicatior_WaitingForServer.IsRunning = false;
+            Frame_RecipeSearching.IsEnabled = true;
+            Frame_RecipeSearching.IsVisible = true;
+        }
+
         public MealsListPage(List<IngredientDtoV2> ingredients)
         {
             InitializeComponent();
-            viewFavorites = false;
             myIngredients = ingredients;
 
             recipeMetas = new List<RecipeMetaDtoV2>();
@@ -90,8 +103,6 @@ namespace FeedMe
                 }
                 else
                 {
-                    Analytics.TrackEvent("reciveRecipeMetas", new Dictionary<string, string> { { "searchIngredients", json } });
-
                     Alert("Fel", "Kunnde inte ansluta till servern\n\nstatus code: " + (int)response.StatusCode, "ok");
                     Label_Loading.IsVisible = false;
                     ActivityIndicatior_WaitingForServer.IsRunning = false;
@@ -139,7 +150,7 @@ namespace FeedMe
                         Owner = x.Owner,
                         OwnerLogo = x.OwnerLogo,
                         CoverageMessage = "Du har " + ((int)(x.Coverage * 100)).ToString() + "%  av alla ingredienser",
-                        ShowCoverageMessage = true,
+                        ShowCoverageMessage = !nameSearching,
                         LogoRadius = 40,
                         RecipeID = x.RecipeID
                     };
@@ -219,7 +230,82 @@ namespace FeedMe
             ActivityIndicatior_WaitingForServer_LoadingMoreRecipes.IsRunning = true;
             Button_ViewMoreRecipes.IsEnabled = false;
             Button_ViewMoreRecipes.IsVisible = false;
-            ReciveRecipeMetas(recipeMetas.Count);
+            if (nameSearching)
+                ReciveRecipeMetasFromName(recipeMetas.Count);
+            else
+                ReciveRecipeMetas(recipeMetas.Count);
+        }
+
+        //Search
+        private void SearchBar_RecipeSearching_SearchButtonPressed(object sender, EventArgs e)
+        {
+            Label_Message.IsVisible = false;
+            Label_Message.IsEnabled = false;
+
+            Label_Loading.IsEnabled = true;
+            Label_Loading.IsVisible = true;
+            ActivityIndicatior_WaitingForServer.IsRunning = true;
+
+            if (recipeMetaModels != null && recipeMetaModels.Count > 0)
+                ListView_Recipes.ScrollTo(((List<RecipeMetaModel>)ListView_Recipes.ItemsSource)[0], ScrollToPosition.Start, false);
+
+            searchWord = SearchBar_RecipeSearching.Text;
+            recipeMetas = new List<RecipeMetaDtoV2>();
+            recipeMetaModels = new List<RecipeMetaModel>();
+            ReciveRecipeMetasFromName(0);
+        }
+
+        async void ReciveRecipeMetasFromName(int start)
+        {
+
+            try
+            {
+                var json = JsonConvert.SerializeObject(new List<RecipeMetaDto>());
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await httpClient.PostAsync(RamseyApi.V2.Recipe.Text + "?search=" + searchWord + "&start=" + start, content);
+
+
+
+                Analytics.TrackEvent("reciveRecipeMetasResponseFromNameSearch", new Dictionary<string, string> { { "reciveRecipeMetasResponseStatusCode", response.StatusCode.ToString() } });
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    var recivedRecipeMetas = JsonConvert.DeserializeObject<List<RecipeMetaDtoV2>>(result);
+                    if (recivedRecipeMetas.Count < 25)
+                    {
+                        Button_ViewMoreRecipes.IsEnabled = false;
+                        Button_ViewMoreRecipes.IsVisible = false;
+                    }
+                    else
+                    {
+                        Button_ViewMoreRecipes.IsEnabled = true;
+                        Button_ViewMoreRecipes.IsVisible = true;
+                    }
+                    recipeMetas.AddRange(recivedRecipeMetas);
+                    XamlSetup();
+
+                    if (recipeMetaModels.Count == 0)
+                    {
+                        Label_Message.Text = "Inga recept hittades";
+                        Label_Message.IsVisible = true;
+                        Label_Message.IsEnabled = true;
+                    }
+                }
+                else
+                {
+                    Alert("Fel", "Kunnde inte ansluta till servern\n\nstatus code: " + (int)response.StatusCode, "ok");
+                    Label_Loading.IsVisible = false;
+                    ActivityIndicatior_WaitingForServer.IsRunning = false;
+                }
+            }
+            catch
+            {
+                Alert("Fel", "Kunnde inte ansluta till servern", "ok");
+                Label_Loading.IsVisible = false;
+                ActivityIndicatior_WaitingForServer.IsRunning = false;
+            }
         }
     }
 

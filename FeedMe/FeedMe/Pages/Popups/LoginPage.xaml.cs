@@ -44,7 +44,7 @@ namespace FeedMe.Pages.Popups
                 });
 
                 var content = new StringContent(user_json, Encoding.UTF8, "application/json");
-                await _httpClient.PostAsync(RamseyApi.V2.User.Sync, content);
+                //await _httpClient.PostAsync(RamseyApi.V2.User.Sync, content);
 
                 await PopupNavigation.Instance.PopAsync().ContinueWith((task) => { _tcs.TrySetResult(true); });
             });
