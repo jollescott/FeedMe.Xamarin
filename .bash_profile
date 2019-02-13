@@ -1,0 +1,2 @@
+export USER_VARIABLE=JoLi0125@student.grillska.se
+export PAT=vj2prwtqvo5ktufph2uju3xip5b4p5gv5uwaoxdshjbtwgzqwjra

@@ -28,6 +28,8 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Developer: Ananas Software (YBK292KPXL)</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -38,6 +40,8 @@
     <MtouchLink>None</MtouchLink>
     <MtouchArch>x86_64</MtouchArch>
     <ConsolePause>false</ConsolePause>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Developer: Ananas Software (YBK292KPXL)</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,14 +53,15 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: Ananas Software (YBK292KPXL)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>
     </CodesignEntitlements>
-    <CodesignProvision />
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
     <CodesignExtraArgs />
     <CodesignResourceRules />
     <BuildIpa>false</BuildIpa>
+    <MtouchI18n>west</MtouchI18n>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -66,8 +71,9 @@
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: Ananas Software (YBK292KPXL)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
@@ -78,8 +84,8 @@
     <ConsolePause>False</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
     <BuildIpa>True</BuildIpa>
-    <CodesignProvision>Automatic:AdHoc</CodesignProvision>
-    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Developer: Ananas Software (YBK292KPXL)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
@@ -90,14 +96,15 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignProvision>Automatic:AppStore</CodesignProvision>
-    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Developer: Ananas Software (YBK292KPXL)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\AdmobRenderer.cs" />
+    <Compile Include="Renderers\CustomFrameRenderer.cs" />
     <Compile Include="Renderers\FacebookLoginRenderer.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist">
@@ -108,48 +115,23 @@
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon180.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon167.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon152.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon87.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon80.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon76.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon58.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon40.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon29.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
-      <Visible>false</Visible>
-    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-40.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-60.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-58.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-87.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-80 %281%29.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-120.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-180.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-20.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-29.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-40 %281%29.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-80.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-76.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-152.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-167.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-1024.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Contents.json" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -193,7 +175,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\FeedMe\FeedMe.csproj">
-      <Project>{5CC39933-3C69-4F1B-B142-69547E2CDD6A}</Project>
+      <Project>{FFB8CE2A-A55D-4126-9AA0-96A8025A385E}</Project>
       <Name>FeedMe</Name>
     </ProjectReference>
   </ItemGroup>
@@ -211,5 +193,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </BundleResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="iTunesArtwork%402x" />
+    <ITunesArtwork Include="iTunesArtwork" />
   </ItemGroup>
 </Project>
