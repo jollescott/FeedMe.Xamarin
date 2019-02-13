@@ -21,10 +21,17 @@ namespace FeedMe.Pages.MasterDetail
         {
             InitializeComponent();
 
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                Icon = "menu.png";
+            }
+
             //Grid_MenuBackground.BackgroundColor = Constants.AppColor.navigationBarColor;
 
             BindingContext = new FDMasterDetailPageMasterViewModel();
             ListView = MenuItemsListView;
+
+            Label_PrivacyPolicy.TextColor = Constants.AppColor.text_link;
         }
 
         class FDMasterDetailPageMasterViewModel : INotifyPropertyChanged
@@ -35,9 +42,10 @@ namespace FeedMe.Pages.MasterDetail
             {
                 MenuItems = new ObservableCollection<FDMasterDetailPageMenuItem>(new[]
                 {
-                    new FDMasterDetailPageMenuItem { Id = 0, Title = "Sök recept", Icon = "md-search"},
-                    new FDMasterDetailPageMenuItem { Id = 1, Title = "Gillade recept", Icon = "md-favorite-border" },
-                    //new FDMasterDetailPageMenuItem { Id = 2, Title = "Inköpslista\n(Kommer snart)", Icon = "md-shopping-basket" }
+                    new FDMasterDetailPageMenuItem { Id = 0, Title = "Sök med ingredienser", Icon = "md-search"},
+                    new FDMasterDetailPageMenuItem { Id = 1, Title = "Sök med receptnamn", Icon = "md-search"},
+                    new FDMasterDetailPageMenuItem { Id = 2, Title = "Gillade recept", Icon = "md-favorite-border" },
+                    //new FDMasterDetailPageMenuItem { Id = 3, Title = "Inköpslista\n(Kommer snart)", Icon = "md-shopping-basket" }
                 });
             }
             
@@ -51,6 +59,12 @@ namespace FeedMe.Pages.MasterDetail
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
             #endregion
+        }
+
+        // Klicked PrivacyPolicy link
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            Device.OpenUri(new Uri("https://api.feedmeapp.se/privacy"));
         }
     }
 }

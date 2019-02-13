@@ -1,7 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
              x:Class="FeedMe.App">
     <Application.Resources>
 
@@ -16,6 +17,17 @@
 
             <Style TargetType="iconize:IconLabel">
                 <Setter Property="TextColor" Value="#282828" />
+            </Style>
+            
+            <Style TargetType="Frame">
+                <Setter Property="HasShadow">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="system:Boolean">
+                            <On Platform="iOS" Value="false"/>                            
+                            <On Platform="Android" Value="true"/>                            
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
             </Style>
         </ResourceDictionary>
 

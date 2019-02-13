@@ -211,7 +211,9 @@ namespace FeedMe
         // Recive ingredentDtos from the server and update lists
         async void GET_ingredientDtos(string search)
         {
-            await Task.Factory.StartNew(() => SearchIngredients = ingredientsSearching.Search(search));
+            bool isLoading = true;
+            ActivityIndicator_Ingredients.IsRunning = true;
+            await Task.Factory.StartNew(() => SearchIngredients = ingredientsSearching.Search(search, out isLoading));
 
             SearchIngredientModels.Clear();
 
@@ -239,6 +241,10 @@ namespace FeedMe
                     });
                 }
             }
+
+            if (!isLoading)
+                ActivityIndicator_Ingredients.IsRunning = false;
+
         }
 
 
@@ -357,14 +363,14 @@ namespace FeedMe
             SearchIngredientModels.Clear();
         }
 
-        private void TapGestureRecognizer_Tapped_ExcludedIngredientsHelp(object sender, EventArgs e)
-        {
-            Alert("Uteslutna Ingredienser", "Här kan du klicka på “Lägg till” knappen för att utesluta ingredienser du inte vill ha i dina recept", "ok");
-        }
-
         private void TapGestureRecognizer_Tapped_MyIngredientsHelp(object sender, EventArgs e)
         {
-            Alert("Minna Ingredienser", "Klicka på “Lägg till” knappen för att lägga till ingredienser du har i ditt kök.", "ok");
+            Alert("Mina Ingredienser", "Klicka på “Lägg till” knappen för att lägga till ingredienser du har i ditt kök.", "ok");
+        }
+
+        private void TapGestureRecognizer_Tapped_ExcludedIngredientsHelp(object sender, EventArgs e)
+        {
+            Alert("Uteslutna Ingredienser", "Här kan du klicka på “Lägg till” knappen för att utesluta ingredienser du inte vill ha i dina recept.", "ok");
         }
     }
 }

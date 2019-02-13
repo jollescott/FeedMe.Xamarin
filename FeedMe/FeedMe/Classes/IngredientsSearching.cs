@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 using Ramsey.Shared.Dto.V2;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Analytics;
 
 namespace FeedMe.Classes
 {
@@ -14,26 +16,28 @@ namespace FeedMe.Classes
     {
         HttpClient httpClient = new HttpClient();
 
-        bool ongoingSearch = false;
+        bool _ongoingSearch = false;
         uint currentSearchNumber = 1;
         uint heighestSearchNumber = 0;
         List<IngredientDtoV2> ingredients = new List<IngredientDtoV2>();
 
-        public List<IngredientDtoV2> Search(string searchWord)
+        public List<IngredientDtoV2> Search(string searchWord, out bool ongoingSearch)
         {
-            if (ongoingSearch)
+            //activityIndicator.IsRunning = true;
+            if (_ongoingSearch)
             {
                 currentSearchNumber++;
             }
             else
             {
-                ongoingSearch = true;
+                _ongoingSearch = true;
                 currentSearchNumber = 1;
                 heighestSearchNumber = 0;
             }
 
             ReciveIngredients(searchWord, currentSearchNumber);
 
+            ongoingSearch = _ongoingSearch;
             return ingredients;
         }
 
@@ -41,6 +45,8 @@ namespace FeedMe.Classes
         {
             try
             {
+                Analytics.TrackEvent("search", new Dictionary<string, string> { { "search", searchWord } });
+
                 HttpResponseMessage response = httpClient.GetAsync(RamseyApi.V2.Ingredient.Suggest + "?search=" + searchWord).GetAwaiter().GetResult();
 
                 if (response.IsSuccessStatusCode && searchNumber > heighestSearchNumber)
@@ -53,11 +59,11 @@ namespace FeedMe.Classes
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { Crashes.TrackError(ex, new Dictionary<string, string> { { "search", searchWord } }); }
 
             if (searchNumber == currentSearchNumber)
             {
-                ongoingSearch = false;
+                _ongoingSearch = false;
             }
         }
     }

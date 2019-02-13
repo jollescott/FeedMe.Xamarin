@@ -33,7 +33,7 @@
     <!--Remove all caps for buttons-->
     <item name="android:textAllCaps">false</item>
     <!--SplashScreen-->
-    <item name="android:windowBackground">@drawable/splash</item>
+    <item name="android:windowBackground">@drawable/splash_background</item>
   </style>
 
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">

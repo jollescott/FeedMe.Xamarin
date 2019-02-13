@@ -34,13 +34,24 @@ namespace FeedMe.iOS.Renderers
 
         private BannerView CreateAdView()
         {
-            var adView = new BannerView()
+            var adView = new BannerView
             {
                 AdSize = AdSizeCons.LargeBanner,
-                AdUnitID = Element.AdUnit
+                AdUnitID = Element.AdUnit,
+                RootViewController = ViewController
             };
-
+            
+            adView.LoadRequest(GetAdRequest());
+                        
             return adView;
+        }
+
+        private Request GetAdRequest()
+        {
+            var request = Request.GetDefaultRequest();
+            request.TestDevices = new[] {Request.SimulatorId.ToString()};
+
+            return request;
         }
     }
 }
