@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:FeedMe"
@@ -36,7 +36,14 @@
             </Grid.ColumnDefinitions>
             
             <SearchBar x:Name="SearchBar_Ingredients" Placeholder="Lägg till ingredienser" HorizontalOptions="Fill" TextChanged="SearchBar_Ingredients_TextChanged" Grid.Column="0" Grid.Row="0"/>
-            <Button x:Name="Button_CloseIngredientsSearch" Text="Klar" FontSize="Small" BackgroundColor="White" Clicked="Button_CloseIngredientsSearch_Clicked" Grid.Column="1" Grid.Row="0"/>
+            <Button x:Name="Button_CloseIngredientsSearch" Text="Klar" FontSize="Small" BackgroundColor="White" Clicked="Button_CloseIngredientsSearch_Clicked" Grid.Column="1" Grid.Row="0">
+                <Button.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="10, 0, 10, 0"/>
+                        <On Platform="Android" Value="0"/>
+                    </OnPlatform>
+                </Button.Margin>
+            </Button>
 
             <ListView ItemsSource="{Binding SearchIngredientModels}" x:Name="ListView_SearchIngredients" ItemSelected="ListView_SearchIngredients_ItemSelected" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
                 <ListView.ItemTemplate>

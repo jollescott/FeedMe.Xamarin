@@ -290,6 +290,9 @@ namespace FeedMe
         // Searching
         private void SearchBar_Ingredients_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (SearchBar_Ingredients.Text == null)
+                return;
+
             string searchWord = SearchBar_Ingredients.Text.ToLower();
 
             if (searchWord.Length > 0)
