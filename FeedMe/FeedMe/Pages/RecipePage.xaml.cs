@@ -325,7 +325,7 @@ namespace FeedMe
             Label_Portions.Text = (portions == 1) ? portions.ToString() + " portion" : portions.ToString() + " portioner";
             for (int i = 0; i < ingredentPortionLabels.Count; i++)
             {
-                ingredentPortionLabels[i].Text = (recipe.RecipeParts.ToList()[i].Quantity != 0) ? (recipe.RecipeParts.ToList()[i].Quantity * portions * portionMuliplier).ToString().Trim() + " " + recipe.RecipeParts.ToList()[i].Unit.Trim() : "";
+                ingredentPortionLabels[i].Text = (recipe.RecipeParts.ToList()[i].Quantity != 0 && recipe.RecipeParts.ToList()[i].Unit != "odefinierad") ? (recipe.RecipeParts.ToList()[i].Quantity * portions * portionMuliplier).ToString().Trim() + " " + recipe.RecipeParts.ToList()[i].Unit.Trim() : "";
             }
         }
 
