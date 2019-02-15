@@ -121,6 +121,8 @@ namespace FeedMe
             Label_Loading.IsEnabled = false;
             Label_Loading.IsVisible = false;
 
+            int frameHeight = (int)(Application.Current.MainPage.Width * 0.8);
+
             if (viewFavorites)
             {
                 recipeMetaModels = recipes.Select(x =>
@@ -132,6 +134,7 @@ namespace FeedMe
                         Name = x.Name,
                         Owner = x.Owner,
                         OwnerLogo = x.OwnerLogo,
+                        FrameHeight = frameHeight,
                         ShowCoverageMessage = false,
                         LogoRadius = 40,
                         RecipeID = x.RecipeID
@@ -149,6 +152,7 @@ namespace FeedMe
                         Name = x.Name,
                         Owner = x.Owner,
                         OwnerLogo = x.OwnerLogo,
+                        FrameHeight = frameHeight,
                         CoverageMessage = "Du har " + ((int)(x.Coverage * 100)).ToString() + "%  av alla ingredienser",
                         ShowCoverageMessage = !nameSearching,
                         LogoRadius = 40,

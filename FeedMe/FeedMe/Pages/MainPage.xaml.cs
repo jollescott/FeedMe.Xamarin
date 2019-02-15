@@ -111,6 +111,7 @@ namespace FeedMe
             XamlSetup();
 
             BindingContext = this;
+                
         }
 
 
