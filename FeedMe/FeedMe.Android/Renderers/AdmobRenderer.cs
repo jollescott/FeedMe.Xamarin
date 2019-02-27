@@ -54,14 +54,9 @@ namespace FeedMe.Droid.Renderers
 
             adView.LayoutParameters = new LinearLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
 
-#if DEBUG
             adView.LoadAd(new AdRequest.Builder()
-                .AddTestDevice("0DF7A98B3CDD737BC14D8BFE75FB5362")
-                .Build());
-#else
-            adView.LoadAd(new AdRequest.Builder()
-                .Build());
-#endif
+                 .AddTestDevice("0DF7A98B3CDD737BC14D8BFE75FB5362")
+                 .Build());
 
             return adView;
         }
