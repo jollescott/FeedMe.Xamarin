@@ -31,21 +31,10 @@ namespace FeedMe.iOS
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             Plugin.Iconize.Iconize.Init();
 
-#if DEBUG
-            Google.MobileAds.MobileAds.Configure("ca-app-pub-3940256099942544~3347511713");
-#else
-            Google.MobileAds.MobileAds.Configure("ca-app-pub-4571482486671250~8388360750");
-#endif
-
-            Profile.EnableUpdatesOnAccessTokenChange(true);
-            Settings.AppId = "2068149499897372";
-            Settings.DisplayName = "FeedMe";
-
             AppCenter.Start("3b7d6ef2-eee4-46d3-a897-b7876624251b", typeof(Analytics), typeof(Crashes));
 
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
-
 
             return base.FinishedLaunching(app, options);
         }

@@ -7,12 +7,12 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 
-[assembly: ExportRenderer(typeof(FeedMe.Controls.AdView), typeof(FaceBookAdViewRenderer))]
+[assembly: ExportRenderer(typeof(FeedMe.Controls.BannerAdView), typeof(FacebookBannerAdRenderer))]
 namespace FeedMe.Droid.Renderers
 {
-    public class FaceBookAdViewRenderer : ViewRenderer<Controls.AdView, Xamarin.Facebook.Ads.AdView>, IAdListener
+    public class FacebookBannerAdRenderer : ViewRenderer<Controls.BannerAdView, Xamarin.Facebook.Ads.AdView>, IAdListener
     {
-        public FaceBookAdViewRenderer(Context context) : base(context) { }
+        public FacebookBannerAdRenderer(Context context) : base(context) { }
 
         public void OnAdClicked(IAd p0)
         {
@@ -31,18 +31,12 @@ namespace FeedMe.Droid.Renderers
         {
         }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<Controls.AdView> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Controls.BannerAdView> e)
         {
             base.OnElementChanged(e);
 
             if (Control == null)
                 SetNativeControl(CreateAdView());
-
-            if (e.NewElement != null)
-            {
-                Control.SetAdListener(this);
-                //Control.LoadAd();
-            }
 
             if (e.OldElement != null)
                 Control.Destroy();
@@ -56,7 +50,7 @@ namespace FeedMe.Droid.Renderers
             string placementId = "2068149499897372_2138868712825450";
 # endif
 
-            var adView = new Xamarin.Facebook.Ads.AdView(Context, placementId, AdSize.BannerHeight90);
+            var adView = new Xamarin.Facebook.Ads.AdView(Context, placementId, AdSize.BannerHeight50);
 
             AdSettings.AddTestDevice("c3d7b4ba-e06e-465b-9db3-1008974c7ebb");
 

@@ -149,7 +149,7 @@
                 </StackLayout>
             </ScrollView>
 
-            <controls:AdView Grid.Row="1" />
+            <controls:BannerAdView Grid.Row="1" />
         </Grid>
             
     </ContentPage.Content>

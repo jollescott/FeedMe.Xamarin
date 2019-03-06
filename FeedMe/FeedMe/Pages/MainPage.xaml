@@ -148,7 +148,7 @@
         
         <!--Ad-->
 
-        <controls:AdView Grid.Row="1" />
+        <controls:BannerAdView Grid.Row="1" />
 
     </Grid>
 
