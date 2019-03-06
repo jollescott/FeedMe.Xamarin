@@ -38,32 +38,25 @@ namespace FeedMe.Droid.Renderers
                 Control.AdListener = null;
         }
 
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            base.OnElementPropertyChanged(sender, e);
-
-            if (e.PropertyName == nameof(AdmobView.AdUnit))
-                Control.AdUnitId = Element.AdUnit;
-        }
-
         private AdView CreateAdView()
         {
+#if DEBUG
+            var adUnit = "ca-app-pub-3940256099942544/6300978111";  // not real ads
+#else
+            var adUnit = "ca-app-pub-4571482486671250/2065611163";
+#endif
+
             var adView = new AdView(Context)
             {
                 AdSize = AdSize.LargeBanner,
-                AdUnitId = Element.AdUnit
+                AdUnitId = adUnit
             };
 
             adView.LayoutParameters = new LinearLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
 
-#if DEBUG
             adView.LoadAd(new AdRequest.Builder()
-                .AddTestDevice("0DF7A98B3CDD737BC14D8BFE75FB5362")
-                .Build());
-#else
-            adView.LoadAd(new AdRequest.Builder()
-                .Build());
-#endif
+                 .AddTestDevice("0DF7A98B3CDD737BC14D8BFE75FB5362")
+                 .Build());
 
             return adView;
         }

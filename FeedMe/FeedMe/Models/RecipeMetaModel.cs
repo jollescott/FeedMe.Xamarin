@@ -12,6 +12,8 @@ namespace FeedMe.Models
         public string OwnerLogo { get; set; }
         public string Image { get; set; }
 
+        public int FrameHeight { get; set; }
+
         public string CoverageMessage { get; set; }
         public bool ShowCoverageMessage { get; set; }
         public double LogoRadius { get; set; }
