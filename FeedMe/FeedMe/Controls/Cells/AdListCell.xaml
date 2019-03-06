@@ -5,7 +5,7 @@
           x:Class="FeedMe.Controls.Cells.AdListCell">
   <ViewCell.View>
       <StackLayout>
-            <controls:AdView/>
+            <controls:NativeAdView/>
        </StackLayout>
   </ViewCell.View>
 </ViewCell>

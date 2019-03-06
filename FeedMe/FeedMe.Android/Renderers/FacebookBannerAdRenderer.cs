@@ -51,9 +51,6 @@ namespace FeedMe.Droid.Renderers
 # endif
 
             var adView = new Xamarin.Facebook.Ads.AdView(Context, placementId, AdSize.BannerHeight50);
-
-            AdSettings.AddTestDevice("c3d7b4ba-e06e-465b-9db3-1008974c7ebb");
-
             adView.LoadAd();
 
             return adView;

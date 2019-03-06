@@ -1,5 +1,4 @@
-﻿using System;
-using Android.Graphics;
+﻿using Android.Graphics;
 using Android.Views;
 using FeedMe.Droid.Effects;
 using FeedMe.Effects;

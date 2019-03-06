@@ -1,21 +1,12 @@
-﻿using System;
-
+﻿
 using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
-using FFImageLoading.Forms.Droid;
-using Xamarin.Facebook;
-using FeedMe.Droid.Callbacks;
-using Xamarin.Facebook.Login;
-using Android.Content;
 using Xamarin.Forms;
-using Android.Gms.Ads;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Xamarin.Facebook.Ads;
 
 namespace FeedMe.Droid
 {
@@ -29,6 +20,9 @@ namespace FeedMe.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+
+            AdSettings.AddTestDevice("4bc78db7-bd07-4bc2-9d11-1d1b19a5a415");
+            AdSettings.AddTestDevice("c3d7b4ba-e06e-465b-9db3-1008974c7ebb");
 
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
 

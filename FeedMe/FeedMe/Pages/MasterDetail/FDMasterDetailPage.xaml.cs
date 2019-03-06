@@ -1,11 +1,6 @@
 ﻿using FeedMe.Interfaces;
-using FeedMe.Pages.Popups;
 using Plugin.Iconize;
 using Rg.Plugins.Popup.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
@@ -58,23 +53,6 @@ namespace FeedMe.Pages.MasterDetail
             */
             IsPresented = false;
             MasterPage.ListView.SelectedItem = null;
-        }
-
-        private async Task<bool> VerifyFacebookAsync()
-        {
-            var id = DependencyService.Get<IFacebook>().UserId;
-
-            if(id == null)
-            {
-                var tcs = new TaskCompletionSource<bool>();
-                await PopupNavigation.Instance.PushAsync(new LoginPage(tcs));
-
-                return await tcs.Task;
-            }
-            else
-            {
-                return true;
-            }
         }
     }
 }
