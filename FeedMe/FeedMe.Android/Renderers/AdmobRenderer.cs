@@ -1,30 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
-using Android.Gms.Ads;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using FeedMe.Controls;
 using FeedMe.Droid.Renderers;
 using Microsoft.AppCenter.Crashes;
+using Xamarin.Facebook.Ads;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(AdmobView), typeof(AdmobViewRenderer))]
+
+[assembly: ExportRenderer(typeof(FeedMe.Controls.AdView), typeof(FaceBookAdViewRenderer))]
 namespace FeedMe.Droid.Renderers
 {
-    public class AdmobViewRenderer : ViewRenderer<AdmobView, AdView>
+    public class FaceBookAdViewRenderer : ViewRenderer<Controls.AdView, Xamarin.Facebook.Ads.AdView>, IAdListener
     {
-        public AdmobViewRenderer(Context context) : base(context) { }
+        public FaceBookAdViewRenderer(Context context) : base(context) { }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<AdmobView> e)
+        public void OnAdClicked(IAd p0)
+        {
+        }
+
+        public void OnAdLoaded(IAd p0)
+        {
+        }
+
+        public void OnError(IAd p0, AdError p1)
+        {
+            Crashes.TrackError(new Exception("Failed to load ad. Error code: " + p1.ErrorCode));
+        }
+
+        public void OnLoggingImpression(IAd p0)
+        {
+        }
+
+        protected override void OnElementChanged(ElementChangedEventArgs<Controls.AdView> e)
         {
             base.OnElementChanged(e);
 
@@ -32,42 +39,30 @@ namespace FeedMe.Droid.Renderers
                 SetNativeControl(CreateAdView());
 
             if (e.NewElement != null)
-                Control.AdListener = new FeedMeAdListener();
+            {
+                Control.SetAdListener(this);
+                //Control.LoadAd();
+            }
 
             if (e.OldElement != null)
-                Control.AdListener = null;
+                Control.Destroy();
         }
 
-        private AdView CreateAdView()
+        private Xamarin.Facebook.Ads.AdView CreateAdView()
         {
-#if DEBUG
-            var adUnit = "ca-app-pub-3940256099942544/6300978111";  // not real ads
+# if DEBUG
+            string placementId = "IMG_16_9_LINK#2068149499897372_2138868712825450";
 #else
-            var adUnit = "ca-app-pub-4571482486671250/2065611163";
-#endif
+            string placementId = "2068149499897372_2138868712825450";
+# endif
 
-            var adView = new AdView(Context)
-            {
-                AdSize = AdSize.LargeBanner,
-                AdUnitId = adUnit
-            };
+            var adView = new Xamarin.Facebook.Ads.AdView(Context, placementId, AdSize.BannerHeight90);
 
-            adView.LayoutParameters = new LinearLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
+            AdSettings.AddTestDevice("c3d7b4ba-e06e-465b-9db3-1008974c7ebb");
 
-            adView.LoadAd(new AdRequest.Builder()
-                 .AddTestDevice("0DF7A98B3CDD737BC14D8BFE75FB5362")
-                 .Build());
+            adView.LoadAd();
 
             return adView;
-        }
-    }
-
-    internal class FeedMeAdListener : AdListener
-    {
-        public override void OnAdFailedToLoad(int errorCode)
-        {
-            base.OnAdFailedToLoad(errorCode);
-            Crashes.TrackError(new Exception("Failed to load ad: " + errorCode.ToString()));
         }
     }
 }

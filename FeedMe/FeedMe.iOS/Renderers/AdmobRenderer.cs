@@ -11,12 +11,12 @@ using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(AdmobView), typeof(AdmobRenderer))]
+[assembly: ExportRenderer(typeof(AdView), typeof(AdmobRenderer))]
 namespace FeedMe.iOS.Renderers
 {
-    public class AdmobRenderer : ViewRenderer<AdmobView, Google.MobileAds.BannerView>
+    public class AdmobRenderer : ViewRenderer<AdView, Google.MobileAds.BannerView>
     {
-        protected override void OnElementChanged(ElementChangedEventArgs<AdmobView> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<AdView> e)
         {
             base.OnElementChanged(e);
 
