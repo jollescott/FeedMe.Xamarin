@@ -38,7 +38,7 @@ namespace FeedMe.Droid.Renderers
             try
             {
                 _scrollView = new NativeAdScrollView(Context, _manager, Xamarin.Facebook.Ads.NativeAdView.Type.Height300);
-                Control.AddView(_scrollView);
+                Control?.AddView(_scrollView);
             }
             catch (Exception ex)
             {
