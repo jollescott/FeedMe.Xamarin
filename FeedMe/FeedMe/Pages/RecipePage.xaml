@@ -19,7 +19,7 @@
         <Grid RowSpacing="0" ColumnSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
             <ScrollView Grid.Row="0">
