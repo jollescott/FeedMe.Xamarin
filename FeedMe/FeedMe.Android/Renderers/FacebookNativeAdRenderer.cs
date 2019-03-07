@@ -35,8 +35,15 @@ namespace FeedMe.Droid.Renderers
             if (_scrollView != null)
                 Control.RemoveView(_scrollView);
 
-            _scrollView = new NativeAdScrollView(Context, _manager, Xamarin.Facebook.Ads.NativeAdView.Type.Height300);
-            Control.AddView(_scrollView);
+            try
+            {
+                _scrollView = new NativeAdScrollView(Context, _manager, Xamarin.Facebook.Ads.NativeAdView.Type.Height300);
+                Control.AddView(_scrollView);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(new Exception("Load native ad error. Exception message: " + ex.Message));
+            }
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<Controls.NativeAdView> e)
