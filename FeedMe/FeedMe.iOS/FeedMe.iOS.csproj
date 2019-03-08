@@ -113,6 +113,10 @@
     <Compile Include="Effects\FrameCornerEffectIOS.cs" />
     <Compile Include="Renderers\CustomFrameRenderer.cs" />
     <Compile Include="Renderers\FacebookBannerAdRenderer.cs" />
+    <Compile Include="Renderers\FacebookBannerAdViewController.cs" />
+    <Compile Include="Renderers\FacebookBannerAdViewController.designer.cs">
+      <DependentUpon>FacebookBannerAdViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -167,6 +171,7 @@
     <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
+    <InterfaceDefinition Include="Renderers\FacebookBannerAdViewController.xib" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

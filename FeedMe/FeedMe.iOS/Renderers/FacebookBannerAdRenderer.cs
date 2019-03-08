@@ -6,14 +6,14 @@ using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(FeedMe.Controls.BannerAdView), typeof(FacebookBannerAdRenderer))]
+//[assembly: ExportRenderer(typeof(FeedMe.Controls.BannerAdView), typeof(FacebookBannerAdRenderer))]
 namespace FeedMe.iOS.Renderers
 {
     public class FacebookBannerAdRenderer : UIViewController
     {
-        public FacebookBannerAdRenderer(Context context) : base(context) { }
+        //public FacebookBannerAdRenderer(Context context) : base(context) { }
 
-        public void OnAdClicked(IAd p0)
+        /*public void OnAdClicked(IAd p0)
         {
         }
 
@@ -39,13 +39,13 @@ namespace FeedMe.iOS.Renderers
 
             if (e.OldElement != null)
                 Control.Destroy();
-        }
+        }*/
 
         private AdView CreateAdView()
         {
 # if DEBUG
             string placementId = "IMG_16_9_LINK#2068149499897372_2138868712825450";
-#else
+# else
             string placementId = "2068149499897372_2138868712825450";
 # endif
 
