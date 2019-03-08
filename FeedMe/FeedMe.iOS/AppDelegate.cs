@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
-using UIKit;	
-using Facebook.CoreKit;
-using Facebook.LoginKit;
+using UIKit;
+//using Facebook.CoreKit;
+//using Facebook.LoginKit;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;

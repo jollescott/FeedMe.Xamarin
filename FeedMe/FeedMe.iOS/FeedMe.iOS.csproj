@@ -112,6 +112,7 @@
     <BundleResource Include="Resources\iconize-material.ttf" />
     <Compile Include="Effects\FrameCornerEffectIOS.cs" />
     <Compile Include="Renderers\CustomFrameRenderer.cs" />
+    <Compile Include="Renderers\FacebookBannerAdRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
