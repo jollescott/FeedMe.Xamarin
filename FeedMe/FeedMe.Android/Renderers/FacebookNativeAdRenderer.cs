@@ -52,7 +52,13 @@ namespace FeedMe.Droid.Renderers
 
             if (Control == null)
             {
-                _manager = new NativeAdsManager(Context, "YOUR_PLACEMENT_ID", 1/* Hur många ads som ska laddas.*/);
+#if DEBUG
+                string placementId = "IMG_16_9_LINK#2068149499897372_2140286706016984";
+#else
+                string placementId = "2068149499897372_2140286706016984";
+                #endif
+
+                _manager = new NativeAdsManager(Context, placementId, 1/* Hur många ads som ska laddas.*/);
                 _manager.SetListener(this);
                 SetNativeControl(new LinearLayout(Context));
             }

@@ -103,7 +103,6 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Renderers\AdmobRenderer.cs" />
     <Compile Include="Renderers\FacebookNativeAdRenderer.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist">

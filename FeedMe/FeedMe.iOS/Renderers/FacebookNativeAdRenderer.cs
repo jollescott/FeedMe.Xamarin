@@ -2,14 +2,16 @@
 using System.Runtime.Remoting.Contexts;
 using Facebook.AudienceNetwork;
 using FeedMe.iOS.Renderers;
+using Foundation;
 using Microsoft.AppCenter.Crashes;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportRenderer(typeof(FeedMe.Controls.NativeAdView), typeof(FacebookNativeAdRenderer))]
 namespace FeedMe.iOS.Renderers
 {
-    public class FacebookNativeAdRenderer : ViewRenderer<Controls.NativeAdView, LinearLayout>, NativeAdsManager.IListener
+    public class FacebookNativeAdRenderer : ViewRenderer<Controls.NativeAdView, UIStackView>
     {
         private NativeAdsManager _manager;
         private NativeAdScrollView _scrollView;
@@ -17,12 +19,12 @@ namespace FeedMe.iOS.Renderers
         public void OnAdsLoaded()
         {
             if (_scrollView != null)
-                Control.RemoveView(_scrollView);
+                Control.RemoveArrangedSubview(_scrollView);
 
             try
             {
                 _scrollView = new NativeAdScrollView(_manager, NativeAdViewType.GenericHeight300);
-                Control?.AddView(_scrollView);
+                Control?.AddArrangedSubview(_scrollView);
             }
             catch (Exception ex)
             {
@@ -36,9 +38,18 @@ namespace FeedMe.iOS.Renderers
 
             if (Control == null)
             {
-                _manager = new NativeAdsManager("YOUR_PLACEMENT_ID", 1/* Hur många ads som ska laddas.*/);
-                _manager.SetListener(this);
-                SetNativeControl(new LinearLayout(Context));
+#if DEBUG
+                string placementId = "IMG_16_9_LINK#2068149499897372_2149242801788041";
+#else
+                string placementId = "2068149499897372_2149242801788041";
+#endif
+
+                _manager = new NativeAdsManager(placementId, 1/* Hur många ads som ska laddas.*/);
+                _manager.Delegate = new FeedMeNativeDelegate
+                {
+                    AdLoaded = OnAdsLoaded
+                };
+                SetNativeControl(new UIStackView());
             }
 
             if (e.NewElement != null)
@@ -48,6 +59,20 @@ namespace FeedMe.iOS.Renderers
 
             if (e.OldElement != null)
                 _scrollView?.Dispose();
+        }
+    }
+
+    internal class FeedMeNativeDelegate : NativeAdsManagerDelegate
+    {
+        public Action AdLoaded { get; set; }
+
+        public override void NativeAdsFailedToLoad(NSError error)
+        {
+        }
+
+        public override void NativeAdsLoaded()
+        {
+            AdLoaded?.Invoke();
         }
     }
 }
