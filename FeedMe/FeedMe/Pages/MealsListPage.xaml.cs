@@ -64,6 +64,8 @@ namespace FeedMe
             InitializeComponent();
             myIngredients = ingredients;
 
+            ReciveRecipeTags();
+
             recipeMetas = new List<RecipeMetaDtoV2>();
             myIngredients = ingredients;
             ReciveRecipeMetas(0);
@@ -73,6 +75,34 @@ namespace FeedMe
         {
             await DisplayAlert(title, message, cancel);
         }
+
+        async void ReciveRecipeTags()
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.PostAsync(RamseyApi.V2.Tags.Suggest, null);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    var recivedTags = JsonConvert.DeserializeObject<List<TagDto>>(result);
+                    Console.WriteLine("jao");
+                }
+                else
+                {
+                    Alert("Fel", "Kunnde inte ansluta till servern\n\nstatus code: " + (int)response.StatusCode, "ok");
+                    Label_Loading.IsVisible = false;
+                    ActivityIndicatior_WaitingForServer.IsRunning = false;
+                }
+            }
+            catch
+            {
+                Alert("Fel", "Kunnde inte ansluta till servern", "ok");
+                Label_Loading.IsVisible = false;
+                ActivityIndicatior_WaitingForServer.IsRunning = false;
+            }
+        }
+
 
         async void ReciveRecipeMetas(int start)
         {
@@ -192,6 +222,7 @@ namespace FeedMe
             int selectedItemIndex = recipeMetaModels.IndexOf(selected);
             ListView_Recipes.SelectedItem = null;
 
+            // Return it was an ad
             for (int i = 0; i < recipeMetaModels.Count; i += 4)
             {
                 if (selectedItemIndex == i)
