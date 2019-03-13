@@ -103,11 +103,8 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-<<<<<<< HEAD
     <Compile Include="Renderers\AdmobRenderer.cs" />
     <Compile Include="Renderers\FacebookNativeAdRenderer.cs" />
-=======
->>>>>>> 6408054... * AppDelegate.cs: Facebook ads working
     <None Include="Entitlements.plist" />
     <None Include="Info.plist">
       <SubType>Designer</SubType>
