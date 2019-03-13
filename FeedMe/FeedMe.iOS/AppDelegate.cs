@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Facebook.AudienceNetwork;
 using Foundation;
 using UIKit;	
 //using Facebook.CoreKit;
@@ -27,6 +27,8 @@ namespace FeedMe.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            AdSettings.AddTestDevice("HASHED_ID");
+            
             Rg.Plugins.Popup.Popup.Init();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             Plugin.Iconize.Iconize.Init();
