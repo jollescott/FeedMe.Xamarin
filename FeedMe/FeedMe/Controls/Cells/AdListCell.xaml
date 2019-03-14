@@ -24,7 +24,7 @@
                 </Grid.ColumnDefinitions>
 
                 <BoxView BackgroundColor="#00CC66" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"/>
-                <Label Text="Anons" TextColor="White" FontSize="Small" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <Label Text="Annons" TextColor="White" FontSize="Small" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
 
                 <!--AdView-->
                 <controls:NativeAdView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"/>
