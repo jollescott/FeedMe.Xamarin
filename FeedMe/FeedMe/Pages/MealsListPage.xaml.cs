@@ -340,6 +340,24 @@ namespace FeedMe
                 ActivityIndicatior_WaitingForServer.IsRunning = false;
             }
         }
+
+        private void SearchBar_RecipeSearching_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Label_Message.IsVisible = false;
+            Label_Message.IsEnabled = false;
+
+            Label_Loading.IsEnabled = true;
+            Label_Loading.IsVisible = true;
+            ActivityIndicatior_WaitingForServer.IsRunning = true;
+
+            if (recipeMetaModels != null && recipeMetaModels.Count > 0)
+                ListView_Recipes.ScrollTo(((List<RecipeMetaModel>)ListView_Recipes.ItemsSource)[0], ScrollToPosition.Start, false);
+
+            searchWord = SearchBar_RecipeSearching.Text;
+            recipeMetas = new List<RecipeMetaDtoV2>();
+            recipeMetaModels = new List<RecipeMetaModel>();
+            ReciveRecipeMetasFromName(0);
+        }
     }
 
 }
