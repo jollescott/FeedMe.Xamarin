@@ -20,7 +20,7 @@
                 </OnPlatform>
             </Grid.Margin>
             
-            <Image Source="feedme-logo.png" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Image Source="feedme_logo.png" VerticalOptions="Center" HorizontalOptions="Center"/>
         </Grid>
 
         <ListView x:Name="MenuItemsListView" HasUnevenRows="true" ItemsSource="{Binding MenuItems}" SeparatorVisibility="None" Grid.Row="1">

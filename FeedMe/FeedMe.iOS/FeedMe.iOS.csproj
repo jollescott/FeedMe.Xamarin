@@ -113,7 +113,7 @@
     <Compile Include="Effects\FrameCornerEffectIOS.cs" />
     <Compile Include="Renderers\CustomFrameRenderer.cs" />
     <Compile Include="Renderers\FacebookBannerAdRenderer.cs" />
-    <BundleResource Include="Resources\feedme-logo.png" />
+    <BundleResource Include="Resources\feedme_logo.png" />
     <BundleResource Include="Resources\LaunchScreenImage.png" />
   </ItemGroup>
   <ItemGroup>
