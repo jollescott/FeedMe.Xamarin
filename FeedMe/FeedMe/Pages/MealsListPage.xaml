@@ -90,7 +90,7 @@
         </Grid.RowDefinitions>
 
         <Frame Padding="0, 0, 0, 10" Margin="0" x:Name="Frame_RecipeSearching" IsEnabled="False" IsVisible="False" CornerRadius="0" BackgroundColor="White" Grid.Row="0">
-            <SearchBar x:Name="SearchBar_RecipeSearching" Placeholder="Sök recept" SearchButtonPressed="SearchBar_RecipeSearching_SearchButtonPressed" TextChanged="SearchBar_RecipeSearching_TextChanged"/>
+            <SearchBar Margin="0" x:Name="SearchBar_RecipeSearching" Placeholder="Sök recept" TextChanged="SearchBar_RecipeSearching_TextChanged"/>
         </Frame>
 
         <Grid Grid.Row="1">

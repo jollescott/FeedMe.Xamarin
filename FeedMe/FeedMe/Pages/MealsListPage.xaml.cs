@@ -269,26 +269,8 @@ namespace FeedMe
                 ReciveRecipeMetas(recipeMetas.Count);
         }
 
-        //Search
-        private void SearchBar_RecipeSearching_SearchButtonPressed(object sender, EventArgs e)
-        {
-            Label_Message.IsVisible = false;
-            Label_Message.IsEnabled = false;
 
-            Label_Loading.IsEnabled = true;
-            Label_Loading.IsVisible = true;
-            ActivityIndicatior_WaitingForServer.IsRunning = true;
-
-            if (recipeMetaModels != null && recipeMetaModels.Count > 0)
-                ListView_Recipes.ScrollTo(((List<RecipeMetaModel>)ListView_Recipes.ItemsSource)[0], ScrollToPosition.Start, false);
-
-            searchWord = SearchBar_RecipeSearching.Text;
-            recipeMetas = new List<RecipeMetaDtoV2>();
-            recipeMetaModels = new List<RecipeMetaModel>();
-            ReciveRecipeMetasFromName(0);
-        }
-
-        async void ReciveRecipeMetasFromName(int start)
+        async void ReciveRecipeMetasFromName(int start, int id=-1)
         {
 
             try
@@ -306,6 +288,17 @@ namespace FeedMe
                 {
                     var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                     var recivedRecipeMetas = JsonConvert.DeserializeObject<List<RecipeMetaDtoV2>>(result);
+
+                    // return if this is not the latest search
+                    if (id != -1 && id != latestId)
+                        return;
+
+                    if (start == 0)
+                    {
+                        recipeMetas = new List<RecipeMetaDtoV2>();
+                        recipeMetaModels = new List<RecipeMetaModel>();
+                    }
+
                     if (recivedRecipeMetas.Count < 25)
                     {
                         Button_ViewMoreRecipes.IsEnabled = false;
@@ -325,6 +318,17 @@ namespace FeedMe
                         Label_Message.IsVisible = true;
                         Label_Message.IsEnabled = true;
                     }
+
+
+                    if (id == latestId)
+                    {
+                        latestId = 0;
+                        nextId = 0;
+                    }
+                    else
+                    {
+                        nextId++;
+                    }
                 }
                 else
                 {
@@ -333,7 +337,7 @@ namespace FeedMe
                     ActivityIndicatior_WaitingForServer.IsRunning = false;
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 Alert("Fel", "Kunnde inte ansluta till servern", "ok");
                 Label_Loading.IsVisible = false;
@@ -341,8 +345,15 @@ namespace FeedMe
             }
         }
 
+
+        // Search
+        int nextId = 0;
+        int latestId = 0;
         private void SearchBar_RecipeSearching_TextChanged(object sender, TextChangedEventArgs e)
         {
+            var id = nextId;
+            latestId = nextId;
+
             Label_Message.IsVisible = false;
             Label_Message.IsEnabled = false;
 
@@ -351,12 +362,11 @@ namespace FeedMe
             ActivityIndicatior_WaitingForServer.IsRunning = true;
 
             if (recipeMetaModels != null && recipeMetaModels.Count > 0)
-                ListView_Recipes.ScrollTo(((List<RecipeMetaModel>)ListView_Recipes.ItemsSource)[0], ScrollToPosition.Start, false);
+                ListView_Recipes.ScrollTo(((List<RecipeMetaModel>)ListView_Recipes.ItemsSource)[0], ScrollToPosition.Center, false);
 
             searchWord = SearchBar_RecipeSearching.Text;
-            recipeMetas = new List<RecipeMetaDtoV2>();
-            recipeMetaModels = new List<RecipeMetaModel>();
-            ReciveRecipeMetasFromName(0);
+            
+            ReciveRecipeMetasFromName(0, id);
         }
     }
 
