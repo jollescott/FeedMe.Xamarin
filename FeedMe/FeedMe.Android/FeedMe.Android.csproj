@@ -121,6 +121,7 @@
     <AndroidResource Include="Resources\mipmap-xhdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-xxhdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
+    <AndroidResource Include="Resources\drawable\feedme-logo.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FeedMe\FeedMe.csproj">

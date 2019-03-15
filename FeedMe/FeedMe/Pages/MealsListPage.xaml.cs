@@ -337,7 +337,7 @@ namespace FeedMe
                     ActivityIndicatior_WaitingForServer.IsRunning = false;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 Alert("Fel", "Kunnde inte ansluta till servern", "ok");
                 Label_Loading.IsVisible = false;
