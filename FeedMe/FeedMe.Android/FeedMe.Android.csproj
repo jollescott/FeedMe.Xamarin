@@ -46,6 +46,9 @@
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <MandroidI18n>West</MandroidI18n>
     <AndroidSupportedAbis>armeabi-v7a;x86</AndroidSupportedAbis>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <BundleAssemblies>false</BundleAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -121,7 +124,7 @@
     <AndroidResource Include="Resources\mipmap-xhdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-xxhdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
-    <AndroidResource Include="Resources\drawable\feedme-logo.png" />
+    <AndroidResource Include="Resources\drawable\feedme_logo.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FeedMe\FeedMe.csproj">
