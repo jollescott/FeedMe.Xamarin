@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:FeedMe.Controls;assembly=FeedMe"
@@ -19,7 +19,7 @@
         <Grid RowSpacing="0" ColumnSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
             <ScrollView Grid.Row="0">
@@ -149,7 +149,7 @@
                 </StackLayout>
             </ScrollView>
 
-            <controls:AdmobView Grid.Row="1" />
+            <controls:BannerAdView Grid.Row="1" />
         </Grid>
             
     </ContentPage.Content>

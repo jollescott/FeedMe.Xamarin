@@ -19,7 +19,7 @@
     <Grid ColumnSpacing="0" RowSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
         
@@ -148,7 +148,10 @@
         
         <!--Ad-->
 
-        <controls:AdmobView Grid.Row="1" />
+        <controls:BannerAdView Grid.Row="1" />
+        <!--<cells:AdListCell/>-->
+        <!--controls:BannerAdView/-->
+
 
     </Grid>
 

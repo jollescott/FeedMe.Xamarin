@@ -1,21 +1,12 @@
-﻿using System;
-
+﻿
 using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
-using FFImageLoading.Forms.Droid;
-using Xamarin.Facebook;
-using FeedMe.Droid.Callbacks;
-using Xamarin.Facebook.Login;
-using Android.Content;
 using Xamarin.Forms;
-using Android.Gms.Ads;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Xamarin.Facebook.Ads;
 
 namespace FeedMe.Droid
 {
@@ -23,8 +14,6 @@ namespace FeedMe.Droid
     [Activity(ScreenOrientation = ScreenOrientation.Portrait, Label = "FeedMe", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", LaunchMode = LaunchMode.SingleTask, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        private ICallbackManager callbackManager;
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
@@ -32,7 +21,8 @@ namespace FeedMe.Droid
 
             base.OnCreate(savedInstanceState);
 
-            Android.Gms.Ads.MobileAds.Initialize(ApplicationContext, "ca-app-pub-4571482486671250~7532275431");
+            AdSettings.AddTestDevice("4bc78db7-bd07-4bc2-9d11-1d1b19a5a415");
+            AdSettings.AddTestDevice("c3d7b4ba-e06e-465b-9db3-1008974c7ebb");
 
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
 
@@ -41,33 +31,9 @@ namespace FeedMe.Droid
 
             AppCenter.Start("eedec111-2462-45bc-9c49-3320f6a175a3", typeof(Analytics), typeof(Crashes));
 
-            callbackManager = CallbackManagerFactory.Create();
-            LoginManager.Instance.RegisterCallback(callbackManager, new FacebookLoginCallback<LoginResult>
-            {
-                HandleError = error =>
-                {
-                    Crashes.TrackError(error);
-                    MessagingCenter.Instance.Send(Xamarin.Forms.Application.Current, "FacebookLogin_Cancelled");
-                },
-                HandleCancel = () =>
-                {
-                    MessagingCenter.Instance.Send(Xamarin.Forms.Application.Current, "FacebookLogin_Cancelled");
-                },
-                HandleSuccess = loginResult =>
-                {
-                    MessagingCenter.Instance.Send(Xamarin.Forms.Application.Current, "FacebookLogin_Success", loginResult.AccessToken.UserId);
-                }
-            });
-
             Forms.Init(this, savedInstanceState);
 
             LoadApplication(new App());
-        }
-
-        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
-        {
-            base.OnActivityResult(requestCode, resultCode, data);
-            callbackManager.OnActivityResult(requestCode, (int)resultCode, data);
         }
     }
 }

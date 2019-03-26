@@ -5,7 +5,8 @@ using Xamarin.Forms;
 
 namespace FeedMe.Controls
 {
-    public class AdmobView : View
+    public class NativeAdView : View
     {
+
     }
 }

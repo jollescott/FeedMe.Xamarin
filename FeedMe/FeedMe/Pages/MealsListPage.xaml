@@ -90,11 +90,11 @@
         </Grid.RowDefinitions>
 
         <Frame Padding="0, 0, 0, 10" Margin="0" x:Name="Frame_RecipeSearching" IsEnabled="False" IsVisible="False" CornerRadius="0" BackgroundColor="White" Grid.Row="0">
-            <SearchBar x:Name="SearchBar_RecipeSearching" Placeholder="Sök här" SearchButtonPressed="SearchBar_RecipeSearching_SearchButtonPressed"/>
+            <SearchBar Margin="0" x:Name="SearchBar_RecipeSearching" Placeholder="Sök recept" TextChanged="SearchBar_RecipeSearching_TextChanged"/>
         </Frame>
 
         <Grid Grid.Row="1">
-            <ListView x:Name="ListView_Recipes" HasUnevenRows="True" ItemTemplate="{x:StaticResource recipeDataTemplateSelector}" SeparatorVisibility="None" ItemSelected="ListView_Recipes_ItemSelected">
+            <ListView CachingStrategy="RecycleElement" x:Name="ListView_Recipes" HasUnevenRows="True" ItemTemplate="{x:StaticResource recipeDataTemplateSelector}" SeparatorVisibility="None" ItemSelected="ListView_Recipes_ItemSelected">
                 <ListView.Footer>
                     <Grid HeightRequest="100">
                         <Button IsEnabled="False" IsVisible="False" VerticalOptions="Center" x:Name="Button_ViewMoreRecipes" BackgroundColor="Transparent" BorderColor="Transparent" Text="Hämta fler recept" FontSize="Medium" Clicked="Button_ViewMoreRecipes_Clicked"/>
