@@ -6,7 +6,6 @@ using Xamarin.Forms;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
-using Xamarin.Facebook.Ads;
 
 namespace FeedMe.Droid
 {
@@ -21,8 +20,9 @@ namespace FeedMe.Droid
 
             base.OnCreate(savedInstanceState);
 
-            AdSettings.AddTestDevice("4bc78db7-bd07-4bc2-9d11-1d1b19a5a415");
-            AdSettings.AddTestDevice("c3d7b4ba-e06e-465b-9db3-1008974c7ebb");
+            // FaceBook ads stuff
+            //AdSettings.AddTestDevice("4bc78db7-bd07-4bc2-9d11-1d1b19a5a415");
+            //AdSettings.AddTestDevice("c3d7b4ba-e06e-465b-9db3-1008974c7ebb");
 
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
 
