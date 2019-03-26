@@ -27,18 +27,21 @@ namespace FeedMe.iOS.Renderers
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-
-            if (e.PropertyName == nameof(AdmobView.AdUnit))
-                Control.AdUnitID = Element.AdUnit;
         }
 
         private BannerView CreateAdView()
         {
+#if DEBUG
+            string adUnitId = "ca-app-pub-3940256099942544/2934735716";
+#else
+            string adUnitId = "ca-app-pub-4571482486671250/4328985802";
+#endif
+
             var adView = new BannerView
             {
                 AdSize = AdSizeCons.LargeBanner,
-                AdUnitID = Element.AdUnit,
-                RootViewController = ViewController
+                AdUnitID = adUnitId,
+                RootViewController = GetVisibleViewController()
             };
             
             adView.LoadRequest(GetAdRequest());
@@ -52,6 +55,19 @@ namespace FeedMe.iOS.Renderers
             request.TestDevices = new[] {Request.SimulatorId.ToString()};
 
             return request;
+        }
+
+        private UIViewController GetVisibleViewController()
+        {
+            var windows = UIApplication.SharedApplication.Windows;
+            foreach (var window in windows)
+            {
+                if (window.RootViewController != null)
+                {
+                    return window.RootViewController;
+                }
+            }
+            return null;
         }
     }
 }

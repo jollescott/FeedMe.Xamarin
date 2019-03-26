@@ -13,13 +13,6 @@ namespace FeedMe.iOS.Renderers
         public override void Draw(CGRect rect)
         {
             base.Draw(rect);
-
-            Layer.ShadowRadius = 1.5f;
-            Layer.ShadowColor = UIColor.Gray.CGColor;
-            Layer.ShadowOffset = new CGSize(1,1);
-            Layer.ShadowOpacity = 0.5f;
-            Layer.ShadowPath = UIBezierPath.FromRect(Layer.Bounds).CGPath;
-            Layer.MasksToBounds = false;
         }
     }
 }

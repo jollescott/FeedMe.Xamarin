@@ -31,12 +31,9 @@ namespace FeedMe.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
-#if DEBUG
-            Android.Gms.Ads.MobileAds.Initialize(ApplicationContext, "ca-app-pub-3940256099942544~3347511713");  // fake ad
-            //Android.Gms.Ads.MobileAds.Initialize(this, "ca-app-pub-4571482486671250~7532275431");  // real ad
-#else
+
             Android.Gms.Ads.MobileAds.Initialize(ApplicationContext, "ca-app-pub-4571482486671250~7532275431");
-#endif
+
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
 
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(false);
