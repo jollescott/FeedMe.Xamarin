@@ -26,9 +26,7 @@ namespace FeedMe.iOS
         // You have 17 seconds to return from this method, or iOS will terminate your application.
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
-        {
-            AdSettings.AddTestDevice("HASHED_ID");
-            
+        {            
             Rg.Plugins.Popup.Popup.Init();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             Plugin.Iconize.Iconize.Init();

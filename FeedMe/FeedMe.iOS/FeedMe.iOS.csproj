@@ -110,6 +110,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <BundleResource Include="Resources\iconize-material.ttf" />
     <Compile Include="Effects\FrameCornerEffectIOS.cs" />
+    <Compile Include="Renderers\AdmobBannerRenderer.cs" />
     <Compile Include="Renderers\CustomFrameRenderer.cs" />
     <BundleResource Include="Resources\feedme_logo.png" />
     <BundleResource Include="Resources\LaunchScreenImage.png" />
