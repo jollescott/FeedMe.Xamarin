@@ -207,12 +207,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\FeedMe\FeedMe.csproj">
-      <Project>{FFB8CE2A-A55D-4126-9AA0-96A8025A385E}</Project>
-      <Name>FeedMe</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\menu%402x.png" />
   </ItemGroup>
   <ItemGroup>
@@ -231,5 +225,10 @@
     <ITunesArtwork Include="iTunesArtwork%402x" />
     <ITunesArtwork Include="iTunesArtwork" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\FeedMe\FeedMe.csproj">
+      <Project>{ffb8ce2a-a55d-4126-9aa0-96a8025a385e}</Project>
+      <Name>FeedMe</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

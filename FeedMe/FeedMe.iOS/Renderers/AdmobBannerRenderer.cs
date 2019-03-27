@@ -1,3 +1,4 @@
+using FeedMe.Controls;
 using FeedMe.iOS.Renderers;
 using Google.MobileAds;
 using UIKit;
@@ -7,10 +8,10 @@ using Xamarin.Forms.Platform.iOS;
 [assembly: ExportRenderer(typeof(Frame), typeof(AdmobBannerRenderer))]
 namespace FeedMe.iOS.Renderers
 {
-    public class AdmobBannerRenderer : ViewRenderer<BannerAdView, BannerView>
+    public class AdmobBannerRenderer : ViewRenderer<FeedMe.Controls.AdView, BannerView>
     {
         private BannerView _adView;
-        private string _adUnit;
+        private readonly string _adUnit;
 
         public AdmobBannerRenderer()
         {
@@ -21,7 +22,7 @@ namespace FeedMe.iOS.Renderers
 #endif
         }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<BannerAdView> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<AdView> e)
         {
             if (Control == null)
             {
@@ -33,7 +34,8 @@ namespace FeedMe.iOS.Renderers
         private void CreateBannerView()
         {
             _adView = new BannerView(size: AdSizeCons.SmartBannerLandscape) {
-                RootViewController = GetVisibleViewController()
+                RootViewController = GetVisibleViewController(),
+                AdUnitID = _adUnit
             };
 
             _adView.LoadRequest(GetAdRequest());
