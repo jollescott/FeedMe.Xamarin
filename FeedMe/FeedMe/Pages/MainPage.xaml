@@ -146,7 +146,7 @@
         </ScrollView>
 
         <!--Ad-->
-        <controls:BannerAdView Grid.Row="1" />
+        <controls:AdView Grid.Row="1" />
         <!--<cells:AdListCell/>-->
         <!--controls:BannerAdView/-->
 

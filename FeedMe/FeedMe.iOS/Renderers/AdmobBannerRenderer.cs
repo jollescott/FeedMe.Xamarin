@@ -1,7 +1,6 @@
-using System;
-using FeedMe.Controls;
 using FeedMe.iOS.Renderers;
 using Google.MobileAds;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
@@ -15,14 +14,14 @@ namespace FeedMe.iOS.Renderers
 
         public AdmobBannerRenderer()
         {
-            #if DEBUG
-            _adUnit = "";
-#endif
-            _adUnit = "";
+#if DEBUG
+            _adUnit = "ca-app-pub-3940256099942544/2934735716";
 #else
+            _adUnit = "ca-app-pub-4571482486671250/4328985802";
+#endif
         }
 
-    protected override void OnElementChanged(ElementChangedEventArgs<BannerAdView> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<BannerAdView> e)
         {
             if (Control == null)
             {
@@ -31,12 +30,34 @@ namespace FeedMe.iOS.Renderers
             }
         }
 
-        private BannerView CreateBannerView()
+        private void CreateBannerView()
         {
-            _adView = new BannerView(size: AdSizeCons.SmartBannerLandscape);
+            _adView = new BannerView(size: AdSizeCons.SmartBannerLandscape) {
+                RootViewController = GetVisibleViewController()
+            };
 
-            
-            return _adView;
+            _adView.LoadRequest(GetAdRequest());
+        }
+
+        private Request GetAdRequest()
+        {
+            var request = Request.GetDefaultRequest();
+            request.TestDevices = new[] { Request.SimulatorId.ToString() };
+
+            return request;
+        }
+
+        private UIViewController GetVisibleViewController()
+        {
+            var windows = UIApplication.SharedApplication.Windows;
+            foreach (var window in windows)
+            {
+                if (window.RootViewController != null)
+                {
+                    return window.RootViewController;
+                }
+            }
+            return null;
         }
     }
 }
