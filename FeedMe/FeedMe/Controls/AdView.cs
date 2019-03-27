@@ -5,7 +5,13 @@ using Xamarin.Forms;
 
 namespace FeedMe.Controls
 {
-    public class BannerAdView : View
+    public class AdView : View
     {
+
+    }
+
+    public enum AdType
+    {
+        Banner, ListItem
     }
 }
