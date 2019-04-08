@@ -17,14 +17,14 @@ using Microsoft.AppCenter.Crashes;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(BannerAdView), typeof(AdmobBanerViewRenderer))]
+[assembly: ExportRenderer(typeof(FeedMe.Controls.AdView), typeof(AdmobBannerViewRenderer))]
 namespace FeedMe.Droid.Renderers
 {
-    public class AdmobBanerViewRenderer : ViewRenderer<BannerAdView, AdView>
+    public class AdmobBannerViewRenderer : ViewRenderer<Controls.AdView, Android.Gms.Ads.AdView>
     {
-        public AdmobBanerViewRenderer(Context context) : base(context) { }
+        public AdmobBannerViewRenderer(Context context) : base(context) { }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<BannerAdView> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Controls.AdView> e)
         {
             base.OnElementChanged(e);
 
@@ -32,13 +32,13 @@ namespace FeedMe.Droid.Renderers
                 SetNativeControl(CreateAdView());
 
             if (e.NewElement != null)
-                Control.AdListener = new FeedMeBanerAdListener();
+                Control.AdListener = new FeedMeBannerAdListener();
 
             if (e.OldElement != null)
                 Control.AdListener = null;
         }
 
-        private AdView CreateAdView()
+        private Android.Gms.Ads.AdView CreateAdView()
         {
 #if DEBUG
             var adUnit = "ca-app-pub-3940256099942544/6300978111";  // not real ads
@@ -46,7 +46,7 @@ namespace FeedMe.Droid.Renderers
             var adUnit = "ca-app-pub-4571482486671250/2065611163";
 #endif
 
-            var adView = new AdView(Context)
+            var adView = new Android.Gms.Ads.AdView(Context)
             {
                 AdSize = AdSize.LargeBanner,
                 AdUnitId = adUnit
@@ -62,7 +62,7 @@ namespace FeedMe.Droid.Renderers
         }
     }
 
-    internal class FeedMeBanerAdListener : AdListener
+    internal class FeedMeBannerAdListener : AdListener
     {
         public override void OnAdFailedToLoad(int errorCode)
         {
