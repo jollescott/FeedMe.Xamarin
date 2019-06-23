@@ -40,12 +40,11 @@ namespace FeedMe.Droid.Renderers
 
         private Android.Gms.Ads.AdView CreateAdView()
         {
-#if DEBUG
-            var adUnit = "ca-app-pub-3940256099942544/6300978111";  // not real ads
-#else
-            var adUnit = "ca-app-pub-4571482486671250/2065611163";
-#endif
-
+            #if DEBUG
+                        var adUnit = "ca-app-pub-3940256099942544/6300978111";  // not real ads
+            #else
+                        var adUnit = "ca-app-pub-4571482486671250/2065611163";
+            #endif
             var adView = new Android.Gms.Ads.AdView(Context)
             {
                 AdSize = AdSize.LargeBanner,
