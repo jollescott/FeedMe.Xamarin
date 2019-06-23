@@ -28,9 +28,7 @@
     <Compile Update="MasterPageMenuItem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\MasterDetail\FDMasterDetailPageMenuItem.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Update="Pages\MasterDetail\FDMasterDetailPageMenuItem.cs" />
   </ItemGroup>
 
   <ItemGroup>
