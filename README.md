@@ -7,4 +7,4 @@
 ![](screenshots/menu.png)
 
 ## FeedMe's Xamarin client
-This is the repository for our recipe service's web app based on react and written in typescript.
+This is the repository for our recipe service's IOS/Android app based on Xamarin.Forms and written in C#.
