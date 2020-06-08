@@ -5,7 +5,7 @@ namespace FeedMe.Models
 {
     public class RecipeMetaModel
     {
-        public string RecipeID { get; set; }
+        public string RecipeId { get; set; }
         public string Name { get; set; }
         public string Source { get; set; }
         public RecipeProvider Owner { get; set; }

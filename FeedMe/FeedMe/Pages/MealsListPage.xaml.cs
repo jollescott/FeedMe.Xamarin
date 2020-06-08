@@ -165,7 +165,7 @@ namespace FeedMe
                         FrameHeight = frameHeight,
                         ShowCoverageMessage = false,
                         LogoRadius = 40,
-                        RecipeID = x.RecipeID
+                        RecipeId = x.RecipeId
                     };
                 }).ToList();
             }
@@ -184,7 +184,7 @@ namespace FeedMe
                         CoverageMessage = "Du har " + ((int)(x.Coverage * 100)).ToString() + "%  av alla ingredienser",
                         ShowCoverageMessage = !nameSearching,
                         LogoRadius = 40,
-                        RecipeID = x.RecipeID
+                        RecipeId = x.RecipeId
                     };
                 }).ToList();
             }

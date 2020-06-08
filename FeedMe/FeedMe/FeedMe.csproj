@@ -14,7 +14,6 @@
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="3.2.2" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="3.2.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="Ramsey.Shared" Version="1.0.9" />
     <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.3" />
     <PackageReference Include="Xam.Plugin.Iconize" Version="3.5.0.129" />
     <PackageReference Include="Xam.Plugin.Iconize.Material" Version="3.5.0.129" />
@@ -23,7 +22,6 @@
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.Forms" Version="4.6.0.847" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="MasterPageMenuItem.cs">
       <SubType>Code</SubType>
@@ -77,5 +75,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Effects\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\libs\FeedMe.Shared\FeedMe.Shared\FeedMe.Shared.csproj" />
   </ItemGroup>
 </Project>

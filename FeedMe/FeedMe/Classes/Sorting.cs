@@ -41,7 +41,7 @@ namespace FeedMe.Classes
         {
             foreach (var r in recipeList)
             {
-                if (recipe.RecipeID == r.RecipeID)
+                if (recipe.RecipeId == r.RecipeId)
                     return true;
             }
             return false;

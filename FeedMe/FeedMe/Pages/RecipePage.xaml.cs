@@ -80,7 +80,7 @@ namespace FeedMe
                     int toRemoveIndex = -1;
                     for (int i = 0; i < savedRecipes.Count; i++)
                     {
-                        if (recipe.RecipeID == savedRecipes[i].RecipeID)
+                        if (recipe.RecipeId == savedRecipes[i].RecipeId)
                         {
                             toRemoveIndex = i;
                             break;
@@ -105,7 +105,7 @@ namespace FeedMe
             this.recipeMeta = recipeMeta;
             myIngredients = User.User.SavedIngredinets;
             XamlSetup1();
-            GET_recipeDto(recipeMeta.RecipeID);
+            GET_recipeDto(recipeMeta.RecipeId);
 
             Task.Factory.StartNew(() => UpdateFavorite());
 		}
