@@ -1,39 +1,33 @@
-﻿using System;
+﻿using FeedMe.Classes;
+using Newtonsoft.Json;
+using Ramsey.Shared.Dto.V2;
+using Ramsey.Shared.Misc;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.Collections.ObjectModel;
+using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.Net.Http;
-using Ramsey.Shared.Misc;
-using Ramsey.Shared.Dto.V2;
-using Newtonsoft.Json;
-using FeedMe.Classes;
-using System.Collections.ObjectModel;
 
 namespace FeedMe.Pages
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class shoppingListPage : ContentPage
-	{
-        HttpClient httpClient = new HttpClient();
-
-        List<IngredientDtoV2> searchIngredients = new List<IngredientDtoV2>();
-        List<IngredientDtoV2> shoppingListIngredients = new List<IngredientDtoV2>();
-
-        bool state = false;
-        List<IconTestModel> icons_testList = new List<IconTestModel>();
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class shoppingListPage : ContentPage
+    {
+        private readonly HttpClient httpClient = new HttpClient();
+        private List<IngredientDtoV2> searchIngredients = new List<IngredientDtoV2>();
+        private readonly List<IngredientDtoV2> shoppingListIngredients = new List<IngredientDtoV2>();
+        private readonly bool state = false;
+        private readonly List<IconTestModel> icons_testList = new List<IconTestModel>();
         //List<IconTestModel> icons_testList2 = new List<IconTestModel>();
 
         public Color TestColor { get; } = Color.Red;
         public ObservableCollection<string> TestIcons { get; set; } = new ObservableCollection<string> { "md-add", "md-remove" };
 
 
-        public shoppingListPage ()
-		{
-			InitializeComponent ();
+        public shoppingListPage()
+        {
+            InitializeComponent();
 
             BindingContext = this;
 
@@ -51,9 +45,9 @@ namespace FeedMe.Pages
 
 
             XamlSetup();
-		}
+        }
 
-        void XamlSetup()
+        private void XamlSetup()
         {
             //ListView_ShoppingList.BackgroundColor = Constants.AppColor.lightGray;
             //ListView_ShoppingList.ItemsSource =
@@ -70,7 +64,7 @@ namespace FeedMe.Pages
             try
             {
                 List<ListItem> items = new List<ListItem>();
-                foreach (var ingredient in ingredients)
+                foreach (IngredientDtoV2 ingredient in ingredients)
                 {
                     items.Add(new ListItem
                     {
@@ -81,7 +75,8 @@ namespace FeedMe.Pages
 
                 }
                 ListView_SearchIngredients.ItemsSource = items;
-            } catch ( Exception _e )
+            }
+            catch (Exception _e)
             {
                 Console.WriteLine(_e);
             }
@@ -104,7 +99,7 @@ namespace FeedMe.Pages
         // --------------------------------------------- REQUESTS ---------------------------------------------------
 
 
-        async void GET_ingredientDtos(string search)
+        private async void GET_ingredientDtos(string search)
         {
             try
             {
@@ -116,7 +111,7 @@ namespace FeedMe.Pages
                 if (response.IsSuccessStatusCode)
                 {
                     //await DisplayAlert("success", "succeess", "ok");
-                    var result = await response.Content.ReadAsStringAsync();
+                    string result = await response.Content.ReadAsStringAsync();
                     searchIngredients = Sorting.SortIngredientsByNameLenght(JsonConvert.DeserializeObject<List<IngredientDtoV2>>(result));
                     UpdateSearchIngreadientsListView(searchIngredients);
                 }
@@ -135,7 +130,7 @@ namespace FeedMe.Pages
         // ----------------------------------------- EVENTS -----------------------------------------------
 
 
-        bool searching = false;
+        private bool searching = false;
         private void SearchBar_Ingredients_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchWord = SearchBar_Ingredients.Text.ToLower();
@@ -229,17 +224,20 @@ namespace FeedMe.Pages
             TestIcons[0] = "md-remove";
         }
 
-        void UpdateIcons(int index, string name)
+        private void UpdateIcons(int index, string name)
         {
-            List<IconTestModel> sorce = new List<IconTestModel>();
-            sorce.Add(new IconTestModel { Icon = name });
-            sorce.Add(new IconTestModel { Icon = name });
+            List<IconTestModel> sorce = new List<IconTestModel>
+            {
+                new IconTestModel { Icon = name },
+                new IconTestModel { Icon = name }
+            };
             //list_test.ItemsSource = sorce;
             list_test.ItemsSource = icons_testList;
         }
     }
 
-    class IconTestModel {
+    internal class IconTestModel
+    {
         public string Icon { get; set; }
     }
 

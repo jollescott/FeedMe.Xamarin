@@ -1,34 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using System.Net.Http;
-using Newtonsoft.Json;
-using Ramsey.Shared.Dto;
-using Ramsey.Shared.Extensions;
-using FeedMe.Classes;
-using Ramsey.Shared.Misc;
-using Ramsey.Shared.Dto.V2;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
+﻿using FeedMe.Classes;
 using FeedMe.Models;
+using Ramsey.Shared.Dto.V2;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace FeedMe
 {
     public partial class MainPage : ContentPage
     {
         private readonly HttpClient httpClient = new HttpClient();
-        IngredientsSearching ingredientsSearching = new IngredientsSearching();
+        private readonly IngredientsSearching ingredientsSearching = new IngredientsSearching();
 
         public bool InSearchWindow { get; set; } = false;
         public bool SearchModeIncluded { get; set; }
 
-        bool noIngredientsError;
+        private bool noIngredientsError;
         public bool NoIngredientsError
         {
-            get { return noIngredientsError; }
+            get => noIngredientsError;
             set
             {
                 noIngredientsError = value;
@@ -36,7 +30,7 @@ namespace FeedMe
                 Label_AddIngredients.TextColor = MyIngredientsErrorBorderCollor;
             }
         }
-        public Color MyIngredientsErrorBorderCollor { get; set; } 
+        public Color MyIngredientsErrorBorderCollor { get; set; }
 
         public List<IngredientDtoV2> SearchIngredients { get; set; }
         public ObservableCollection<IngredientListModel> SearchIngredientModels { get; set; } = new ObservableCollection<IngredientListModel>();
@@ -47,7 +41,7 @@ namespace FeedMe
         public List<IngredientDtoV2> ExcludedIngredients { get; set; }
         public ObservableCollection<IngredientListModel> ExcludedIngredientModels { get; set; } = new ObservableCollection<IngredientListModel>();
 
-        void MyIngredientsAdd(IngredientDtoV2 ingredient)
+        private void MyIngredientsAdd(IngredientDtoV2 ingredient)
         {
             MyIngredients.Insert(0, ingredient);
             if (!InSearchWindow)
@@ -57,7 +51,8 @@ namespace FeedMe
             }
             SaveMyIngredients(MyIngredients);
         }
-        void MyIngredientsRemoveAt(int index)
+
+        private void MyIngredientsRemoveAt(int index)
         {
             MyIngredients.RemoveAt(index);
             if (!InSearchWindow)
@@ -68,7 +63,7 @@ namespace FeedMe
             SaveMyIngredients(MyIngredients);
         }
 
-        void ExcludedIngredientsAdd(IngredientDtoV2 ingredient)
+        private void ExcludedIngredientsAdd(IngredientDtoV2 ingredient)
         {
             ingredient.Role = IngredientRole.Exclude;
             ExcludedIngredients.Insert(0, ingredient);
@@ -79,7 +74,8 @@ namespace FeedMe
             }
             SaveExcludedIngredients(ExcludedIngredients);
         }
-        void ExcludedIngredientsRemoveAt(int index)
+
+        private void ExcludedIngredientsRemoveAt(int index)
         {
             ExcludedIngredients.RemoveAt(index);
             if (!InSearchWindow)
@@ -96,12 +92,12 @@ namespace FeedMe
 
             SearchIngredients = new List<IngredientDtoV2>();
             MyIngredients = User.User.SavedIngredinets;
-            foreach (var ingredient in MyIngredients)
+            foreach (IngredientDtoV2 ingredient in MyIngredients)
             {
-                MyIngredientModels.Add(new IngredientListModel() { Ingredient = ingredient, IsAdded = true});
+                MyIngredientModels.Add(new IngredientListModel() { Ingredient = ingredient, IsAdded = true });
             }
             ExcludedIngredients = User.User.SavedExcludedIngredinets;
-            foreach (var ingredient in ExcludedIngredients)
+            foreach (IngredientDtoV2 ingredient in ExcludedIngredients)
             {
                 ExcludedIngredientModels.Add(new IngredientListModel() { Ingredient = ingredient, IsAdded = true });
             }
@@ -111,11 +107,10 @@ namespace FeedMe
             XamlSetup();
 
             BindingContext = this;
-                
+
         }
 
-
-        void XamlSetup()
+        private void XamlSetup()
         {
             SearchBar_Ingredients.BackgroundColor = Color.White;
             SearchBar_Ingredients.HeightRequest = Constants.textHeight;
@@ -124,7 +119,7 @@ namespace FeedMe
 
 
             //Main
-            
+
             StackLayout_main.Padding = Constants.padding2;
             StackLayout_main.Spacing = Constants.padding2;
 
@@ -150,10 +145,10 @@ namespace FeedMe
         // --------------------------------------------- SPAGHETTI ---------------------------------------------------
 
 
-        void GenerateMyIngredientModels()
+        private void GenerateMyIngredientModels()
         {
             MyIngredientModels.Clear();
-            foreach (var ingredient in MyIngredients)
+            foreach (IngredientDtoV2 ingredient in MyIngredients)
             {
                 MyIngredientModels.Add(new IngredientListModel
                 {
@@ -164,10 +159,10 @@ namespace FeedMe
             Sorting.ResizeListView(ListView_myIngredients, MyIngredients.Count);
         }
 
-        void GenerateExcludedIngredientModels()
+        private void GenerateExcludedIngredientModels()
         {
             ExcludedIngredientModels.Clear();
-            foreach (var ingredient in ExcludedIngredients)
+            foreach (IngredientDtoV2 ingredient in ExcludedIngredients)
             {
                 ExcludedIngredientModels.Add(new IngredientListModel
                 {
@@ -182,25 +177,25 @@ namespace FeedMe
         // --------------------------------------------- ASYNC SPAGHETTI ---------------------------------------------------
 
 
-        async void Alert(string title, string message, string cancel)
+        private async void Alert(string title, string message, string cancel)
         {
             await DisplayAlert(title, message, cancel);
         }
 
-        async void GotoMealsListPage()
+        private async void GotoMealsListPage()
         {
-            var ingredents = new List<IngredientDtoV2>();
+            List<IngredientDtoV2> ingredents = new List<IngredientDtoV2>();
             ingredents.AddRange(MyIngredients);
             ingredents.AddRange(ExcludedIngredients);
             await Navigation.PushAsync(new MealsListPage(ingredents) { Title = "Recept" });
         }
 
-        async void SaveMyIngredients(List<IngredientDtoV2> ingredients)
+        private async void SaveMyIngredients(List<IngredientDtoV2> ingredients)
         {
             await Task.Factory.StartNew(() => User.User.SavedIngredinets = ingredients);
         }
 
-        async void SaveExcludedIngredients(List<IngredientDtoV2> ingredients)
+        private async void SaveExcludedIngredients(List<IngredientDtoV2> ingredients)
         {
             await Task.Factory.StartNew(() => User.User.SavedExcludedIngredinets = ingredients);
         }
@@ -208,9 +203,9 @@ namespace FeedMe
 
         // --------------------------------------------- REQUESTS ---------------------------------------------------
 
-        
+
         // Recive ingredentDtos from the server and update lists
-        async void GET_ingredientDtos(string search)
+        private async void GET_ingredientDtos(string search)
         {
             bool isLoading = true;
             ActivityIndicator_Ingredients.IsRunning = true;
@@ -220,7 +215,7 @@ namespace FeedMe
 
             if (SearchModeIncluded)
             {
-                foreach (var ingredient in SearchIngredients)
+                foreach (IngredientDtoV2 ingredient in SearchIngredients)
                 {
                     SearchIngredientModels.Add(new IngredientListModel()
                     {
@@ -231,7 +226,7 @@ namespace FeedMe
             }
             else
             {
-                foreach (var ingredient in SearchIngredients)
+                foreach (IngredientDtoV2 ingredient in SearchIngredients)
                 {
                     SearchIngredientModels.Add(new IngredientListModel()
                     {
@@ -244,8 +239,9 @@ namespace FeedMe
             }
 
             if (!isLoading)
+            {
                 ActivityIndicator_Ingredients.IsRunning = false;
-
+            }
         }
 
 
@@ -256,7 +252,9 @@ namespace FeedMe
         private void ListView_SearchIngredients_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (ListView_SearchIngredients.SelectedItem == null)
+            {
                 return;
+            }
 
             int index = ((ObservableCollection<IngredientListModel>)ListView_SearchIngredients.ItemsSource).IndexOf((IngredientListModel)e.SelectedItem);
             ((ListView)sender).SelectedItem = null;
@@ -273,18 +271,24 @@ namespace FeedMe
             if (SearchModeIncluded)
             {
                 if (MyIngredients.Any(p => p.IngredientId == selectedIngredient.IngredientId))
+                {
                     MyIngredientsRemoveAt(MyIngredients.FindIndex(p => p.IngredientId == selectedIngredient.IngredientId));
-
+                }
                 else
+                {
                     MyIngredientsAdd(selectedIngredient);
+                }
             }
             else
             {
                 if (ExcludedIngredients.Any(p => p.IngredientId == selectedIngredient.IngredientId))
+                {
                     ExcludedIngredientsRemoveAt(ExcludedIngredients.FindIndex(p => p.IngredientId == selectedIngredient.IngredientId));
-
+                }
                 else
+                {
                     ExcludedIngredientsAdd(selectedIngredient);
+                }
             }
         }
 
@@ -292,12 +296,16 @@ namespace FeedMe
         private void SearchBar_Ingredients_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (SearchBar_Ingredients.Text == null)
+            {
                 return;
+            }
 
             string searchWord = SearchBar_Ingredients.Text.ToLower();
 
             if (searchWord.Length > 0)
+            {
                 GET_ingredientDtos(searchWord);
+            }
         }
 
         // Clicked in myIngredients list
@@ -316,7 +324,9 @@ namespace FeedMe
         private void Button_Clicked(object sender, EventArgs e)
         {
             if (MyIngredients.Count > 0)
+            {
                 GotoMealsListPage();
+            }
             else
             {
                 NoIngredientsError = true;
@@ -359,9 +369,13 @@ namespace FeedMe
             SearchBar_Ingredients.Text = string.Empty;
             InSearchWindow = false;
             if (SearchModeIncluded)
+            {
                 Task.Factory.StartNew(() => GenerateMyIngredientModels());
+            }
             else
+            {
                 Task.Factory.StartNew(() => GenerateExcludedIngredientModels());
+            }
 
             SearchIngredients.Clear();
             SearchIngredientModels.Clear();

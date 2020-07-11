@@ -4,6 +4,6 @@ namespace FeedMe.Controls
 {
     public class CustomFrame : Frame
     {
-        
+
     }
 }

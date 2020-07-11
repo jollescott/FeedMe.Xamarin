@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace FeedMe.Effects
 {
@@ -18,7 +17,7 @@ namespace FeedMe.Effects
             return (double)view.GetValue(RadiusProperty);
         }
 
-        public FrameCornerEffect(): base("FeedMe.FrameCornerEffect")
+        public FrameCornerEffect() : base("FeedMe.FrameCornerEffect")
         {
         }
     }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace FeedMe
 {
-    class Constants
+    internal class Constants
     {
         public class AppColor
         {

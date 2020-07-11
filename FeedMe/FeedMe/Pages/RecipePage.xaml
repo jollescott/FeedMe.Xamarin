@@ -56,7 +56,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                
+
                                 <Label x:Name="Label_RecipeName" FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Center" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Column="0"/>
 
                                 <iconize:IconLabel x:Name="Icon_Favorite" Text="{Binding IsFavorite, Converter={x:StaticResource favoriteConv}}"
@@ -74,7 +74,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                
+
                                 <ff:CachedImage Margin="0" x:Name="Image_OwnerLogo" Grid.Column="0" VerticalOptions="Center" WidthRequest="80"/>
 
                                 <StackLayout Margin="0" Padding="0" Grid.Column="1" VerticalOptions="Start">
@@ -117,7 +117,7 @@
                                 <iconize:IconButton x:Name="IconButton_RemovePortionCount" BackgroundColor="#00CC66" Text="md-remove" FontSize="Micro" Padding="0" CornerRadius="5" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Pressed="IconButton_RemovePortionCount_Clicked"/>
                                 <Label x:Name="Label_Portions" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="0"/>
                             </Grid>
-                            
+
                             <!--RecipeLoading-->
                             <ActivityIndicator x:Name="ActivityIndicatior_LoadingRecipeIngredients" Margin="15" IsRunning="True" VerticalOptions="Center" Grid.Row="2"/>
 
@@ -132,7 +132,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            
+
                             <!--Instructions Head-->
                             <Frame x:Name="Frame_InstructionsHead" Margin="0" CornerRadius="0" Grid.Row="0">
                                 <Label x:Name="Label_InstructionsHead" VerticalTextAlignment="Center"/>
@@ -145,11 +145,9 @@
                             <StackLayout Margin="15" x:Name="Stack_Instructions" Grid.Row="1"/>
                         </Grid>
                     </Frame>
-                    
+
                 </StackLayout>
             </ScrollView>
-
-            <controls:AdView Grid.Row="1" />
         </Grid>
             
     </ContentPage.Content>

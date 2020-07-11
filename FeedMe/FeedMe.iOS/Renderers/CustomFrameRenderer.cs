@@ -1,7 +1,5 @@
 using CoreGraphics;
-using FeedMe.Controls;
 using FeedMe.iOS.Renderers;
-using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 

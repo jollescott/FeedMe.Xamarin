@@ -2,85 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             xmlns:cells="clr-namespace:FeedMe.Controls.Cells"
-             xmlns:selectors="clr-namespace:FeedMe.Controls.Selectors"
              xmlns:effects="clr-namespace:FeedMe.Effects"
              x:Class="FeedMe.MealsListPage">
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <DataTemplate x:Key="adTemplate">
-                <cells:AdListCell/>
-            </DataTemplate>
-
-            <DataTemplate x:Key="recipeTemplate">
-                <ViewCell>
-                    <Frame x:Name="Frame_List" Padding="0" CornerRadius="0" HeightRequest="{Binding FrameHeight}">
-                        <Frame.Margin>
-                            <OnPlatform x:TypeArguments="Thickness">
-                                <On Platform="iOS" Value="0, 7.5, 0, 7.5"/>
-                                <On Platform="Android" Value="15, 7.5, 15, 7.5"/>
-                            </OnPlatform>
-                        </Frame.Margin>
-                        
-                        <Grid Padding="0" HorizontalOptions="Fill" VerticalOptions="Fill" RowSpacing="0" ColumnSpacing="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="15*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <BoxView BackgroundColor="#00CC66" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"/>
-                            <Label Text="{Binding CoverageMessage}" IsVisible="{Binding ShowCoverageMessage}" IsEnabled="{Binding ShowCoverageMessage}" TextColor="White" FontSize="Small" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
-                            <ff:CachedImage Source="{Binding Image}" Margin="0" Aspect="AspectFill" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
-                            <Label Text="{Binding Name}" FontSize="Medium" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="3" Grid.Column="2"/>
-                            
-                            <Frame x:Name="Frame_Logo" Margin="0" effects:FrameCornerEffect.Radius="{Binding LogoRadius}" Padding="2" BorderColor="Black" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" HeightRequest="{Binding LogoDiameter}" WidthRequest="{Binding LogoDiameter}" HorizontalOptions="Start" VerticalOptions="Center">
-                                <Frame.Effects>
-                                    <effects:FrameCornerEffect/>
-                                </Frame.Effects>
-
-                                <Frame.CornerRadius>
-                                    <OnPlatform x:TypeArguments="x:Single">
-                                        <On Platform="iOS" Value="0"/>
-                                        <On Platform="Android" Value="40"/>
-                                    </OnPlatform>
-                                </Frame.CornerRadius>
-
-                                <Frame.BorderColor>
-                                    <OnPlatform x:TypeArguments="Color">
-                                        <On Platform="iOS" Value="Black"/>
-                                        <On Platform="Android" Value="Black"/>
-                                    </OnPlatform>
-                                </Frame.BorderColor>
-
-                                <Frame.HasShadow>
-                                    <OnPlatform x:TypeArguments="x:Boolean">
-                                        <On Platform="iOS" Value="false"/>
-                                        <On Platform="Android" Value="true"/>
-                                    </OnPlatform>
-                                </Frame.HasShadow>
-
-                                <ff:CachedImage Source="{Binding OwnerLogo}" Margin="0" Aspect="AspectFit">
-                                </ff:CachedImage>
-                            </Frame>
-
-                        </Grid>
-                    </Frame>
-                </ViewCell>
-            </DataTemplate>
-
-            <selectors:RecipeListTemplateSelector x:Key="recipeDataTemplateSelector"
-                RecipeTemplate="{StaticResource recipeTemplate}"
-                AdTemplate="{StaticResource adTemplate}" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
 
     <Grid Padding="0" Margin="0" RowSpacing="0">
         <Grid.RowDefinitions>
@@ -93,8 +16,73 @@
         </Frame>
 
         <Grid Grid.Row="1">
-            <ListView CachingStrategy="RecycleElement" x:Name="ListView_Recipes" HasUnevenRows="True" ItemTemplate="{x:StaticResource recipeDataTemplateSelector}" SeparatorVisibility="None" 
+            <ListView CachingStrategy="RecycleElement" x:Name="ListView_Recipes" HasUnevenRows="True" SeparatorVisibility="None" 
                       ItemSelected="ListView_Recipes_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame x:Name="Frame_List" Padding="0" CornerRadius="0" HeightRequest="{Binding FrameHeight}">
+                                <Frame.Margin>
+                                    <OnPlatform x:TypeArguments="Thickness">
+                                        <On Platform="iOS" Value="0, 7.5, 0, 7.5"/>
+                                        <On Platform="Android" Value="15, 7.5, 15, 7.5"/>
+                                    </OnPlatform>
+                                </Frame.Margin>
+
+                                <Grid Padding="0" HorizontalOptions="Fill" VerticalOptions="Fill" RowSpacing="0" ColumnSpacing="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="15*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <BoxView BackgroundColor="#00CC66" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"/>
+                                    <Label Text="{Binding CoverageMessage}" IsVisible="{Binding ShowCoverageMessage}" IsEnabled="{Binding ShowCoverageMessage}" TextColor="White" FontSize="Small" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
+                                    <ff:CachedImage Source="{Binding Image}" Margin="0" Aspect="AspectFill" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
+                                    <Label Text="{Binding Name}" FontSize="Medium" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="3" Grid.Column="2"/>
+
+                                    <Frame x:Name="Frame_Logo" Margin="0" effects:FrameCornerEffect.Radius="{Binding LogoRadius}" Padding="2" BorderColor="Black" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" HeightRequest="{Binding LogoDiameter}" WidthRequest="{Binding LogoDiameter}" HorizontalOptions="Start" VerticalOptions="Center">
+                                        <Frame.Effects>
+                                            <effects:FrameCornerEffect/>
+                                        </Frame.Effects>
+
+                                        <Frame.CornerRadius>
+                                            <OnPlatform x:TypeArguments="x:Single">
+                                                <On Platform="iOS" Value="0"/>
+                                                <On Platform="Android" Value="40"/>
+                                            </OnPlatform>
+                                        </Frame.CornerRadius>
+
+                                        <Frame.BorderColor>
+                                            <OnPlatform x:TypeArguments="Color">
+                                                <On Platform="iOS" Value="Black"/>
+                                                <On Platform="Android" Value="Black"/>
+                                            </OnPlatform>
+                                        </Frame.BorderColor>
+
+                                        <Frame.HasShadow>
+                                            <OnPlatform x:TypeArguments="x:Boolean">
+                                                <On Platform="iOS" Value="false"/>
+                                                <On Platform="Android" Value="true"/>
+                                            </OnPlatform>
+                                        </Frame.HasShadow>
+
+                                        <ff:CachedImage Source="{Binding OwnerLogo}" Margin="0" Aspect="AspectFit">
+                                        </ff:CachedImage>
+                                    </Frame>
+
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
                 <ListView.Footer>
                     <Grid HeightRequest="100">
                         <Button IsEnabled="False" IsVisible="False" VerticalOptions="Center" x:Name="Button_ViewMoreRecipes" BackgroundColor="Transparent" BorderColor="Transparent" Text="Hämta fler recept" FontSize="Medium" Clicked="Button_ViewMoreRecipes_Clicked"/>

@@ -1,46 +1,42 @@
-﻿using Ramsey.Shared.Dto;
+﻿using Newtonsoft.Json;
+using Plugin.Iconize;
 using Ramsey.Shared.Dto.V2;
+using Ramsey.Shared.Enums;
+using Ramsey.Shared.Misc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.Net.Http;
-using Newtonsoft.Json;
-using Ramsey.Shared.Misc;
-using System.Windows.Input;
-using FeedMe.Interfaces;
-using FeedMe.Classes;
-using Ramsey.Shared.Enums;
-using System.Threading.Tasks;
-using Plugin.Iconize;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
 
 namespace FeedMe
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class RecipePage : ContentPage
-	{
-        HttpClient httpClient = new HttpClient();
-        RecipeMetaDtoV2 recipeMeta;
-        RecipeDtoV2 recipe;
-        List<IngredientDtoV2> myIngredients;
-        List<Label> ingredentPortionLabels = new List<Label>();
-
-        bool fromSavedRecipes;
-
-        bool loadedRecipe = false;
+    public partial class RecipePage : ContentPage
+    {
+        private readonly HttpClient httpClient = new HttpClient();
+        private readonly RecipeMetaDtoV2 recipeMeta;
+        private RecipeDtoV2 recipe;
+        private readonly List<IngredientDtoV2> myIngredients;
+        private readonly List<Label> ingredentPortionLabels = new List<Label>();
+        private readonly bool fromSavedRecipes;
+        private bool loadedRecipe = false;
 
         public bool IsFavorite { get; set; }
 
         private int portions = 2;
-        public int Poritons {
-            get { return portions; }
+        public int Poritons
+        {
+            get => portions;
             set
             {
                 if (value <= 10 && value >= 1)
-                    portions = value;                    
+                {
+                    portions = value;
+                }
             }
         }
 
@@ -49,25 +45,18 @@ namespace FeedMe
 
         private void RunFavoriteCommand(object obj)
         {
-            //var userid = DependencyService.Get<IFacebook>().UserId;
-            //await RamseyConnection.SaveFavoriteAsync(recipeMeta.RecipeID, userid);
-
             if (!loadedRecipe)
             {
-                Analytics.TrackEvent("TriedChangingFavoriteBeforeRecipeLoaded", new Dictionary<string, string> { { "loadedRecipe", loadedRecipe.ToString() } });
                 return;
             }
 
             IsFavorite = !IsFavorite;
-
-            Analytics.TrackEvent("changeFavorite", new Dictionary<string, string> { { "IsFavorite", IsFavorite.ToString() } });
-
             OnPropertyChanged(nameof(IsFavorite));
 
             try
             {
                 //Save or unsave recipe
-                var savedRecipes = User.User.SavedRecipes;
+                List<RecipeDtoV2> savedRecipes = User.User.SavedRecipes;
                 // save
                 if (IsFavorite && !savedRecipes.Any(p => p.Name == recipe.Name))
                 {
@@ -93,11 +82,11 @@ namespace FeedMe
                     }
                 }
             }
-            catch (Exception ex) { Crashes.TrackError(ex); }
+            catch (Exception) { }
         }
 
-        public RecipePage (RecipeMetaDtoV2 recipeMeta)
-		{
+        public RecipePage(RecipeMetaDtoV2 recipeMeta)
+        {
             InitializeComponent();
             BindingContext = this;
 
@@ -108,9 +97,9 @@ namespace FeedMe
             GET_recipeDto(recipeMeta.RecipeId);
 
             Task.Factory.StartNew(() => UpdateFavorite());
-		}
-        public RecipePage (RecipeDtoV2 recipe)
-		{
+        }
+        public RecipePage(RecipeDtoV2 recipe)
+        {
             InitializeComponent();
             BindingContext = this;
 
@@ -123,22 +112,21 @@ namespace FeedMe
             Task.Factory.StartNew(() => UpdateFavorite());
         }
 
-        void UpdateFavorite()
+        private void UpdateFavorite()
         {
             IsFavorite = User.User.SavedRecipes.Any(p => p.Name == (fromSavedRecipes ? recipe.Name : recipeMeta.Name));
             OnPropertyChanged(nameof(IsFavorite));
         }
 
-        async void GET_recipeDto(string id)
+        private async void GET_recipeDto(string id)
         {
             try
             {
                 HttpResponseMessage response = await httpClient.GetAsync(RamseyApi.V2.Recipe.Retreive + "?id=" + id);
-                Analytics.TrackEvent("reciveRecipeResponse", new Dictionary<string, string> { { "reciveRecipeResponseStatusCode", response.StatusCode.ToString() } });
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = await response.Content.ReadAsStringAsync();
+                    string result = await response.Content.ReadAsStringAsync();
                     recipe = JsonConvert.DeserializeObject<RecipeDtoV2>(result);
                     XamlSetup2();
                     loadedRecipe = true;
@@ -148,16 +136,13 @@ namespace FeedMe
                     await DisplayAlert("Fel", "Kunnde inte ansluta till servern\n\nstatus code: " + (int)response.StatusCode, "ok");
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Analytics.TrackEvent("reciveRecipe", new Dictionary<string, string> { { "recipeID", id.ToString() } });
-
-                Crashes.TrackError(ex);
                 await DisplayAlert("Fel", "Kunnde inte ansluta till servern", "ok");
             }
         }
 
-        void XamlSetup1()
+        private void XamlSetup1()
         {
             //Recipe Image
             Grid_Images.HeightRequest = Application.Current.MainPage.Width;
@@ -185,8 +170,8 @@ namespace FeedMe
             Label_InstructionsHead.TextColor = Constants.AppColor.text_white;
             Label_InstructionsHead.FontSize = Constants.fontSize1;
         }
-        
-        void XamlSetup2()
+
+        private void XamlSetup2()
         {
             //Ingredients
             for (int i = 0; i < recipe.RecipeParts.Count() + 1; i++)
@@ -220,7 +205,7 @@ namespace FeedMe
                 }, 1, i);
 
                 // has ingredient icons
-                foreach (var myIngredient in myIngredients)
+                foreach (IngredientDtoV2 myIngredient in myIngredients)
                 {
 
                     if (recipe.RecipeParts.ToList()[i].IngredientName.Trim() == myIngredient.IngredientName.Trim())
@@ -319,7 +304,7 @@ namespace FeedMe
             ActivityIndicatior_LoadingRecipeInstructions.IsRunning = false;
         }
 
-        void UpdateIngredientPortions(int portions)
+        private void UpdateIngredientPortions(int portions)
         {
             double portionMuliplier = 0.5;
             Label_Portions.Text = (portions == 1) ? portions.ToString() + " portion" : portions.ToString() + " portioner";

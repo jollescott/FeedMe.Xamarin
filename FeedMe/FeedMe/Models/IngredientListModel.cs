@@ -16,8 +16,8 @@ namespace FeedMe.Models
         public string NotAddedIcon { get; set; } = Constants.AddIngredientCheckIcon;
         public string DefultIcon { get; set; } = Constants.DeleteIngredientIcon;
 
-        public string IngredientName { get { return Ingredient.IngredientName; } }
-        public string Icon { get { return (IsAdded) ? AddedIcon : NotAddedIcon; } }
-        public Color Color { get { return (IsAdded) ? AddedColor : NotAddedColor; } }
+        public string IngredientName => Ingredient.IngredientName;
+        public string Icon => (IsAdded) ? AddedIcon : NotAddedIcon;
+        public Color Color => (IsAdded) ? AddedColor : NotAddedColor;
     }
 }

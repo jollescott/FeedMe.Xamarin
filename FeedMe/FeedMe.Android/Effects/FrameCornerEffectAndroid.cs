@@ -22,7 +22,7 @@ namespace FeedMe.Droid.Effects
         }
     }
 
-    class RoundedOutlineProvider : ViewOutlineProvider
+    internal class RoundedOutlineProvider : ViewOutlineProvider
     {
         private readonly double radius;
 

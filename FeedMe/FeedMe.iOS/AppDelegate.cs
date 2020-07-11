@@ -1,10 +1,7 @@
-﻿using Foundation;
+﻿using FeedMe.Core;
+using Foundation;
+using MvvmCross.Forms.Platforms.Ios.Core;
 using UIKit;
-//using Facebook.CoreKit;
-//using Facebook.LoginKit;
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
 
 namespace FeedMe.iOS
 {
@@ -12,7 +9,7 @@ namespace FeedMe.iOS
     // User Interface of the application, as well as listening (and optionally responding) to 
     // application events from iOS.
     [Register("AppDelegate")]
-    public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
+    public partial class AppDelegate : MvxFormsApplicationDelegate<MvxFormsIosSetup<App, FormsApp>, App, FormsApp>
     {
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
@@ -22,21 +19,10 @@ namespace FeedMe.iOS
         // You have 17 seconds to return from this method, or iOS will terminate your application.
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
-        {            
+        {
             Rg.Plugins.Popup.Popup.Init();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             Plugin.Iconize.Iconize.Init();
-
-            AppCenter.Start("3b7d6ef2-eee4-46d3-a897-b7876624251b", typeof(Analytics), typeof(Crashes));
-
-#if DEBUG
-            Google.MobileAds.MobileAds.Configure("ca-app-pub-3940256099942544~3347511713");
-#else
-            Google.MobileAds.MobileAds.Configure("ca-app-pub-4571482486671250~8388360750");
-#endif
-
-            global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
         }

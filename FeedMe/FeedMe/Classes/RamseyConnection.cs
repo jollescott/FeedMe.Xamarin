@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.Http;
-using Ramsey.Shared.Misc;
-using Ramsey.Shared.Dto.V2;
-using Newtonsoft.Json;
-using FeedMe.Classes;
+﻿using System.Threading.Tasks;
 
 namespace FeedMe.Classes
 {

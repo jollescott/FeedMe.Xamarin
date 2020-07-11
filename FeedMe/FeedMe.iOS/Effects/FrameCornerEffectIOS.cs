@@ -1,5 +1,4 @@
-﻿using System;
-using FeedMe.Effects;
+﻿using FeedMe.Effects;
 using FeedMe.iOS.Effects;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -13,7 +12,7 @@ namespace FeedMe.iOS.Effects
 
         protected override void OnAttached()
         {
-            var radius = (float)FrameCornerEffect.GetRadius(Element);
+            float radius = (float)FrameCornerEffect.GetRadius(Element);
             Container.Layer.CornerRadius = radius;
             Container.Layer.MasksToBounds = true;
         }

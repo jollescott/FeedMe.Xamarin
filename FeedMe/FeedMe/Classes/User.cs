@@ -2,14 +2,11 @@
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using Ramsey.Shared.Dto.V2;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
 
 namespace FeedMe.User
 {
-    class User
+    internal class User
     {
         private static ISettings AppSettings =>
     CrossSettings.Current;
@@ -20,7 +17,9 @@ namespace FeedMe.User
             {
                 string json = AppSettings.GetValueOrDefault(nameof(SavedIngredinets), string.Empty);
                 if (json == null || json == "")
+                {
                     return new List<IngredientDtoV2>();
+                }
                 else
                 {
                     try
@@ -42,7 +41,9 @@ namespace FeedMe.User
             {
                 string json = AppSettings.GetValueOrDefault(nameof(SavedExcludedIngredinets), string.Empty);
                 if (json == null || json == "")
+                {
                     return new List<IngredientDtoV2>();
+                }
                 else
                 {
                     try
@@ -64,7 +65,9 @@ namespace FeedMe.User
             {
                 string json = AppSettings.GetValueOrDefault(nameof(SavedRecipeMetas), string.Empty);
                 if (json == null || json == "")
+                {
                     return new List<RecipeMetaDtoV2>();
+                }
                 else
                 {
                     try
@@ -86,7 +89,9 @@ namespace FeedMe.User
             {
                 string json = AppSettings.GetValueOrDefault(nameof(SavedRecipes), string.Empty);
                 if (json == null || json == "")
+                {
                     return new List<RecipeDtoV2>();
+                }
                 else
                 {
                     try

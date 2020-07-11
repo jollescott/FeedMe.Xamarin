@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -34,10 +30,10 @@ namespace FeedMe.Pages.MasterDetail
             Label_PrivacyPolicy.TextColor = Constants.AppColor.text_link;
         }
 
-        class FDMasterDetailPageMasterViewModel : INotifyPropertyChanged
+        private class FDMasterDetailPageMasterViewModel : INotifyPropertyChanged
         {
             public ObservableCollection<FDMasterDetailPageMenuItem> MenuItems { get; set; }
-            
+
             public FDMasterDetailPageMasterViewModel()
             {
                 MenuItems = new ObservableCollection<FDMasterDetailPageMenuItem>(new[]
@@ -48,13 +44,16 @@ namespace FeedMe.Pages.MasterDetail
                     //new FDMasterDetailPageMenuItem { Id = 3, Title = "Inköpslista\n(Kommer snart)", Icon = "md-shopping-basket" }
                 });
             }
-            
+
             #region INotifyPropertyChanged Implementation
             public event PropertyChangedEventHandler PropertyChanged;
-            void OnPropertyChanged([CallerMemberName] string propertyName = "")
+
+            private void OnPropertyChanged([CallerMemberName] string propertyName = "")
             {
                 if (PropertyChanged == null)
+                {
                     return;
+                }
 
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }

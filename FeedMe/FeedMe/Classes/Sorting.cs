@@ -1,12 +1,10 @@
 ﻿using Ramsey.Shared.Dto.V2;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 namespace FeedMe.Classes
 {
-    class Sorting
+    internal class Sorting
     {
         public static List<IngredientDtoV2> SortIngredientsByNameLenght(List<IngredientDtoV2> ingredients)
         {
@@ -31,7 +29,9 @@ namespace FeedMe.Classes
             foreach (IngredientDtoV2 item in ingredientList)
             {
                 if (item.IngredientId == ingredient.IngredientId)
+                {
                     return true;
+                }
             }
             return false;
         }
@@ -39,10 +39,12 @@ namespace FeedMe.Classes
 
         public static bool RecipeMetaExistsInList(RecipeMetaDtoV2 recipe, List<RecipeMetaDtoV2> recipeList)
         {
-            foreach (var r in recipeList)
+            foreach (RecipeMetaDtoV2 r in recipeList)
             {
                 if (recipe.RecipeId == r.RecipeId)
+                {
                     return true;
+                }
             }
             return false;
         }
@@ -51,7 +53,9 @@ namespace FeedMe.Classes
         public static void ResizeListView(ListView listView, int numberOfItems)
         {
             if (numberOfItems < 1)
+            {
                 numberOfItems = 1;
+            }
 
             double height = numberOfItems * Constants.textHeight;
             double adjust = (numberOfItems * 0.55) + 0.2;

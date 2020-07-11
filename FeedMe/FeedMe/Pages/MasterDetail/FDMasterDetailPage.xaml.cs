@@ -1,7 +1,4 @@
-﻿using FeedMe.Interfaces;
-using Plugin.Iconize;
-using Rg.Plugins.Popup.Services;
-using System.Threading.Tasks;
+﻿using Plugin.Iconize;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,14 +12,15 @@ namespace FeedMe.Pages.MasterDetail
         public FDMasterDetailPage()
         {
             InitializeComponent();
-            MasterPage.ListView.ItemSelected += ListView_ItemSelectedAsync;
+            MasterPage.ListView.ItemSelected += ListView_ItemSelected;
         }
 
-        private async void ListView_ItemSelectedAsync(object sender, SelectedItemChangedEventArgs e)
+        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var item = e.SelectedItem as FDMasterDetailPageMenuItem;
-            if (item == null)
+            if (!(e.SelectedItem is FDMasterDetailPageMenuItem item))
+            {
                 return;
+            }
 
             switch (item.Id)
             {
@@ -33,24 +31,10 @@ namespace FeedMe.Pages.MasterDetail
                     Detail = new NavigationPage(new MealsListPage(true) { Title = "Sök Recept" }); // search with name page
                     break;
                 case 2:
-
-                    //bool isAuth = await VerifyFacebookAsync();
-                    //if (isAuth)
-                    //    Detail = new IconNavigationPage(new FavoritesPage());
-
-                    Detail = new NavigationPage(new MealsListPage() { Title = "Gillade Recept"}); // saved recipes page
+                    Detail = new NavigationPage(new MealsListPage() { Title = "Gillade Recept" }); // saved recipes page
                     break;
-
-                //case 3:
-                //    Detail = new NavigationPage(new shoppingListPage()); // shopping list page
-                //    break;
             }
-            /*
-            var page = (Page)Activator.CreateInstance(item.TargetType);
-            page.Title = item.Title;
 
-            Detail = new NavigationPage(page);
-            */
             IsPresented = false;
             MasterPage.ListView.SelectedItem = null;
         }

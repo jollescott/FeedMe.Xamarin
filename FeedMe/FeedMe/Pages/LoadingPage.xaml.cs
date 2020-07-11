@@ -1,25 +1,24 @@
-﻿using System;
+﻿using FeedMe.Pages.MasterDetail;
+using Ramsey.Shared.Misc;
+using System;
+using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.Net.Http;
-using FeedMe.Pages.MasterDetail;
-using Ramsey.Shared.Misc;
 
 namespace FeedMe
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class LoadingPage : ContentPage
-	{
+    public partial class LoadingPage : ContentPage
+    {
+        private readonly HttpClient httpClient = new HttpClient();
 
-        HttpClient httpClient = new HttpClient();
-
-		public LoadingPage ()
-		{
-			InitializeComponent ();
+        public LoadingPage()
+        {
+            InitializeComponent();
             XamlSetup();
-		}
+        }
 
-        void XamlSetup()
+        private void XamlSetup()
         {
             //BackgroundImage = "background_loading.png";
             //ff_Background.Source = "background_loading.png"; // image does not exist
@@ -31,8 +30,7 @@ namespace FeedMe
             TestConnection();
         }
 
-
-        async void TestConnection()
+        private async void TestConnection()
         {
             bool repet = true;
             do
@@ -56,7 +54,7 @@ namespace FeedMe
                         //await DisplayAlert("Error", "", "reload");
                     }
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     ActivityIndicatior_WaitingForServer.IsRunning = false;
                     await DisplayAlert("Can't connect to server", "Server conection failed", "try again");
