@@ -69,5 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\libs\FeedMe.Shared\FeedMe.Shared\FeedMe.Shared.csproj" />
+    <ProjectReference Include="..\FeedMe.Core\FeedMe.Core.csproj" />
   </ItemGroup>
 </Project>

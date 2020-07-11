@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<views:MvxContentPage x:TypeArguments="viewModels:LoadingViewModel"
+             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:FeedMe"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+             xmlns:viewModels="clr-namespace:FeedMe.Core.ViewModels;assembly=FeedMe.Core"
              x:Class="FeedMe.LoadingPage">
-    <ContentPage.Content>
-        <Grid>
-            <ff:CachedImage x:Name="ff_Background" Margin="0" Aspect="AspectFill"/>
-            <ActivityIndicator Margin="30" Color="#777777" x:Name="ActivityIndicatior_WaitingForServer" VerticalOptions="End" HorizontalOptions="Center" IsRunning="True"/>
-        </Grid>
-    </ContentPage.Content>
-</ContentPage>
+    
+    <Grid>
+        <ff:CachedImage x:Name="ff_Background" Margin="0" Aspect="AspectFill"/>
+        <ActivityIndicator Margin="30" Color="#777777" VerticalOptions="End" HorizontalOptions="Center" IsRunning="True"/>
+    </Grid>
+</views:MvxContentPage>
