@@ -47,14 +47,5 @@ namespace FeedMe
         public static string ExcludeIngredientCheckIcon = "md-block";
         public static string AddIngredientIcon = "md-add";
         public static string DeleteIngredientIcon = "md-clear";
-
-        //public static int navigationBarPadding = 5;
-        //public static int navigationBarHeight = 30;
-
-        //public static string ingredient_search = "https://ramsey.azurewebsites.net/ingredient/suggest?search=";
-        //public static string recipe_suggest = "https://ramsey.azurewebsites.net/recipe/suggest";
-        //public static string recipe_retrive = "https://ramsey.azurewebsites.net/recipe/retrieve?id=";
-
-        //public static string myIngredientsSave = "myIngredients";
     }
 }

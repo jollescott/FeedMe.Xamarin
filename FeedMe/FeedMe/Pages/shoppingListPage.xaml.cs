@@ -12,7 +12,7 @@ using Xamarin.Forms.Xaml;
 namespace FeedMe.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class shoppingListPage : ContentPage
+    public partial class ShoppingListPage : ContentPage
     {
         private readonly HttpClient httpClient = new HttpClient();
         private List<IngredientDtoV2> searchIngredients = new List<IngredientDtoV2>();
@@ -25,7 +25,7 @@ namespace FeedMe.Pages
         public ObservableCollection<string> TestIcons { get; set; } = new ObservableCollection<string> { "md-add", "md-remove" };
 
 
-        public shoppingListPage()
+        public ShoppingListPage()
         {
             InitializeComponent();
 

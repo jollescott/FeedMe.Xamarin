@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:FeedMe.Controls;assembly=FeedMe"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             xmlns:fft="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
              xmlns:conv="clr-namespace:FeedMe.Converters"
              x:Class="FeedMe.RecipePage">
@@ -40,11 +38,6 @@
                         </Grid.ColumnDefinitions>
 
                         <ff:CachedImage x:Name="Image_Recipe" Aspect="AspectFill" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
-                        <!--ff:CachedImage x:Name="Image_OwnerLogo" Aspect="AspectFit" Grid.Row="1" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill">
-                            <ff:CachedImage.Transformations>
-                                <fft:CircleTransformation BorderHexColor="#777777" BorderSize="5"/>
-                            </ff:CachedImage.Transformations>
-                        </-->
                     </Grid>
 
                     <!--Owner Info-->

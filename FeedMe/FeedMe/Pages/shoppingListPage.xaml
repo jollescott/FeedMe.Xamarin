@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
-             x:Class="FeedMe.Pages.shoppingListPage">
+             x:Class="FeedMe.Pages.ShoppingListPage">
     <ContentPage.Content>
 
         <Grid Padding="0" Margin="0">
@@ -47,9 +47,6 @@
                                         </Grid.ColumnDefinitions>
 
                                         <Label Text="{Binding Name}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"/>
-
-                                        <!--Image Source="{Binding IconSource}" VerticalOptions="Center" HorizontalOptions="End" Aspect="AspectFit" Grid.Column="2" Grid.Row="1"/-->
-
                                         <iconize:IconLabel Text="{Binding IconSource}" FontSize="28" VerticalTextAlignment="Center" TextColor="{Binding Color}" Grid.Column="2" Grid.Row="1"/>
 
                                     </Grid>

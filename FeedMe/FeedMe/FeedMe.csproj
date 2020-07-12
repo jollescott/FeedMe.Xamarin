@@ -27,6 +27,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pages\MasterDetail\FDMasterDetailPageMenuItem.cs" />
+    <Compile Update="Pages\shoppingListPage.xaml.cs">
+      <DependentUpon>ShoppingListPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -60,7 +63,7 @@
     <EmbeddedResource Update="Pages\RecipePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\shoppingListPage.xaml">
+    <EmbeddedResource Update="Pages\ShoppingListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
