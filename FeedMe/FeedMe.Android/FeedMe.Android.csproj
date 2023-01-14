@@ -4,6 +4,7 @@
     <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseMaui>true</UseMaui>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <AndroidTlsProvider>btls</AndroidTlsProvider>
@@ -31,6 +32,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFramework>net7.0-android</TargetFramework>
+    <TargetFrameworks>net7.0-android33.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android.Export" />

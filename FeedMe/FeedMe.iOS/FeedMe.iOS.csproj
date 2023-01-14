@@ -3,6 +3,7 @@
     <OutputType>Exe</OutputType>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <UseMaui>true</UseMaui>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.1</SupportedOSPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <ConsolePause>false</ConsolePause>
@@ -46,6 +47,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFramework>net7.0-ios</TargetFramework>
+    <TargetFrameworks>net7.0-ios15.4</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MvvmCross">
