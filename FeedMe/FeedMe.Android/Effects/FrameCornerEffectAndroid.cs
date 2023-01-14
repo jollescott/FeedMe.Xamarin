@@ -2,8 +2,8 @@
 using Android.Views;
 using FeedMe.Droid.Effects;
 using FeedMe.Effects;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
 
 [assembly: ResolutionGroupName("FeedMe")]
 [assembly: ExportEffect(typeof(FrameCornerEffectAndroid), "FrameCornerEffect")]

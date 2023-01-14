@@ -1,7 +1,7 @@
 ﻿using FeedMe.Effects;
 using FeedMe.iOS.Effects;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.iOS;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
 
 [assembly: ResolutionGroupName("FeedMe")]
 [assembly: ExportEffect(typeof(FrameCornerEffectIOS), "FrameCornerEffect")]

@@ -1,7 +1,7 @@
 using CoreGraphics;
 using FeedMe.iOS.Renderers;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.iOS;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
 
 [assembly: ExportRenderer(typeof(Frame), typeof(CustomFrameRenderer))]
 namespace FeedMe.iOS.Renderers

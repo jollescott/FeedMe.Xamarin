@@ -1,6 +1,6 @@
 ﻿using FeedMe.Pages.MasterDetail;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace FeedMe

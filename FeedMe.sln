@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29009.5
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedMe.Android", "FeedMe\FeedMe.Android\FeedMe.Android.csproj", "{23D8CFF5-C02F-4F85-8EE5-20008DAC55F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeedMe.Android", "FeedMe\FeedMe.Android\FeedMe.Android.csproj", "{23D8CFF5-C02F-4F85-8EE5-20008DAC55F3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeedMe", "FeedMe\FeedMe\FeedMe.csproj", "{FFB8CE2A-A55D-4126-9AA0-96A8025A385E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedMe.iOS", "FeedMe\FeedMe.iOS\FeedMe.iOS.csproj", "{4CE9D335-4CA4-4F59-8D7A-9D08BB66CFD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeedMe.iOS", "FeedMe\FeedMe.iOS\FeedMe.iOS.csproj", "{4CE9D335-4CA4-4F59-8D7A-9D08BB66CFD3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeedMe.Shared", "libs\FeedMe.Shared\FeedMe.Shared\FeedMe.Shared.csproj", "{C9639875-1F00-4541-B246-2AC84CC619EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedMe.Core", "FeedMe\FeedMe.Core\FeedMe.Core.csproj", "{929D6FA8-7E49-4609-8F88-90AB71682B1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeedMe.Core", "FeedMe\FeedMe.Core\FeedMe.Core.csproj", "{929D6FA8-7E49-4609-8F88-90AB71682B1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -221,9 +221,9 @@ Global
 		{4CE9D335-4CA4-4F59-8D7A-9D08BB66CFD3}.AppStore|x86.ActiveCfg = AppStore|iPhone
 		{4CE9D335-4CA4-4F59-8D7A-9D08BB66CFD3}.AppStore|x86.Build.0 = AppStore|iPhone
 		{4CE9D335-4CA4-4F59-8D7A-9D08BB66CFD3}.AppStore|x86.Deploy.0 = AppStore|iPhone
-		{4CE9D335-4CA4-4F59-8D7A-9D08BB66CFD3}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
-		{4CE9D335-4CA4-4F59-8D7A-9D08BB66CFD3}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
-		{4CE9D335-4CA4-4F59-8D7A-9D08BB66CFD3}.Debug|Any CPU.Deploy.0 = Debug|iPhoneSimulator
+		{4CE9D335-4CA4-4F59-8D7A-9D08BB66CFD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CE9D335-4CA4-4F59-8D7A-9D08BB66CFD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CE9D335-4CA4-4F59-8D7A-9D08BB66CFD3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{4CE9D335-4CA4-4F59-8D7A-9D08BB66CFD3}.Debug|ARM.ActiveCfg = Debug|iPhone
 		{4CE9D335-4CA4-4F59-8D7A-9D08BB66CFD3}.Debug|ARM.Build.0 = Debug|iPhone
 		{4CE9D335-4CA4-4F59-8D7A-9D08BB66CFD3}.Debug|ARM.Deploy.0 = Debug|iPhone

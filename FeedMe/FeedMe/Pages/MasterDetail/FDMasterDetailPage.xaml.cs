@@ -1,13 +1,12 @@
 ﻿using Plugin.Iconize;
-
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
 
 
 namespace FeedMe.Pages.MasterDetail
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class FDMasterDetailPage : MasterDetailPage
+    public partial class FDMasterDetailPage : FlyoutPage
     {
         public FDMasterDetailPage()
         {

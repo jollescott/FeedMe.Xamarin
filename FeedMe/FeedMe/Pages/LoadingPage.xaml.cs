@@ -4,8 +4,8 @@ using MvvmCross.Forms.Views;
 using Ramsey.Shared.Misc;
 using System;
 using System.Net.Http;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
 
 namespace FeedMe
 {
