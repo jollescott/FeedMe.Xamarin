@@ -2,7 +2,6 @@
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 
-[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace FeedMe
 {
     public partial class FormsApp : Application
@@ -11,7 +10,6 @@ namespace FeedMe
         {
             InitializeComponent();
 
-            Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.MaterialModule());
             MainPage = new FDMasterDetailPage();
         }
 
