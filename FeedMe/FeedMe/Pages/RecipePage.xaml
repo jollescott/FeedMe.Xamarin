@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:conv="clr-namespace:FeedMe.Converters"
@@ -6,16 +7,15 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <conv:IsFavoriteConverter x:Key="favoriteConv"/>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
+
     <ContentPage.Content>
 
         <Grid RowSpacing="0" ColumnSpacing="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="100" />
             </Grid.RowDefinitions>
 
             <ScrollView Grid.Row="0">
@@ -25,17 +25,18 @@
                     <Grid x:Name="Grid_Images" Margin="0" Padding="0">
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="7*"/>
-                            <RowDefinition Height="3*"/>
-                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="7*" />
+                            <RowDefinition Height="3*" />
+                            <RowDefinition Height="5" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="7*"/>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="7*" />
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="5" />
                         </Grid.ColumnDefinitions>
 
-                        <Image x:Name="ImageRecipe" Aspect="AspectFill" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
+                        <Image x:Name="ImageRecipe" Aspect="AspectFill" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3"
+                               Grid.ColumnSpan="3" />
                     </Grid>
 
                     <!--Owner Info-->
@@ -44,11 +45,13 @@
 
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
-                                <Label x:Name="LabelRecipeName" FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Center" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Column="0"/>
+                                <Label x:Name="LabelRecipeName" FontSize="Medium" HorizontalOptions="Start"
+                                       VerticalOptions="Center" HorizontalTextAlignment="Start"
+                                       VerticalTextAlignment="Center" Grid.Column="0" />
 
                                 <!--<iconize:IconLabel x:Name="IconFavorite" Text="{Binding IsFavorite, Converter={x:StaticResource favoriteConv}}"
                                                 VerticalTextAlignment="Start" HorizontalTextAlignment="End" VerticalOptions="Start" HorizontalOptions="End" TextColor="Red" Grid.Column="1">
@@ -58,21 +61,27 @@
                                 </iconize:IconLabel>-->
                             </Grid>
 
-                            <BoxView HeightRequest="1" HorizontalOptions="Fill" Color="LightGray"/>
+                            <BoxView HeightRequest="1" HorizontalOptions="Fill" Color="LightGray" />
 
                             <Grid ColumnSpacing="15">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Image Margin="0" x:Name="ImageOwnerLogo" Grid.Column="0" VerticalOptions="Center" WidthRequest="80"/>
+                                <Image Margin="0" x:Name="ImageOwnerLogo" Grid.Column="0" VerticalOptions="Center"
+                                       WidthRequest="80" />
 
                                 <StackLayout Margin="0" Padding="0" Grid.Column="1" VerticalOptions="Start">
-                                    <Label x:Name="LabelOwnerLinkInfo" Margin="0" FontSize="Medium" Text="Receptet kan hittas på:" VerticalOptions="Start" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
-                                    <Label x:Name="LabelOwnerLink" Margin="0" FontSize="Small" HorizontalOptions="Start" VerticalOptions="Start" HorizontalTextAlignment="Start">
+                                    <Label x:Name="LabelOwnerLinkInfo" Margin="0" FontSize="Medium"
+                                           Text="Receptet kan hittas på:" VerticalOptions="Start"
+                                           HorizontalOptions="Start" HorizontalTextAlignment="Start" />
+                                    <Label x:Name="LabelOwnerLink" Margin="0" FontSize="Small"
+                                           HorizontalOptions="Start" VerticalOptions="Start"
+                                           HorizontalTextAlignment="Start">
                                         <Label.GestureRecognizers>
-                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1"/>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                                  Tapped="TapGestureRecognizer_Tapped_1" />
                                         </Label.GestureRecognizers>
                                     </Label>
                                 </StackLayout>
@@ -84,62 +93,65 @@
                     <Frame Margin="0, 7.5, 0, 7.5" Padding="0" CornerRadius="0" BackgroundColor="White">
                         <Grid RowSpacing="0">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <!--Ingredients Head-->
                             <Frame x:Name="FrameIngredientsHead" Margin="0" CornerRadius="0" Grid.Row="0">
-                                <Label x:Name="LabelIngridientsHead" VerticalTextAlignment="Center" FontFamily=""/>
+                                <Label x:Name="LabelIngridientsHead" VerticalTextAlignment="Center" FontFamily="" />
                             </Frame>
 
                             <!--Portions Stepper-->
                             <Grid Margin="15, 15, 15, 15" x:Name="GridPortions" Padding="0" Grid.Row="1">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <!--Stepper x:Name="Stepper_Portions" VerticalOptions="Center" HorizontalOptions="End" Maximum="10" Minimum="1" Increment="1" Value="2" ValueChanged="Stepper_Portions_ValueChanged"/-->
                                 <!--<iconize:IconButton x:Name="IconButton_AddPortionCount" BackgroundColor="#00CC66" Text="md-add" FontSize="Micro" Padding="0" CornerRadius="5" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Pressed="IconButton_AddPortionCount_Clicked"/>
                                 <iconize:IconButton x:Name="IconButton_RemovePortionCount" BackgroundColor="#00CC66" Text="md-remove" FontSize="Micro" Padding="0" CornerRadius="5" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Pressed="IconButton_RemovePortionCount_Clicked"/>-->
-                                <Label x:Name="LabelPortions" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="0"/>
+                                <Label x:Name="LabelPortions" FontSize="Medium" VerticalOptions="Center"
+                                       HorizontalOptions="Start" Grid.Column="0" />
                             </Grid>
 
                             <!--RecipeLoading-->
-                            <ActivityIndicator x:Name="ActivityIndicatorLoadingRecipeIngredients" Margin="15" IsRunning="True" VerticalOptions="Center" Grid.Row="2"/>
+                            <ActivityIndicator x:Name="ActivityIndicatorLoadingRecipeIngredients" Margin="15"
+                                               IsRunning="True" VerticalOptions="Center" Grid.Row="2" />
 
                             <!--Ingredients-->
-                            <Grid Margin="15, 7.5, 15, 15" Padding="0" x:Name="GridIngredients" Grid.Row="2"/>
+                            <Grid Margin="15, 7.5, 15, 15" Padding="0" x:Name="GridIngredients" Grid.Row="2" />
                         </Grid>
                     </Frame>
 
                     <Frame Margin="0, 7.5, 0, 15" Padding="0" CornerRadius="0" BackgroundColor="White">
                         <Grid RowSpacing="0">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
                             <!--Instructions Head-->
                             <Frame x:Name="FrameInstructionsHead" Margin="0" CornerRadius="0" Grid.Row="0">
-                                <Label x:Name="LabelInstructionsHead" VerticalTextAlignment="Center"/>
+                                <Label x:Name="LabelInstructionsHead" VerticalTextAlignment="Center" />
                             </Frame>
 
                             <!--RecipeLoading-->
-                            <ActivityIndicator x:Name="ActivityIndicatorLoadingRecipeInstructions" Margin="15" IsRunning="True" VerticalOptions="Center" Grid.Row="1"/>
+                            <ActivityIndicator x:Name="ActivityIndicatorLoadingRecipeInstructions" Margin="15"
+                                               IsRunning="True" VerticalOptions="Center" Grid.Row="1" />
 
                             <!--Instructions-->
-                            <StackLayout Margin="15" x:Name="StackInstructions" Grid.Row="1"/>
+                            <StackLayout Margin="15" x:Name="StackInstructions" Grid.Row="1" />
                         </Grid>
                     </Frame>
 
                 </StackLayout>
             </ScrollView>
         </Grid>
-            
+
     </ContentPage.Content>
 </ContentPage>

@@ -1,11 +1,10 @@
-﻿namespace FeedMe
+﻿namespace FeedMe;
+
+[XamlCompilation(XamlCompilationOptions.Compile)]
+public partial class LoadingPage : ContentPage
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LoadingPage : ContentPage
+    public LoadingPage()
     {
-        public LoadingPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

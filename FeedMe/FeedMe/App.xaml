@@ -1,12 +1,13 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FeedMe.FormsApp">
-   
+
     <Application.Resources>
 
         <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
-            <Setter x:Name="SetterBackgroundColor" Property="BackgroundColor" Value="#F2F2F2"/>
+            <Setter x:Name="SetterBackgroundColor" Property="BackgroundColor" Value="#F2F2F2" />
         </Style>
 
         <ResourceDictionary>
@@ -23,8 +24,8 @@
                 <Setter Property="HasShadow">
                     <Setter.Value>
                         <OnPlatform x:TypeArguments="x:Boolean">
-                            <On Platform="iOS" Value="false"/>
-                            <On Platform="Android" Value="true"/>
+                            <On Platform="iOS" Value="false" />
+                            <On Platform="Android" Value="true" />
                         </OnPlatform>
                     </Setter.Value>
                 </Setter>

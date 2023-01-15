@@ -7,33 +7,33 @@ using View = Android.Views.View;
 
 [assembly: ResolutionGroupName("FeedMe")]
 [assembly: ExportEffect(typeof(FrameCornerEffectAndroid), "FrameCornerEffect")]
-namespace FeedMe.Android.Effects
-{
-    public class FrameCornerEffectAndroid : PlatformEffect
-    {
-        protected override void OnAttached()
-        {
-            Control.ClipToOutline = true;
-            Control.OutlineProvider = new RoundedOutlineProvider(FrameCornerEffect.GetRadius(Element));
-        }
 
-        protected override void OnDetached()
-        {
-        }
+namespace FeedMe.Android.Effects;
+
+public class FrameCornerEffectAndroid : PlatformEffect
+{
+    protected override void OnAttached()
+    {
+        Control.ClipToOutline = true;
+        Control.OutlineProvider = new RoundedOutlineProvider(FrameCornerEffect.GetRadius(Element));
     }
 
-    internal class RoundedOutlineProvider : ViewOutlineProvider
+    protected override void OnDetached()
     {
-        private readonly double _radius;
+    }
+}
 
-        public RoundedOutlineProvider(double radius)
-        {
-            this._radius = radius;
-        }
+internal class RoundedOutlineProvider : ViewOutlineProvider
+{
+    private readonly double _radius;
 
-        public override void GetOutline(View view, Outline outline)
-        {
-            outline?.SetRoundRect(0, 0, view.Width, view.Height, (float)_radius);
-        }
+    public RoundedOutlineProvider(double radius)
+    {
+        _radius = radius;
+    }
+
+    public override void GetOutline(View view, Outline outline)
+    {
+        outline?.SetRoundRect(0, 0, view.Width, view.Height, (float)_radius);
     }
 }

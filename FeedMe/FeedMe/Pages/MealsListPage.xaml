@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:effects="clr-namespace:FeedMe.Effects"
@@ -6,74 +7,89 @@
 
     <Grid Padding="0" Margin="0" RowSpacing="0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Frame Padding="0, 0, 0, 10" Margin="0" x:Name="FrameRecipeSearching" IsEnabled="False" IsVisible="False" CornerRadius="0" BackgroundColor="White" Grid.Row="0">
-            <SearchBar Margin="0" x:Name="SearchBarRecipeSearching" Placeholder="Sök recept" TextChanged="SearchBar_RecipeSearching_TextChanged"/>
+        <Frame Padding="0, 0, 0, 10" Margin="0" x:Name="FrameRecipeSearching" IsEnabled="False" IsVisible="False"
+               CornerRadius="0" BackgroundColor="White" Grid.Row="0">
+            <SearchBar Margin="0" x:Name="SearchBarRecipeSearching" Placeholder="Sök recept"
+                       TextChanged="SearchBar_RecipeSearching_TextChanged" />
         </Frame>
 
         <Grid Grid.Row="1">
-            <ListView CachingStrategy="RecycleElement" x:Name="ListViewRecipes" HasUnevenRows="True" SeparatorVisibility="None" 
+            <ListView CachingStrategy="RecycleElement" x:Name="ListViewRecipes" HasUnevenRows="True"
+                      SeparatorVisibility="None"
                       ItemSelected="ListView_Recipes_ItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Frame x:Name="Frame_List" Padding="0" CornerRadius="0" HeightRequest="{Binding FrameHeight}">
+                            <Frame x:Name="Frame_List" Padding="0" CornerRadius="0"
+                                   HeightRequest="{Binding FrameHeight}">
                                 <Frame.Margin>
                                     <OnPlatform x:TypeArguments="Thickness">
-                                        <On Platform="iOS" Value="0, 7.5, 0, 7.5"/>
-                                        <On Platform="Android" Value="15, 7.5, 15, 7.5"/>
+                                        <On Platform="iOS" Value="0, 7.5, 0, 7.5" />
+                                        <On Platform="Android" Value="15, 7.5, 15, 7.5" />
                                     </OnPlatform>
                                 </Frame.Margin>
 
-                                <Grid Padding="0" HorizontalOptions="Fill" VerticalOptions="Fill" RowSpacing="0" ColumnSpacing="0">
+                                <Grid Padding="0" HorizontalOptions="Fill" VerticalOptions="Fill" RowSpacing="0"
+                                      ColumnSpacing="0">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="1*"/>
-                                        <RowDefinition Height="1*"/>
-                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="15*"/>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="15*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <BoxView BackgroundColor="#00CC66" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"/>
-                                    <Label Text="{Binding CoverageMessage}" IsVisible="{Binding ShowCoverageMessage}" IsEnabled="{Binding ShowCoverageMessage}" TextColor="White" FontSize="Small" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
-                                    <Image Source="{Binding Image}" Margin="0" Aspect="AspectFill" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
-                                    <Label Text="{Binding Name}" FontSize="Medium" Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="3" Grid.Column="2"/>
+                                    <BoxView BackgroundColor="#00CC66" HorizontalOptions="Fill" VerticalOptions="Fill"
+                                             Margin="0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" />
+                                    <Label Text="{Binding CoverageMessage}" IsVisible="{Binding ShowCoverageMessage}"
+                                           IsEnabled="{Binding ShowCoverageMessage}" TextColor="White" FontSize="Small"
+                                           Margin="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center"
+                                           Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" />
+                                    <Image Source="{Binding Image}" Margin="0" Aspect="AspectFill" Grid.Column="0"
+                                           Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="3" />
+                                    <Label Text="{Binding Name}" FontSize="Medium" Margin="0"
+                                           HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Row="3"
+                                           Grid.Column="2" />
 
-                                    <Frame x:Name="FrameLogo" Margin="0" effects:FrameCornerEffect.Radius="{Binding LogoRadius}" Padding="2" BorderColor="Black" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" HeightRequest="{Binding LogoDiameter}" WidthRequest="{Binding LogoDiameter}" HorizontalOptions="Start" VerticalOptions="Center">
+                                    <Frame x:Name="FrameLogo" Margin="0"
+                                           effects:FrameCornerEffect.Radius="{Binding LogoRadius}" Padding="2"
+                                           BorderColor="Black" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2"
+                                           HeightRequest="{Binding LogoDiameter}" WidthRequest="{Binding LogoDiameter}"
+                                           HorizontalOptions="Start" VerticalOptions="Center">
                                         <Frame.Effects>
-                                            <effects:FrameCornerEffect/>
+                                            <effects:FrameCornerEffect />
                                         </Frame.Effects>
 
                                         <Frame.CornerRadius>
                                             <OnPlatform x:TypeArguments="x:Single">
-                                                <On Platform="iOS" Value="0"/>
-                                                <On Platform="Android" Value="40"/>
+                                                <On Platform="iOS" Value="0" />
+                                                <On Platform="Android" Value="40" />
                                             </OnPlatform>
                                         </Frame.CornerRadius>
 
                                         <Frame.BorderColor>
                                             <OnPlatform x:TypeArguments="Color">
-                                                <On Platform="iOS" Value="Black"/>
-                                                <On Platform="Android" Value="Black"/>
+                                                <On Platform="iOS" Value="Black" />
+                                                <On Platform="Android" Value="Black" />
                                             </OnPlatform>
                                         </Frame.BorderColor>
 
                                         <Frame.HasShadow>
                                             <OnPlatform x:TypeArguments="x:Boolean">
-                                                <On Platform="iOS" Value="false"/>
-                                                <On Platform="Android" Value="true"/>
+                                                <On Platform="iOS" Value="false" />
+                                                <On Platform="Android" Value="true" />
                                             </OnPlatform>
                                         </Frame.HasShadow>
 
-                                        <Image Source="{Binding OwnerLogo}" Margin="0" Aspect="AspectFit">
-                                        </Image>
+                                        <Image Source="{Binding OwnerLogo}" Margin="0" Aspect="AspectFit" />
                                     </Frame>
 
                                 </Grid>
@@ -81,19 +97,24 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-                
+
                 <ListView.Footer>
                     <Grid HeightRequest="100">
-                        <Button IsEnabled="False" IsVisible="False" VerticalOptions="Center" x:Name="ButtonViewMoreRecipes" BackgroundColor="Transparent" BorderColor="Transparent" Text="Hämta fler recept" FontSize="Medium" Clicked="Button_ViewMoreRecipes_Clicked"/>
-                        <ActivityIndicator x:Name="ActivityIndicatorWaitingForServerLoadingMoreRecipes" IsRunning="false" VerticalOptions="Center"/>
+                        <Button IsEnabled="False" IsVisible="False" VerticalOptions="Center"
+                                x:Name="ButtonViewMoreRecipes" BackgroundColor="Transparent" BorderColor="Transparent"
+                                Text="Hämta fler recept" FontSize="Medium" Clicked="Button_ViewMoreRecipes_Clicked" />
+                        <ActivityIndicator x:Name="ActivityIndicatorWaitingForServerLoadingMoreRecipes"
+                                           IsRunning="false" VerticalOptions="Center" />
                     </Grid>
                 </ListView.Footer>
             </ListView>
 
-            <Label x:Name="LabelMessage" FontSize="Medium" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False" IsEnabled="False"/>
+            <Label x:Name="LabelMessage" FontSize="Medium" HorizontalOptions="Center" VerticalOptions="Center"
+                   IsVisible="False" IsEnabled="False" />
 
-            <ActivityIndicator x:Name="ActivityIndicatorWaitingForServer" IsRunning="True" VerticalOptions="Center"/>
-            <Label x:Name="LabelLoading" Text="Hämtar recept..." VerticalOptions="End" HorizontalOptions="Center" Margin="0, 0, 0, 30"/>
+            <ActivityIndicator x:Name="ActivityIndicatorWaitingForServer" IsRunning="True" VerticalOptions="Center" />
+            <Label x:Name="LabelLoading" Text="Hämtar recept..." VerticalOptions="End" HorizontalOptions="Center"
+                   Margin="0, 0, 0, 30" />
         </Grid>
     </Grid>
 </ContentPage>

@@ -1,69 +1,64 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using FeedMe.Classes;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
 
-namespace FeedMe.Pages.MasterDetail
+namespace FeedMe.Pages.MasterDetail;
+
+[XamlCompilation(XamlCompilationOptions.Compile)]
+public partial class FDMasterDetailPageMaster : ContentPage
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class FDMasterDetailPageMaster : ContentPage
+    public ListView ListView;
+
+    public FDMasterDetailPageMaster()
     {
-        public ListView ListView;
+        InitializeComponent();
 
-        public FDMasterDetailPageMaster()
+        if (Device.RuntimePlatform == Device.iOS)
         {
-            InitializeComponent();
-
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                //Icon = "menu.png";
-            }
-
-            //Grid_MenuBackground.BackgroundColor = Constants.AppColor.navigationBarColor;
-
-            BindingContext = new FDMasterDetailPageMasterViewModel();
-            ListView = MenuItemsListView;
-
-            Label_PrivacyPolicy.TextColor = Constants.AppColor.TextLink;
+            //Icon = "menu.png";
         }
 
-        private class FDMasterDetailPageMasterViewModel : INotifyPropertyChanged
+        //Grid_MenuBackground.BackgroundColor = Constants.AppColor.navigationBarColor;
+
+        BindingContext = new FDMasterDetailPageMasterViewModel();
+        ListView = MenuItemsListView;
+
+        Label_PrivacyPolicy.TextColor = Constants.AppColor.TextLink;
+    }
+
+    // Klicked PrivacyPolicy link
+    private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+    {
+        await Browser.OpenAsync(new Uri("https://api.feedmeapp.se/privacy"));
+    }
+
+    private class FDMasterDetailPageMasterViewModel : INotifyPropertyChanged
+    {
+        public FDMasterDetailPageMasterViewModel()
         {
-            public ObservableCollection<FDMasterDetailPageMenuItem> MenuItems { get; set; }
-
-            public FDMasterDetailPageMasterViewModel()
+            MenuItems = new ObservableCollection<FDMasterDetailPageMenuItem>(new[]
             {
-                MenuItems = new ObservableCollection<FDMasterDetailPageMenuItem>(new[]
-                {
-                    new FDMasterDetailPageMenuItem { Id = 0, Title = "Sök med ingredienser", Icon = "md-search"},
-                    new FDMasterDetailPageMenuItem { Id = 1, Title = "Sök med receptnamn", Icon = "md-search"},
-                    new FDMasterDetailPageMenuItem { Id = 2, Title = "Gillade recept", Icon = "md-favorite-border" },
-                    //new FDMasterDetailPageMenuItem { Id = 3, Title = "Inköpslista\n(Kommer snart)", Icon = "md-shopping-basket" }
-                });
-            }
-
-            #region INotifyPropertyChanged Implementation
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            private void OnPropertyChanged([CallerMemberName] string propertyName = "")
-            {
-                if (PropertyChanged == null)
-                {
-                    return;
-                }
-
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-            #endregion
+                new FDMasterDetailPageMenuItem { Id = 0, Title = "Sök med ingredienser", Icon = "md-search" },
+                new FDMasterDetailPageMenuItem { Id = 1, Title = "Sök med receptnamn", Icon = "md-search" },
+                new FDMasterDetailPageMenuItem { Id = 2, Title = "Gillade recept", Icon = "md-favorite-border" }
+                //new FDMasterDetailPageMenuItem { Id = 3, Title = "Inköpslista\n(Kommer snart)", Icon = "md-shopping-basket" }
+            });
         }
 
-        // Klicked PrivacyPolicy link
-        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        public ObservableCollection<FDMasterDetailPageMenuItem> MenuItems { get; }
+
+        #region INotifyPropertyChanged Implementation
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            await Browser.OpenAsync(new Uri("https://api.feedmeapp.se/privacy"));
+            if (PropertyChanged == null) return;
+
+            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
     }
 }

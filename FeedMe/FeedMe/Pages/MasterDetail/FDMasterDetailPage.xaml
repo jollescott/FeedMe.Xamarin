@@ -1,19 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <FlyoutPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FeedMe.Pages.MasterDetail.FDMasterDetailPage"
-             xmlns:pagesMasterDetail="clr-namespace:FeedMe.Pages.MasterDetail"
-             xmlns:pages="clr-namespace:FeedMe">
-    
-  <FlyoutPage.Flyout>
-    <pagesMasterDetail:FDMasterDetailPageMaster x:Name="MasterPage" />
-  </FlyoutPage.Flyout>
-  
-  <FlyoutPage.Detail>
-    <NavigationPage>
-      <x:Arguments>
-        <pages:MainPage />
-      </x:Arguments>
-    </NavigationPage>
-  </FlyoutPage.Detail>
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="FeedMe.Pages.MasterDetail.FDMasterDetailPage"
+            xmlns:pagesMasterDetail="clr-namespace:FeedMe.Pages.MasterDetail"
+            xmlns:pages="clr-namespace:FeedMe">
+
+    <FlyoutPage.Flyout>
+        <pagesMasterDetail:FDMasterDetailPageMaster x:Name="MasterPage" />
+    </FlyoutPage.Flyout>
+
+    <FlyoutPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <pages:MainPage />
+            </x:Arguments>
+        </NavigationPage>
+    </FlyoutPage.Detail>
 </FlyoutPage>

@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FeedMe.Pages.ShoppingListPage">
@@ -6,45 +7,50 @@
 
         <Grid Padding="0" Margin="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            
+
             <!--Searching-->
-            <Frame Margin="0" Padding="0" x:Name="FrameSearch" CornerRadius="0" IsEnabled="False" IsVisible="False" Grid.Row="0">
+            <Frame Margin="0" Padding="0" x:Name="FrameSearch" CornerRadius="0" IsEnabled="False" IsVisible="False"
+                   Grid.Row="0">
                 <Grid RowSpacing="0" ColumnSpacing="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    
-                    
-                    <SearchBar x:Name="SearchBarIngredients" Placeholder="Lägg till ingredienser" HorizontalOptions="Fill" Grid.Row="0" Grid.Column="0" TextChanged="SearchBar_Ingredients_TextChanged"/>
-                    <Button Text="Klar" Grid.Row="0" Grid.Column="1" Clicked="ImageButton_Clicked"/>
+
+
+                    <SearchBar x:Name="SearchBarIngredients" Placeholder="Lägg till ingredienser"
+                               HorizontalOptions="Fill" Grid.Row="0" Grid.Column="0"
+                               TextChanged="SearchBar_Ingredients_TextChanged" />
+                    <Button Text="Klar" Grid.Row="0" Grid.Column="1" Clicked="ImageButton_Clicked" />
                     <!--<iconize:IconLabel x:Name="test" Text="md-done" FontSize="28" VerticalTextAlignment="Center" TextColor="#00CC66" Grid.Row="0" Grid.Column="1"/>-->
 
 
-                    <ListView x:Name="ListViewSearchIngredients" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemSelected="ListView_SearchIngredients_ItemSelected">
+                    <ListView x:Name="ListViewSearchIngredients" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                              ItemSelected="ListView_SearchIngredients_ItemSelected">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
                                     <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="2.5*"/>
-                                            <RowDefinition Height="5*"/>
-                                            <RowDefinition Height="2.5*"/>
+                                            <RowDefinition Height="2.5*" />
+                                            <RowDefinition Height="5*" />
+                                            <RowDefinition Height="2.5*" />
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="7*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="7*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Label Text="{Binding Name}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"/>
+                                        <Label Text="{Binding Name}" FontSize="Medium" VerticalOptions="Center"
+                                               HorizontalOptions="Start" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" />
                                         <!--<iconize:IconLabel Text="{Binding IconSource}" FontSize="28" VerticalTextAlignment="Center" TextColor="{Binding Color}" Grid.Column="2" Grid.Row="1"/>-->
 
                                     </Grid>
@@ -60,56 +66,64 @@
             <ScrollView x:Name="ScrollViewMain" Grid.Row="0">
                 <StackLayout x:Name="StackLayoutMain">
 
-                    <Label Text="Test" TextColor="{Binding TestColor}"/>
+                    <Label Text="Test" TextColor="{Binding TestColor}" />
 
-                    <ListView ItemsSource="{Binding TestIcons}" x:Name="ListTest" HasUnevenRows="True" HeightRequest="100">
+                    <ListView ItemsSource="{Binding TestIcons}" x:Name="ListTest" HasUnevenRows="True"
+                              HeightRequest="100">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
                                     <StackLayout Orientation="Horizontal">
                                         <!--<iconize:IconLabel x:Name="icon_test" Text="{Binding .}" FontSize="28" TextColor="Red"/>-->
                                         <!--iconize:IconImage Icon="md-add"/-->
-                                        <Label Text="{Binding .}" FontSize="28" VerticalTextAlignment="Center" HorizontalTextAlignment="End"/>
+                                        <Label Text="{Binding .}" FontSize="28" VerticalTextAlignment="Center"
+                                               HorizontalTextAlignment="End" />
                                     </StackLayout>
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    
-                    <Button Clicked="button_test_Clicked"/>
+
+                    <Button Clicked="button_test_Clicked" />
 
                     <Frame BackgroundColor="Wheat" x:Name="FrameMyIngredients" Padding="0" CornerRadius="0">
                         <Grid Margin="0" Padding="0" RowSpacing="0" ColumnSpacing="0">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <Label Text="Inköpslista" FontSize="Medium" HorizontalOptions="Center" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
-                            <Button Text="Lägg till" x:Name="ButtonAddIngredients" BackgroundColor="Transparent" Grid.Row="0" Grid.Column="1" Clicked="Button_AddIngredients_Clicked"/>
+                            <Label Text="Inköpslista" FontSize="Medium" HorizontalOptions="Center"
+                                   VerticalOptions="Center" VerticalTextAlignment="Center"
+                                   HorizontalTextAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+                            <Button Text="Lägg till" x:Name="ButtonAddIngredients" BackgroundColor="Transparent"
+                                    Grid.Row="0" Grid.Column="1" Clicked="Button_AddIngredients_Clicked" />
 
-                            <ListView x:Name="ListViewMyIngredients" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemSelected="ListView_myIngredients_ItemSelected">
+                            <ListView x:Name="ListViewMyIngredients" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                      ItemSelected="ListView_myIngredients_ItemSelected">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell>
                                             <Grid>
                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition Height="2.5*"/>
-                                                    <RowDefinition Height="5*"/>
-                                                    <RowDefinition Height="2.5*"/>
+                                                    <RowDefinition Height="2.5*" />
+                                                    <RowDefinition Height="5*" />
+                                                    <RowDefinition Height="2.5*" />
                                                 </Grid.RowDefinitions>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="1*"/>
-                                                    <ColumnDefinition Width="7*"/>
-                                                    <ColumnDefinition Width="1*"/>
-                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="1*" />
+                                                    <ColumnDefinition Width="7*" />
+                                                    <ColumnDefinition Width="1*" />
+                                                    <ColumnDefinition Width="1*" />
                                                 </Grid.ColumnDefinitions>
 
-                                                <Label Text="{Binding IngredientId}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"/>
+                                                <Label Text="{Binding IngredientId}" FontSize="Medium"
+                                                       VerticalOptions="Center" HorizontalOptions="Start"
+                                                       Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" />
 
                                                 <!--Image Source="icon_x.png" VerticalOptions="Center" HorizontalOptions="End" Aspect="AspectFit" Grid.Column="2" Grid.Row="1"/-->
                                                 <!--<iconize:IconLabel Text="md-remove-shopping-cart" FontSize="28" VerticalTextAlignment="Center" HorizontalTextAlignment="End"  HorizontalOptions="End" TextColor="#1E1E1E"  Grid.Column="2" Grid.Row="0" Grid.RowSpan="3"/>-->
@@ -125,8 +139,8 @@
                 </StackLayout>
             </ScrollView>
 
-            
+
         </Grid>
-        
+
     </ContentPage.Content>
 </ContentPage>

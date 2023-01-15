@@ -1,25 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup>
-    <UseMaui>true</UseMaui>
-    <TargetFramework>net7.0-android</TargetFramework>
-    <OutputType>Library</OutputType>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-    <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
-    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.355802">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Update="Xamarin.Google.Android.Material" Version="1.7.0.1" />
-    <PackageReference Update="Xamarin.AndroidX.Navigation.Common" Version="2.5.3" />
-    <PackageReference Update="Xamarin.Android.Glide" Version="4.14.2" />
-    <PackageReference Include="Xamarin.AndroidX.Activity" Version="1.6.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\libs\FeedMe.Shared\FeedMe.Shared\FeedMe.Shared.csproj" />
-  </ItemGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DefineConstants>TRACE;DEBUG</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup>
+        <UseMaui>true</UseMaui>
+        <TargetFramework>net7.0-android</TargetFramework>
+        <OutputType>Library</OutputType>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.2"/>
+        <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1"/>
+        <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.355802">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Update="Xamarin.Google.Android.Material" Version="1.7.0.1"/>
+        <PackageReference Update="Xamarin.AndroidX.Navigation.Common" Version="2.5.3"/>
+        <PackageReference Update="Xamarin.Android.Glide" Version="4.14.2"/>
+        <PackageReference Include="Xamarin.AndroidX.Activity" Version="1.6.1"/>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\libs\FeedMe.Shared\FeedMe.Shared\FeedMe.Shared.csproj"/>
+    </ItemGroup>
 </Project>
