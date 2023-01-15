@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using FeedMe.Classes;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 
@@ -18,7 +19,7 @@ namespace FeedMe.Pages.MasterDetail
 
             if (Device.RuntimePlatform == Device.iOS)
             {
-                Icon = "menu.png";
+                //Icon = "menu.png";
             }
 
             //Grid_MenuBackground.BackgroundColor = Constants.AppColor.navigationBarColor;
@@ -26,7 +27,7 @@ namespace FeedMe.Pages.MasterDetail
             BindingContext = new FDMasterDetailPageMasterViewModel();
             ListView = MenuItemsListView;
 
-            Label_PrivacyPolicy.TextColor = Constants.AppColor.text_link;
+            Label_PrivacyPolicy.TextColor = Constants.AppColor.TextLink;
         }
 
         private class FDMasterDetailPageMasterViewModel : INotifyPropertyChanged
@@ -60,9 +61,9 @@ namespace FeedMe.Pages.MasterDetail
         }
 
         // Klicked PrivacyPolicy link
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            Device.OpenUri(new Uri("https://api.feedmeapp.se/privacy"));
+            await Browser.OpenAsync(new Uri("https://api.feedmeapp.se/privacy"));
         }
     }
 }

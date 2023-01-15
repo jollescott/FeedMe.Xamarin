@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
              xmlns:conv="clr-namespace:FeedMe.Converters"
-             x:Class="FeedMe.RecipePage">
+             x:Class="FeedMe.Pages.RecipePage">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -37,11 +35,11 @@
                             <ColumnDefinition Width="5"/>
                         </Grid.ColumnDefinitions>
 
-                        <ff:CachedImage x:Name="Image_Recipe" Aspect="AspectFill" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
+                        <Image x:Name="ImageRecipe" Aspect="AspectFill" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
                     </Grid>
 
                     <!--Owner Info-->
-                    <Frame x:Name="Frame_OwnerInfo" Margin="0, 0, 0, 7.5" Padding="15" CornerRadius="0" BackgroundColor="White">
+                    <Frame Margin="0, 0, 0, 7.5" Padding="15" CornerRadius="0" BackgroundColor="White">
                         <StackLayout Margin="0" Padding="0" Spacing="7.5">
 
                             <Grid>
@@ -50,14 +48,14 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Label x:Name="Label_RecipeName" FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Center" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Column="0"/>
+                                <Label x:Name="LabelRecipeName" FontSize="Medium" HorizontalOptions="Start" VerticalOptions="Center" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Grid.Column="0"/>
 
-                                <iconize:IconLabel x:Name="Icon_Favorite" Text="{Binding IsFavorite, Converter={x:StaticResource favoriteConv}}"
+                                <!--<iconize:IconLabel x:Name="IconFavorite" Text="{Binding IsFavorite, Converter={x:StaticResource favoriteConv}}"
                                                 VerticalTextAlignment="Start" HorizontalTextAlignment="End" VerticalOptions="Start" HorizontalOptions="End" TextColor="Red" Grid.Column="1">
                                     <iconize:IconLabel.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding FavoriteCommand}"/>
                                     </iconize:IconLabel.GestureRecognizers>
-                                </iconize:IconLabel>
+                                </iconize:IconLabel>-->
                             </Grid>
 
                             <BoxView HeightRequest="1" HorizontalOptions="Fill" Color="LightGray"/>
@@ -68,11 +66,11 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <ff:CachedImage Margin="0" x:Name="Image_OwnerLogo" Grid.Column="0" VerticalOptions="Center" WidthRequest="80"/>
+                                <Image Margin="0" x:Name="ImageOwnerLogo" Grid.Column="0" VerticalOptions="Center" WidthRequest="80"/>
 
                                 <StackLayout Margin="0" Padding="0" Grid.Column="1" VerticalOptions="Start">
-                                    <Label x:Name="Label_OwnerLinkInfo" Margin="0" FontSize="Medium" Text="Receptet kan hittas på:" VerticalOptions="Start" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
-                                    <Label x:Name="Label_OwnerLink" Margin="0" FontSize="Small" HorizontalOptions="Start" VerticalOptions="Start" HorizontalTextAlignment="Start">
+                                    <Label x:Name="LabelOwnerLinkInfo" Margin="0" FontSize="Medium" Text="Receptet kan hittas på:" VerticalOptions="Start" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                    <Label x:Name="LabelOwnerLink" Margin="0" FontSize="Small" HorizontalOptions="Start" VerticalOptions="Start" HorizontalTextAlignment="Start">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1"/>
                                         </Label.GestureRecognizers>
@@ -91,12 +89,12 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <!--Ingredients Head-->
-                            <Frame x:Name="Frame_IngredientsHead" Margin="0" CornerRadius="0" Grid.Row="0">
-                                <Label x:Name="Label_IngridientsHead" VerticalTextAlignment="Center" FontFamily=""/>
+                            <Frame x:Name="FrameIngredientsHead" Margin="0" CornerRadius="0" Grid.Row="0">
+                                <Label x:Name="LabelIngridientsHead" VerticalTextAlignment="Center" FontFamily=""/>
                             </Frame>
 
                             <!--Portions Stepper-->
-                            <Grid Margin="15, 15, 15, 15" x:Name="Grid_Portions" Padding="0" Grid.Row="1">
+                            <Grid Margin="15, 15, 15, 15" x:Name="GridPortions" Padding="0" Grid.Row="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
@@ -106,16 +104,16 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <!--Stepper x:Name="Stepper_Portions" VerticalOptions="Center" HorizontalOptions="End" Maximum="10" Minimum="1" Increment="1" Value="2" ValueChanged="Stepper_Portions_ValueChanged"/-->
-                                <iconize:IconButton x:Name="IconButton_AddPortionCount" BackgroundColor="#00CC66" Text="md-add" FontSize="Micro" Padding="0" CornerRadius="5" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Pressed="IconButton_AddPortionCount_Clicked"/>
-                                <iconize:IconButton x:Name="IconButton_RemovePortionCount" BackgroundColor="#00CC66" Text="md-remove" FontSize="Micro" Padding="0" CornerRadius="5" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Pressed="IconButton_RemovePortionCount_Clicked"/>
-                                <Label x:Name="Label_Portions" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="0"/>
+                                <!--<iconize:IconButton x:Name="IconButton_AddPortionCount" BackgroundColor="#00CC66" Text="md-add" FontSize="Micro" Padding="0" CornerRadius="5" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Pressed="IconButton_AddPortionCount_Clicked"/>
+                                <iconize:IconButton x:Name="IconButton_RemovePortionCount" BackgroundColor="#00CC66" Text="md-remove" FontSize="Micro" Padding="0" CornerRadius="5" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Pressed="IconButton_RemovePortionCount_Clicked"/>-->
+                                <Label x:Name="LabelPortions" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="0"/>
                             </Grid>
 
                             <!--RecipeLoading-->
-                            <ActivityIndicator x:Name="ActivityIndicatior_LoadingRecipeIngredients" Margin="15" IsRunning="True" VerticalOptions="Center" Grid.Row="2"/>
+                            <ActivityIndicator x:Name="ActivityIndicatorLoadingRecipeIngredients" Margin="15" IsRunning="True" VerticalOptions="Center" Grid.Row="2"/>
 
                             <!--Ingredients-->
-                            <Grid Margin="15, 7.5, 15, 15" Padding="0" x:Name="Grid_Ingredients" Grid.Row="2"/>
+                            <Grid Margin="15, 7.5, 15, 15" Padding="0" x:Name="GridIngredients" Grid.Row="2"/>
                         </Grid>
                     </Frame>
 
@@ -127,15 +125,15 @@
                             </Grid.RowDefinitions>
 
                             <!--Instructions Head-->
-                            <Frame x:Name="Frame_InstructionsHead" Margin="0" CornerRadius="0" Grid.Row="0">
-                                <Label x:Name="Label_InstructionsHead" VerticalTextAlignment="Center"/>
+                            <Frame x:Name="FrameInstructionsHead" Margin="0" CornerRadius="0" Grid.Row="0">
+                                <Label x:Name="LabelInstructionsHead" VerticalTextAlignment="Center"/>
                             </Frame>
 
                             <!--RecipeLoading-->
-                            <ActivityIndicator x:Name="ActivityIndicatior_LoadingRecipeInstructions" Margin="15" IsRunning="True" VerticalOptions="Center" Grid.Row="1"/>
+                            <ActivityIndicator x:Name="ActivityIndicatorLoadingRecipeInstructions" Margin="15" IsRunning="True" VerticalOptions="Center" Grid.Row="1"/>
 
                             <!--Instructions-->
-                            <StackLayout Margin="15" x:Name="Stack_Instructions" Grid.Row="1"/>
+                            <StackLayout Margin="15" x:Name="StackInstructions" Grid.Row="1"/>
                         </Grid>
                     </Frame>
 

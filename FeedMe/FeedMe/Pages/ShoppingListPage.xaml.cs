@@ -21,7 +21,6 @@ namespace FeedMe.Pages
         private readonly List<IconTestModel> icons_testList = new List<IconTestModel>();
         //List<IconTestModel> icons_testList2 = new List<IconTestModel>();
 
-        public Color TestColor { get; } = Color.Red;
         public ObservableCollection<string> TestIcons { get; set; } = new ObservableCollection<string> { "md-add", "md-remove" };
 
 
@@ -51,8 +50,8 @@ namespace FeedMe.Pages
         {
             //ListView_ShoppingList.BackgroundColor = Constants.AppColor.lightGray;
             //ListView_ShoppingList.ItemsSource =
-            StackLayout_main.Padding = Constants.padding2;
-            ListView_myIngredients.RowHeight = Constants.textHeight;
+            StackLayoutMain.Padding = Constants.Padding2;
+            ListViewMyIngredients.RowHeight = Constants.TextHeight;
             UpdateShoppingListListView(shoppingListIngredients);
         }
 
@@ -70,15 +69,15 @@ namespace FeedMe.Pages
                     {
                         Name = ingredient.IngredientName,
                         //IconSource = "md-remove-shopping-cart",   // FUNKAR INTE aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa :(
-                        Color = (Sorting.IngredientExistsInList(ingredient, shoppingListIngredients)) ? Color.Black : Color.FromHex("#00CC66")
+                        Color = (Sorting.IngredientExistsInList(ingredient, shoppingListIngredients)) ? Colors.Black : Color.FromHex("#00CC66")
                     });
 
                 }
-                ListView_SearchIngredients.ItemsSource = items;
+                ListViewSearchIngredients.ItemsSource = items;
             }
-            catch (Exception _e)
+            catch (Exception e)
             {
-                Console.WriteLine(_e);
+                Console.WriteLine(e);
             }
         }
 
@@ -90,9 +89,9 @@ namespace FeedMe.Pages
                 itemsorce.Insert(0, ingredient);
             }
 
-            ListView_myIngredients.ItemsSource = itemsorce;
+            ListViewMyIngredients.ItemsSource = itemsorce;
 
-            Sorting.ResizeListView(ListView_myIngredients, shoppingListIngredients.Count);
+            Sorting.ResizeListView(ListViewMyIngredients, shoppingListIngredients.Count);
         }
 
 
@@ -133,7 +132,7 @@ namespace FeedMe.Pages
         private bool searching = false;
         private void SearchBar_Ingredients_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string searchWord = SearchBar_Ingredients.Text.ToLower();
+            string searchWord = SearchBarIngredients.Text.ToLower();
 
             if (searchWord.Length > 0)
             {
@@ -152,7 +151,7 @@ namespace FeedMe.Pages
 
         private void ListView_myIngredients_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            shoppingListIngredients.Remove(ListView_myIngredients.SelectedItem as IngredientDtoV2);
+            shoppingListIngredients.Remove(ListViewMyIngredients.SelectedItem as IngredientDtoV2);
             UpdateShoppingListListView(shoppingListIngredients);
 
             User.User.ShoppingListIngredients = JsonConvert.SerializeObject(shoppingListIngredients);
@@ -160,15 +159,15 @@ namespace FeedMe.Pages
 
         private void Button_AddIngredients_Clicked(object sender, EventArgs e)
         {
-            Frame_Search.IsEnabled = true;
-            Frame_Search.IsVisible = true;
-            ScrollView_main.IsEnabled = false;
-            ScrollView_main.IsVisible = false;
+            FrameSearch.IsEnabled = true;
+            FrameSearch.IsVisible = true;
+            ScrollViewMain.IsEnabled = false;
+            ScrollViewMain.IsVisible = false;
         }
 
         private void ListView_SearchIngredients_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            IngredientDtoV2 selectedIngredient = searchIngredients[((List<ListItem>)ListView_SearchIngredients.ItemsSource).IndexOf((ListItem)e.SelectedItem)];
+            IngredientDtoV2 selectedIngredient = searchIngredients[((List<ListItem>)ListViewSearchIngredients.ItemsSource).IndexOf((ListItem)e.SelectedItem)];
 
             if (Sorting.IngredientExistsInList(selectedIngredient, shoppingListIngredients))
             {
@@ -193,11 +192,11 @@ namespace FeedMe.Pages
         private void ImageButton_Clicked(object sender, EventArgs e)
         {
             UpdateShoppingListListView(shoppingListIngredients);
-            ScrollView_main.IsEnabled = true;
-            ScrollView_main.IsVisible = true;
-            Frame_Search.IsEnabled = false;
-            Frame_Search.IsVisible = false;
-            SearchBar_Ingredients.Text = "";
+            ScrollViewMain.IsEnabled = true;
+            ScrollViewMain.IsVisible = true;
+            FrameSearch.IsEnabled = false;
+            FrameSearch.IsVisible = false;
+            SearchBarIngredients.Text = "";
         }
 
         private void button_test_Clicked(object sender, EventArgs e)
@@ -232,7 +231,7 @@ namespace FeedMe.Pages
                 new IconTestModel { Icon = name }
             };
             //list_test.ItemsSource = sorce;
-            list_test.ItemsSource = icons_testList;
+            ListTest.ItemsSource = icons_testList;
         }
     }
 

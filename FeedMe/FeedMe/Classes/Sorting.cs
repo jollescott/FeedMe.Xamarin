@@ -5,18 +5,18 @@ using Microsoft.Maui.Controls;
 
 namespace FeedMe.Classes
 {
-    internal class Sorting
+    internal abstract class Sorting
     {
         public static List<IngredientDtoV2> SortIngredientsByNameLenght(List<IngredientDtoV2> ingredients)
         {
-            for (int i = 1; i < ingredients.Count; i++)
+            for (var i = 1; i < ingredients.Count; i++)
             {
-                int j = 0;
+                var j = 0;
                 while (ingredients[i].IngredientName.Length > ingredients[j].IngredientName.Length)
                 {
                     j++;
                 }
-                IngredientDtoV2 item = ingredients[i];
+                var item = ingredients[i];
                 ingredients.RemoveAt(i);
                 ingredients.Insert(j, item);
             }
@@ -27,27 +27,13 @@ namespace FeedMe.Classes
 
         public static bool IngredientExistsInList(IngredientDtoV2 ingredient, List<IngredientDtoV2> ingredientList)
         {
-            foreach (IngredientDtoV2 item in ingredientList)
-            {
-                if (item.IngredientId == ingredient.IngredientId)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return ingredientList.Any(item => item.IngredientId == ingredient.IngredientId);
         }
 
 
         public static bool RecipeMetaExistsInList(RecipeMetaDtoV2 recipe, List<RecipeMetaDtoV2> recipeList)
         {
-            foreach (RecipeMetaDtoV2 r in recipeList)
-            {
-                if (recipe.RecipeId == r.RecipeId)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return recipeList.Any(r => recipe.RecipeId == r.RecipeId);
         }
 
 
@@ -58,8 +44,8 @@ namespace FeedMe.Classes
                 numberOfItems = 1;
             }
 
-            double height = numberOfItems * Constants.textHeight;
-            double adjust = (numberOfItems * 0.55) + 0.2;
+            double height = numberOfItems * Constants.TextHeight;
+            var adjust = (numberOfItems * 0.55) + 0.2;
             listView.HeightRequest = height + adjust;
         }
     }

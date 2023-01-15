@@ -1,9 +1,4 @@
-﻿using Plugin.Iconize;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-
-
-namespace FeedMe.Pages.MasterDetail
+﻿namespace FeedMe.Pages.MasterDetail
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FDMasterDetailPage : FlyoutPage
@@ -24,7 +19,7 @@ namespace FeedMe.Pages.MasterDetail
             switch (item.Id)
             {
                 case 0:
-                    Detail = new IconNavigationPage(new MainPage()); // search page
+                    //Detail = new IconNavigationPage(new MainPage()); // search page
                     break;
                 case 1:
                     Detail = new NavigationPage(new MealsListPage(true) { Title = "Sök Recept" }); // search with name page

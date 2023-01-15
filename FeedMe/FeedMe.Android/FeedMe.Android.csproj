@@ -41,20 +41,8 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.2</Version>
     </PackageReference>
-    <PackageReference Include="Xam.Plugin.Iconize">
-      <Version>3.5.0.129</Version>
-    </PackageReference>
-    <PackageReference Include="Xam.Plugin.Iconize.Material">
-      <Version>3.5.0.129</Version>
-    </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.FFImageLoading.Forms">
-      <Version>2.4.11.982</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.FFImageLoading.Transformations">
-      <Version>2.4.11.982</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.6.0" />
     <PackageReference Include="Xamarin.AndroidX.CardView" Version="1.0.0.17" />
@@ -63,6 +51,9 @@
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.355802">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Update="Xamarin.Google.Android.Material" Version="1.7.0.1" />
+    <PackageReference Update="Xamarin.AndroidX.Navigation.Common" Version="2.5.3" />
+    <PackageReference Update="Xamarin.Android.Glide" Version="4.14.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FeedMe\FeedMe.csproj" />

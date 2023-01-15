@@ -1,13 +1,13 @@
 ﻿using Android.Graphics;
 using Android.Views;
-using FeedMe.Droid.Effects;
+using FeedMe.Android.Effects;
 using FeedMe.Effects;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Platform;
+using View = Android.Views.View;
 
 [assembly: ResolutionGroupName("FeedMe")]
 [assembly: ExportEffect(typeof(FrameCornerEffectAndroid), "FrameCornerEffect")]
-namespace FeedMe.Droid.Effects
+namespace FeedMe.Android.Effects
 {
     public class FrameCornerEffectAndroid : PlatformEffect
     {
@@ -24,16 +24,16 @@ namespace FeedMe.Droid.Effects
 
     internal class RoundedOutlineProvider : ViewOutlineProvider
     {
-        private readonly double radius;
+        private readonly double _radius;
 
         public RoundedOutlineProvider(double radius)
         {
-            this.radius = radius;
+            this._radius = radius;
         }
 
-        public override void GetOutline(Android.Views.View view, Outline outline)
+        public override void GetOutline(View view, Outline outline)
         {
-            outline?.SetRoundRect(0, 0, view.Width, view.Height, (float)radius);
+            outline?.SetRoundRect(0, 0, view.Width, view.Height, (float)_radius);
         }
     }
 }

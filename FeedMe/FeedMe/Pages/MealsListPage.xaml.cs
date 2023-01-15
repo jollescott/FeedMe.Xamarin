@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using FeedMe.Pages;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 
@@ -30,14 +31,14 @@ namespace FeedMe
             InitializeComponent();
             viewFavorites = true;
 
-            Label_Loading.Text = "Laddar...";
+            LabelLoading.Text = "Laddar...";
             recipes = User.User.SavedRecipes;
             XamlSetup();
 
             if (recipes.Count < 1)
             {
-                Label_Message.Text = "Här sparas de recept du har gillat";
-                Label_Message.IsVisible = true;
+                LabelMessage.Text = "Här sparas de recept du har gillat";
+                LabelMessage.IsVisible = true;
             }
         }
 
@@ -45,11 +46,11 @@ namespace FeedMe
         {
             InitializeComponent();
             nameSearching = true;
-            Label_Loading.IsEnabled = false;
-            Label_Loading.IsVisible = false;
-            ActivityIndicatior_WaitingForServer.IsRunning = false;
-            Frame_RecipeSearching.IsEnabled = true;
-            Frame_RecipeSearching.IsVisible = true;
+            LabelLoading.IsEnabled = false;
+            LabelLoading.IsVisible = false;
+            ActivityIndicatorWaitingForServer.IsRunning = false;
+            FrameRecipeSearching.IsEnabled = true;
+            FrameRecipeSearching.IsVisible = true;
         }
 
         public MealsListPage(List<IngredientDtoV2> ingredients)
@@ -82,13 +83,13 @@ namespace FeedMe
                     List<RecipeMetaDtoV2> recivedRecipeMetas = JsonConvert.DeserializeObject<List<RecipeMetaDtoV2>>(result);
                     if (recivedRecipeMetas.Count < 25)
                     {
-                        Button_ViewMoreRecipes.IsEnabled = false;
-                        Button_ViewMoreRecipes.IsVisible = false;
+                        ButtonViewMoreRecipes.IsEnabled = false;
+                        ButtonViewMoreRecipes.IsVisible = false;
                     }
                     else
                     {
-                        Button_ViewMoreRecipes.IsEnabled = true;
-                        Button_ViewMoreRecipes.IsVisible = true;
+                        ButtonViewMoreRecipes.IsEnabled = true;
+                        ButtonViewMoreRecipes.IsVisible = true;
                     }
                     recipeMetas.AddRange(recivedRecipeMetas);
                     XamlSetup();
@@ -96,22 +97,22 @@ namespace FeedMe
                 else
                 {
                     Alert("Fel", "Kunnde inte ansluta till servern\n\nstatus code: " + (int)response.StatusCode, "ok");
-                    Label_Loading.IsVisible = false;
-                    ActivityIndicatior_WaitingForServer.IsRunning = false;
+                    LabelLoading.IsVisible = false;
+                    ActivityIndicatorWaitingForServer.IsRunning = false;
                 }
             }
             catch
             {
                 Alert("Fel", "Kunnde inte ansluta till servern", "ok");
-                Label_Loading.IsVisible = false;
-                ActivityIndicatior_WaitingForServer.IsRunning = false;
+                LabelLoading.IsVisible = false;
+                ActivityIndicatorWaitingForServer.IsRunning = false;
             }
         }
 
         private void XamlSetup()
         {
-            Label_Loading.IsEnabled = false;
-            Label_Loading.IsVisible = false;
+            LabelLoading.IsEnabled = false;
+            LabelLoading.IsVisible = false;
 
             int frameHeight = (int)(Application.Current.MainPage.Width * 0.8);
 
@@ -163,28 +164,28 @@ namespace FeedMe
             }
 
 
-            ListView_Recipes.BackgroundColor = Color.Transparent;
-            ListView_Recipes.ItemsSource = recipeMetaModels;
+            ListViewRecipes.BackgroundColor = Colors.Transparent;
+            ListViewRecipes.ItemsSource = recipeMetaModels;
 
-            ActivityIndicatior_WaitingForServer.IsRunning = false;
-            ActivityIndicatior_WaitingForServer_LoadingMoreRecipes.IsRunning = false;
+            ActivityIndicatorWaitingForServer.IsRunning = false;
+            ActivityIndicatorWaitingForServerLoadingMoreRecipes.IsRunning = false;
         }
 
-        private bool canOpenNewRecipes = true;
+        private bool _canOpenNewRecipes = true;
         //Recipe selected
         private void ListView_Recipes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            object selected = ListView_Recipes.SelectedItem;
+            var selected = ListViewRecipes.SelectedItem;
 
-            if (selected == null || !canOpenNewRecipes)
+            if (selected == null || !_canOpenNewRecipes)
             {
                 return;
             }
 
-            canOpenNewRecipes = false;
+            _canOpenNewRecipes = false;
 
-            int selectedItemIndex = recipeMetaModels.IndexOf(selected);
-            ListView_Recipes.SelectedItem = null;
+            int selectedItemIndex = recipeMetaModels.IndexOf((RecipeMetaModel)selected);
+            ListViewRecipes.SelectedItem = null;
 
             // Return it was an ad
             for (int i = 0; i < recipeMetaModels.Count; i += 4)
@@ -212,7 +213,7 @@ namespace FeedMe
         {
             await Navigation.PushAsync(new RecipePage(recipeMeta) { Title = recipeMeta.Name });
 
-            canOpenNewRecipes = true;
+            _canOpenNewRecipes = true;
         }
 
         //Next page (favorite)
@@ -220,7 +221,7 @@ namespace FeedMe
         {
             await Navigation.PushAsync(new RecipePage(recipe) { Title = recipe.Name });
 
-            canOpenNewRecipes = true;
+            _canOpenNewRecipes = true;
         }
 
         //Navigation back button
@@ -232,9 +233,9 @@ namespace FeedMe
         //Load more recipes button
         private void Button_ViewMoreRecipes_Clicked(object sender, EventArgs e)
         {
-            ActivityIndicatior_WaitingForServer_LoadingMoreRecipes.IsRunning = true;
-            Button_ViewMoreRecipes.IsEnabled = false;
-            Button_ViewMoreRecipes.IsVisible = false;
+            ActivityIndicatorWaitingForServerLoadingMoreRecipes.IsRunning = true;
+            ButtonViewMoreRecipes.IsEnabled = false;
+            ButtonViewMoreRecipes.IsVisible = false;
             if (nameSearching)
             {
                 ReciveRecipeMetasFromName(recipeMetas.Count);
@@ -274,22 +275,22 @@ namespace FeedMe
 
                     if (recivedRecipeMetas.Count < 25)
                     {
-                        Button_ViewMoreRecipes.IsEnabled = false;
-                        Button_ViewMoreRecipes.IsVisible = false;
+                        ButtonViewMoreRecipes.IsEnabled = false;
+                        ButtonViewMoreRecipes.IsVisible = false;
                     }
                     else
                     {
-                        Button_ViewMoreRecipes.IsEnabled = true;
-                        Button_ViewMoreRecipes.IsVisible = true;
+                        ButtonViewMoreRecipes.IsEnabled = true;
+                        ButtonViewMoreRecipes.IsVisible = true;
                     }
                     recipeMetas.AddRange(recivedRecipeMetas);
                     XamlSetup();
 
                     if (recipeMetaModels.Count == 0)
                     {
-                        Label_Message.Text = "Inga recept hittades";
-                        Label_Message.IsVisible = true;
-                        Label_Message.IsEnabled = true;
+                        LabelMessage.Text = "Inga recept hittades";
+                        LabelMessage.IsVisible = true;
+                        LabelMessage.IsEnabled = true;
                     }
 
 
@@ -306,15 +307,15 @@ namespace FeedMe
                 else
                 {
                     Alert("Fel", "Kunnde inte ansluta till servern\n\nstatus code: " + (int)response.StatusCode, "ok");
-                    Label_Loading.IsVisible = false;
-                    ActivityIndicatior_WaitingForServer.IsRunning = false;
+                    LabelLoading.IsVisible = false;
+                    ActivityIndicatorWaitingForServer.IsRunning = false;
                 }
             }
             catch
             {
                 Alert("Fel", "Kunnde inte ansluta till servern", "ok");
-                Label_Loading.IsVisible = false;
-                ActivityIndicatior_WaitingForServer.IsRunning = false;
+                LabelLoading.IsVisible = false;
+                ActivityIndicatorWaitingForServer.IsRunning = false;
             }
         }
 
@@ -327,19 +328,19 @@ namespace FeedMe
             int id = nextId;
             latestId = nextId;
 
-            Label_Message.IsVisible = false;
-            Label_Message.IsEnabled = false;
+            LabelMessage.IsVisible = false;
+            LabelMessage.IsEnabled = false;
 
-            Label_Loading.IsEnabled = true;
-            Label_Loading.IsVisible = true;
-            ActivityIndicatior_WaitingForServer.IsRunning = true;
+            LabelLoading.IsEnabled = true;
+            LabelLoading.IsVisible = true;
+            ActivityIndicatorWaitingForServer.IsRunning = true;
 
             if (recipeMetaModels != null && recipeMetaModels.Count > 0)
             {
-                ListView_Recipes.ScrollTo(((List<RecipeMetaModel>)ListView_Recipes.ItemsSource)[0], ScrollToPosition.Center, false);
+                ListViewRecipes.ScrollTo(((List<RecipeMetaModel>)ListViewRecipes.ItemsSource)[0], ScrollToPosition.Center, false);
             }
 
-            searchWord = SearchBar_RecipeSearching.Text;
+            searchWord = SearchBarRecipeSearching.Text;
 
             ReciveRecipeMetasFromName(0, id);
         }
