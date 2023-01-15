@@ -9,14 +9,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.4.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-    <PackageReference Include="Rg.Plugins.Popup" Version="2.1.0" />
-    <PackageReference Include="Xam.Plugin.Iconize" Version="3.5.0.129" />
-    <PackageReference Include="Xam.Plugin.Iconize.Material" Version="3.5.0.129" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
-    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
-    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.355802">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -24,6 +18,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\libs\FeedMe.Shared\FeedMe.Shared\FeedMe.Shared.csproj" />
-    <ProjectReference Include="..\FeedMe.Core\FeedMe.Core.csproj" />
   </ItemGroup>
 </Project>

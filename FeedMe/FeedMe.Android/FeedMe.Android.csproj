@@ -65,7 +65,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FeedMe.Core\FeedMe.Core.csproj" />
     <ProjectReference Include="..\FeedMe\FeedMe.csproj" />
   </ItemGroup>
 </Project>
