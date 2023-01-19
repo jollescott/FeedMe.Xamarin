@@ -1,15 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0-android</TargetFramework>
         <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseMaui>true</UseMaui>
-        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <AndroidTlsProvider>btls</AndroidTlsProvider>
         <MandroidI18n>West</MandroidI18n>
-        <AotAssemblies>false</AotAssemblies>
+        <RunAOTCompilation>false</RunAOTCompilation>
         <EnableLLVM>false</EnableLLVM>
         <BundleAssemblies>false</BundleAssemblies>
         <AndroidDexTool>d8</AndroidDexTool>
@@ -19,7 +20,7 @@
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
         <MandroidI18n>West</MandroidI18n>
-        <AotAssemblies>false</AotAssemblies>
+        <RunAOTCompilation>false</RunAOTCompilation>
         <EnableLLVM>false</EnableLLVM>
         <BundleAssemblies>false</BundleAssemblies>
         <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
@@ -30,13 +31,6 @@
         <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
         <AndroidPackageFormat>aab</AndroidPackageFormat>
     </PropertyGroup>
-    <PropertyGroup>
-        <TargetFramework>net7.0-android</TargetFramework>
-        <TargetFrameworks>net7.0-android33.0</TargetFrameworks>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="Mono.Android.Export"/>
-    </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Newtonsoft.Json">
             <Version>13.0.2</Version>
@@ -44,18 +38,19 @@
         <PackageReference Include="Xam.Plugins.Settings">
             <Version>3.1.1</Version>
         </PackageReference>
-        <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.6.0"/>
-        <PackageReference Include="Xamarin.AndroidX.CardView" Version="1.0.0.17"/>
-        <PackageReference Include="Xamarin.AndroidX.MediaRouter" Version="1.3.1.1"/>
-        <PackageReference Include="Xamarin.AndroidX.Migration" Version="1.0.10"/>
+        <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.6.0" />
+        <PackageReference Include="Xamarin.AndroidX.CardView" Version="1.0.0.17" />
+        <PackageReference Include="Xamarin.AndroidX.MediaRouter" Version="1.3.1.1" />
+        <PackageReference Include="Xamarin.AndroidX.Migration" Version="1.0.10" />
         <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.355802">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Update="Xamarin.Google.Android.Material" Version="1.7.0.1"/>
-        <PackageReference Update="Xamarin.AndroidX.Navigation.Common" Version="2.5.3"/>
-        <PackageReference Update="Xamarin.Android.Glide" Version="4.14.2"/>
+        <PackageReference Update="Xamarin.Google.Android.Material" Version="1.7.0.1" />
+        <PackageReference Update="Xamarin.AndroidX.Navigation.Common" Version="2.5.3" />
+        <PackageReference Update="Xamarin.Android.Glide" Version="4.14.2" />
+        <PackageReference Include="Xamarin.Kotlin.StdLib.Jdk8" Version="1.8.0" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\FeedMe\FeedMe.csproj"/>
+        <ProjectReference Include="..\FeedMe\FeedMe.csproj" />
     </ItemGroup>
 </Project>
