@@ -1,6 +1,7 @@
 ﻿using FeedMe.Pages.MasterDetail;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
+using Plugin.Iconize.Fonts;
 
 namespace FeedMe
 {
@@ -10,6 +11,8 @@ namespace FeedMe
         {
             InitializeComponent();
 
+            Plugin.Iconize.Iconize.With(new MaterialModule());
+            
             MainPage = new FDMasterDetailPage();
         }
 

@@ -1,4 +1,6 @@
-﻿namespace FeedMe;
+﻿using Plugin.Iconize;
+
+namespace FeedMe;
 
 public static class MauiProgram
 {
@@ -6,7 +8,8 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         builder
-            .UseMauiApp<FormsApp>();
+            .UseMauiApp<FormsApp>()
+            .Init();
 
         return builder.Build();
     }
