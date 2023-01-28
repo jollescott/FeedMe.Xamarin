@@ -10,7 +10,7 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-        <PackageReference Include="plugin.iconize" Version="1.0.1" />
+        <PackageReference Include="plugin.iconize" Version="1.0.2" />
         <PackageReference Include="Plugin.Iconize.Material" Version="1.0.1" />
         <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
         <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.355802">

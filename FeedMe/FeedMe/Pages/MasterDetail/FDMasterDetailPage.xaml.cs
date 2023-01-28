@@ -1,4 +1,6 @@
-﻿namespace FeedMe.Pages.MasterDetail;
+﻿using Plugin.Iconize;
+
+namespace FeedMe.Pages.MasterDetail;
 
 [XamlCompilation(XamlCompilationOptions.Compile)]
 public partial class FDMasterDetailPage : FlyoutPage
@@ -16,7 +18,7 @@ public partial class FDMasterDetailPage : FlyoutPage
         switch (item.Id)
         {
             case 0:
-                //Detail = new IconNavigationPage(new MainPage()); // search page
+                Detail = new IconNavigationPage(new MainPage()); // search page
                 break;
             case 1:
                 Detail = new NavigationPage(new MealsListPage(true) { Title = "Sök Recept" }); // search with name page

@@ -9,7 +9,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<FormsApp>()
-            .Init();
+            .UseIconize();
 
         return builder.Build();
     }

@@ -32,7 +32,7 @@
 
             <SearchBar x:Name="SearchBarIngredients" Placeholder="Lägg till ingredienser" HorizontalOptions="Fill"
                        TextChanged="SearchBar_Ingredients_TextChanged" Grid.Column="0" Grid.Row="0" />
-            <Button x:Name="ButtonCloseIngredientsSearch" Text="Klar" FontSize="Small" BackgroundColor="White"
+            <Button x:Name="ButtonCloseIngredientsSearch" Text="Klar" HorizontalOptions="Center" VerticalOptions="Center"
                     Clicked="Button_CloseIngredientsSearch_Clicked" Grid.Column="1" Grid.Row="0" />
 
             <ListView ItemsSource="{Binding SearchIngredientModels}" x:Name="ListViewSearchIngredients"
@@ -81,7 +81,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <iconize:IconLabel Margin="15" Text="md-help-outline" TextColor="White" FontSize="Medium"
+                            <iconize:IconLabel Margin="15" Text="md-help-outline" TextColor="Black" FontSize="24"
                                                HorizontalOptions="Start" VerticalOptions="Center" Grid.Column="0">
                                 <iconize:IconLabel.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_MyIngredientsHelp" />
@@ -131,7 +131,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <iconize:IconLabel Margin="15" Text="md-help-outline" TextColor="White" FontSize="Medium"
+                            <iconize:IconLabel Margin="15" Text="md-help-outline" TextColor="Black" FontSize="24"
                                                HorizontalOptions="Start" VerticalOptions="Center" Grid.Column="0">
                                 <iconize:IconLabel.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_ExcludedIngredientsHelp" />
