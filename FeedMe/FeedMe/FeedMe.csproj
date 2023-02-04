@@ -9,6 +9,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="FeedMe.Shared" Version="1.0.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
         <PackageReference Include="plugin.iconize" Version="1.0.2" />
         <PackageReference Include="Plugin.Iconize.Material" Version="1.0.1" />
@@ -23,8 +24,5 @@
         <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.6.0" />
         <PackageReference Include="Xamarin.AndroidX.CardView" Version="1.0.0.17" />
         <PackageReference Include="Xamarin.Kotlin.StdLib.Jdk8" Version="1.8.0" />
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\..\libs\FeedMe.Shared\FeedMe.Shared\FeedMe.Shared.csproj" />
     </ItemGroup>
 </Project>
